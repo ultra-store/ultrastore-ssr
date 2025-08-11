@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { App } from "../components/App";
+import { Header } from "../components/Header";
 
 import "@gravity-ui/uikit/styles/fonts.css";
 import "@gravity-ui/uikit/styles/styles.css";
@@ -19,7 +20,10 @@ export default function RootLayout({
   return (
     <html lang="ru">
       <body className={"body"}>
-        <App>{children}</App>
+        <App>
+          <Header />
+          {children}
+        </App>
       </body>
     </html>
   );

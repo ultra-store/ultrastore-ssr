@@ -2,6 +2,7 @@
 
 import React from "react";
 import { ThemeProvider } from "@gravity-ui/uikit";
+import { CartProvider } from "@/contexts/CartContext";
 
 interface AppProps {
   children: React.ReactNode;
@@ -9,7 +10,9 @@ interface AppProps {
 export const App: React.FC<AppProps> = ({ children }) => {
   return (
     <ThemeProvider theme={'light'}>
-      <div>{children}</div>
+      <CartProvider>
+        <div>{children}</div>
+      </CartProvider>
     </ThemeProvider>
   );
 };

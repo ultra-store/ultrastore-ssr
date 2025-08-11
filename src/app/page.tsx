@@ -1,13 +1,9 @@
-import styles from "./page.module.css";
+import {ProductGrid} from "@/components/Product/ProductGrid";
+import {woocommerce} from "@/lib/woocommerce";
 
-export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>
+export const dynamic = "force-dynamic";
 
-      </main>
-      <footer className={styles.footer}>
-      </footer>
-    </div>
-  );
+export default async function Home() {
+  const products = await woocommerce.getProducts({featured: true, per_page: 8});
+  return <ProductGrid products={products} />;
 }
