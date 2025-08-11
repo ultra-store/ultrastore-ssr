@@ -1,32 +1,46 @@
-# Base
+## Base
 FROM node:20-alpine AS base
 WORKDIR /app
 
-# Dependencies layer
-FROM base AS deps
-COPY package.json ./
-RUN npm install --no-audit --no-fund
+# Enable pnpm via Corepack (lockfile v9 expects pnpm 9)
+ENV PNPM_HOME=/pnpm
+ENV PATH=$PNPM_HOME:$PATH
+RUN corepack enable && corepack prepare pnpm@9.0.0 --activate
 
-# Dev image (hot reload)
+## Dependencies (with dev deps for building)
+FROM base AS deps
+ENV NODE_ENV=development
+COPY package.json ./
+COPY pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile
+
+## Dev image (hot reload)
 FROM base AS dev
 ENV NODE_ENV=development
 COPY --from=deps /app/node_modules /app/node_modules
 COPY . .
 EXPOSE 3000
-CMD ["npm", "run", "dev"]
+CMD ["pnpm", "dev"]
 
-# Build image
+## Build image
 FROM base AS builder
 ENV NODE_ENV=production
 COPY --from=deps /app/node_modules /app/node_modules
 COPY . .
-RUN npm run build
+RUN pnpm build
 
-# Production runtime
+## Production deps (pruned)
+FROM base AS prod-deps
+ENV NODE_ENV=production
+COPY package.json ./
+COPY pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile --prod
+
+## Production runtime
 FROM base AS prod
 ENV NODE_ENV=production
 COPY --from=builder /app/.next /app/.next
-COPY --from=deps /app/node_modules /app/node_modules
+COPY --from=prod-deps /app/node_modules /app/node_modules
 COPY package.json ./
 EXPOSE 3000
-CMD ["npm", "run", "start"]
+CMD ["pnpm", "start"]
