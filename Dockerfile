@@ -2,6 +2,9 @@
 FROM node:20-alpine AS base
 WORKDIR /app
 
+# Enable corepack (pnpm support)
+RUN corepack enable
+
 # Dependencies layer
 FROM base AS deps
 COPY package.json pnpm-lock.yaml ./
