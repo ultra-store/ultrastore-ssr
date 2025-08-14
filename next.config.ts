@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
-// Derive remote image patterns from WooCommerce URL env var
-const woocommerceUrl = process.env.NEXT_PUBLIC_WOOCOMMERCE_URL;
+// Derive remote image patterns from a single canonical URL: WP_SITEURL
+const woocommerceUrl = process.env.WP_SITEURL;
 let remotePatterns: NonNullable<NextConfig["images"]>["remotePatterns"] = [];
 
 if (woocommerceUrl) {
@@ -26,6 +26,10 @@ const nextConfig: NextConfig = {
   pageExtensions: ["ts", "tsx", "md", "mdx"],
   images: {
     remotePatterns,
+  },
+  env: {
+    // Force a single source of truth for frontend base URL
+    NEXT_PUBLIC_WOOCOMMERCE_URL: process.env.WP_SITEURL || "",
   },
 };
 

@@ -173,8 +173,13 @@ class WooCommerceAPI {
 }
 
 // Создаем экземпляр API клиента
+const isServer = typeof window === 'undefined';
+const resolvedBaseUrl = isServer
+  ? (process.env.INTERNAL_WOOCOMMERCE_URL || process.env.NEXT_PUBLIC_WOOCOMMERCE_URL || 'http://backend')
+  : (process.env.NEXT_PUBLIC_WOOCOMMERCE_URL || '');
+
 const woocommerceConfig: WooCommerceConfig = {
-  url: process.env.NEXT_PUBLIC_WOOCOMMERCE_URL || 'http://localhost:8080',
+  url: resolvedBaseUrl || 'http://localhost:8080',
   consumerKey: process.env.NEXT_PUBLIC_WOOCOMMERCE_CONSUMER_KEY || '',
   consumerSecret: process.env.NEXT_PUBLIC_WOOCOMMERCE_CONSUMER_SECRET || ''
 };
