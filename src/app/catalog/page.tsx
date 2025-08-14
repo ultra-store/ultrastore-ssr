@@ -19,8 +19,15 @@ export default async function Catalog({searchParams}: {searchParams: Promise<Sea
 
   // WooCommerce API doesn't directly return total pages via axios headers in our wrapper
   // For a minimal version, fetch one extra page to estimate hasNext
-  const products = await woocommerce.getProducts({page, per_page, search});
-  const nextProducts = await woocommerce.getProducts({page: page + 1, per_page, search});
+  let products = [] as Awaited<ReturnType<typeof woocommerce.getProducts>>;
+  let nextProducts = [] as Awaited<ReturnType<typeof woocommerce.getProducts>>;
+  try {
+    products = await woocommerce.getProducts({page, per_page, search});
+    nextProducts = await woocommerce.getProducts({page: page + 1, per_page, search});
+  } catch {
+    products = [];
+    nextProducts = [];
+  }
   const totalPages = products.length === 0 && page > 1 ? page : nextProducts.length > 0 ? page + 1 : page;
 
   return (

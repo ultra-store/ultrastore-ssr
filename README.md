@@ -21,7 +21,7 @@ cp .env.example .env
 ```
 
 Основные переменные:
-- `WP_SITEURL` — канонический базовый URL WordPress/WooCommerce (например, `http://localhost:8080`).
+- `WORDPRESS_SITE_URL` — канонический базовый URL WordPress/WooCommerce (например, `http://localhost:8080`).
   Фронтенд автоматически использует его как `NEXT_PUBLIC_WOOCOMMERCE_URL` при сборке.
 - `NEXT_PUBLIC_WOOCOMMERCE_CONSUMER_KEY` — Consumer Key для WooCommerce REST API
 - `NEXT_PUBLIC_WOOCOMMERCE_CONSUMER_SECRET` — Consumer Secret для WooCommerce REST API

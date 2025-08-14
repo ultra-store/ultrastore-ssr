@@ -7,7 +7,12 @@ export const dynamic = "force-dynamic";
 
 export default async function ProductPage({params}: {params: Promise<{slug: string}>}) {
   const {slug} = await params;
-  const product = await woocommerce.getProductBySlug(slug);
+  let product = null as Awaited<ReturnType<typeof woocommerce.getProductBySlug>>;
+  try {
+    product = await woocommerce.getProductBySlug(slug);
+  } catch {
+    product = null;
+  }
   if (!product) {
     const {notFound} = await import("next/navigation");
     return notFound();

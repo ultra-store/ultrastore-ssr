@@ -21,8 +21,8 @@ CMD ["pnpm", "dev"]
 # Build image
 FROM base AS builder
 ENV NODE_ENV=production
-ARG WP_SITEURL
-ENV WP_SITEURL=${WP_SITEURL}
+ARG WORDPRESS_SITE_URL
+ENV WORDPRESS_SITE_URL=${WORDPRESS_SITE_URL}
 COPY --from=deps /app/node_modules /app/node_modules
 COPY . .
 RUN pnpm build
@@ -30,8 +30,8 @@ RUN pnpm build
 # Production runtime
 FROM base AS prod
 ENV NODE_ENV=production
-ARG WP_SITEURL
-ENV WP_SITEURL=${WP_SITEURL}
+ARG WORDPRESS_SITE_URL
+ENV WORDPRESS_SITE_URL=${WORDPRESS_SITE_URL}
 COPY --from=builder /app/.next /app/.next
 COPY --from=deps /app/node_modules /app/node_modules
 COPY package.json pnpm-lock.yaml ./
