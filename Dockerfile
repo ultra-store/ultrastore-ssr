@@ -1,85 +1,87 @@
-# syntax=docker.io/docker/dockerfile:1
-
+##
+## Base image with pnpm enabled
+##
 FROM node:18-alpine AS base
+# Helpful for native deps like sharp on Alpine
+RUN apk add --no-cache libc6-compat
+# Enable pnpm via Corepack (bundled with Node 18)
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
 
-# Step 1. Rebuild the source code only when needed
+##
+## Pre-fetch dependencies into a global content-addressable store (great for caching)
+##
+FROM base AS deps
+WORKDIR /app
+# Only copy files needed to resolve deps
+COPY package.json pnpm-lock.yaml .npmrc* ./
+# Create the pnpm store from the lockfile (no node_modules yet)
+RUN pnpm fetch
+
+##
+## Build the app
+##
 FROM base AS builder
-
 WORKDIR /app
 
-# Install dependencies based on the preferred package manager
-COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* .npmrc* ./
-# Omit --production flag for TypeScript devDependencies
-RUN \
-  if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
-  elif [ -f package-lock.json ]; then npm ci; \
-  elif [ -f pnpm-lock.yaml ]; then corepack enable && pnpm i; \
-  # Allow install without lockfile, so example works even without Node.js installed locally
-  else echo "Warning: Lockfile not found. It is recommended to commit lockfiles to version control." && yarn install; \
-  fi
+# Bring in the cached pnpm store from the previous stage
+COPY --from=deps /pnpm /pnpm
+# Copy lockfiles + manifest first for better layer caching
+COPY package.json pnpm-lock.yaml .npmrc* ./
 
+# Now copy the app sources
 COPY src ./src
 COPY public ./public
-COPY next.config.ts .
+COPY next.config.* .
 COPY tsconfig.json .
+COPY postcss.config.mjs .
+COPY tailwind.config.js .
 
-# Environment variables must be present at build time
-# https://github.com/vercel/next.js/discussions/14030
+# Install deps from the offline store strictly per lockfile
+RUN pnpm install --offline --frozen-lockfile
+
+# ---- Build-time envs (Next.js needs them during build) ----
 ARG NEXT_PUBLIC_WOOCOMMERCE_URL
 ENV NEXT_PUBLIC_WOOCOMMERCE_URL=${NEXT_PUBLIC_WOOCOMMERCE_URL}
 ARG NEXT_PUBLIC_WOOCOMMERCE_CONSUMER_KEY
 ENV NEXT_PUBLIC_WOOCOMMERCE_CONSUMER_KEY=${NEXT_PUBLIC_WOOCOMMERCE_CONSUMER_KEY}
 ARG NEXT_PUBLIC_WOOCOMMERCE_CONSUMER_SECRET
 ENV NEXT_PUBLIC_WOOCOMMERCE_CONSUMER_SECRET=${NEXT_PUBLIC_WOOCOMMERCE_CONSUMER_SECRET}
-ARG INTERNAL_WOOCOMMERCE_URL
-ENV INTERNAL_WOOCOMMERCE_URL=${INTERNAL_WOOCOMMERCE_URL}
 
-# Next.js collects completely anonymous telemetry data about general usage. Learn more here: https://nextjs.org/telemetry
-# Uncomment the following line to disable telemetry at build time
-# ENV NEXT_TELEMETRY_DISABLED 1
+# If you want to disable telemetry at build time, uncomment:
+# ENV NEXT_TELEMETRY_DISABLED=1
 
-# Build Next.js based on the preferred package manager
-RUN \
-  if [ -f yarn.lock ]; then yarn build; \
-  elif [ -f package-lock.json ]; then npm run build; \
-  elif [ -f pnpm-lock.yaml ]; then pnpm build; \
-  else npm run build; \
-  fi
+# Build (requires next.config with output: 'standalone')
+RUN pnpm build
 
-# Note: It is not necessary to add an intermediate step that does a full copy of `node_modules` here
-
-# Step 2. Production image, copy all the files and run next
-FROM base AS runner
-
+##
+## Production runtime (no pnpm or node_modules needed; we use Next standalone output)
+##
+FROM node:18-alpine AS runner
 WORKDIR /app
 
-# Use root for broader PaaS compatibility
-
-COPY --from=builder /app/public ./public
-
-# Automatically leverage output traces to reduce image size
-# https://nextjs.org/docs/advanced-features/output-file-tracing
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
-
-# Environment variables must be redefined at run time
-ARG NEXT_PUBLIC_WOOCOMMERCE_URL
-ENV NEXT_PUBLIC_WOOCOMMERCE_URL=${NEXT_PUBLIC_WOOCOMMERCE_URL}
-ARG NEXT_PUBLIC_WOOCOMMERCE_CONSUMER_KEY
-ENV NEXT_PUBLIC_WOOCOMMERCE_CONSUMER_KEY=${NEXT_PUBLIC_WOOCOMMERCE_CONSUMER_KEY}
-ARG NEXT_PUBLIC_WOOCOMMERCE_CONSUMER_SECRET
-ENV NEXT_PUBLIC_WOOCOMMERCE_CONSUMER_SECRET=${NEXT_PUBLIC_WOOCOMMERCE_CONSUMER_SECRET}
-ARG INTERNAL_WOOCOMMERCE_URL
-ENV INTERNAL_WOOCOMMERCE_URL=${INTERNAL_WOOCOMMERCE_URL}
-
-# Uncomment the following line to disable telemetry at run time
-# ENV NEXT_TELEMETRY_DISABLED 1
-
-# Ensure correct runtime defaults on most PaaS providers
 ENV NODE_ENV=production \
     PORT=3000 \
     HOSTNAME=0.0.0.0
 
+# Re-declare runtime envs (can be overridden at 'docker run' time)
+ARG NEXT_PUBLIC_WOOCOMMERCE_URL
+ENV NEXT_PUBLIC_WOOCOMMERCE_URL=${NEXT_PUBLIC_WOOCOMMERCE_URL}
+ARG NEXT_PUBLIC_WOOCOMMERCE_CONSUMER_KEY
+ENV NEXT_PUBLIC_WOOCOMMERCE_CONSUMER_KEY=${NEXT_PUBLIC_WOOCOMMERCE_CONSUMER_KEY}
+ARG NEXT_PUBLIC_WOOCOMMERCE_CONSUMER_SECRET
+ENV NEXT_PUBLIC_WOOCOMMERCE_CONSUMER_SECRET=${NEXT_PUBLIC_WOOCOMMERCE_CONSUMER_SECRET}
+
+# If you want to disable telemetry at runtime, uncomment:
+# ENV NEXT_TELEMETRY_DISABLED=1
+
+# Static files & standalone server
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
+
 EXPOSE 3000
 
-ENTRYPOINT ["node", "/app/server.js"]
+# server.js is at /app/server.js inside the standalone output
+CMD ["node", "server.js"]
