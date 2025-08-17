@@ -23,6 +23,7 @@ const nextConfig: NextConfig = {
   // Restrict recognized page file extensions to avoid accidental pickup of legacy pages/*.js
   // This prevents conflicts like "pages/index.js" vs "app/page.tsx" in mixed environments.
   pageExtensions: ["ts", "tsx", "md", "mdx"],
+  output: "standalone",
   images: {
     remotePatterns,
   },
