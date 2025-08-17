@@ -21,6 +21,6 @@ jobs:
             git pull origin master
             rm -f .env
             echo "${{ secrets.SERVER_ENV }}" > .env
-            npm install
-            npm run build
+            pnpm install
+            pnpm run build
             pm2 restart ultrastore-ssr
