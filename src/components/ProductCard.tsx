@@ -98,7 +98,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             </div>
           )}
         </div>
-        <div className={`min-h-[44px] flex items-center gap-3 transition-opacity duration-200 ${showCta ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
+        <div className={`min-h-[44px] flex items-center gap-3 transition-opacity duration-200`}>
           {product.type === 'variable' ? (
             showCta ? (
               <Button
