@@ -53,10 +53,7 @@ FROM base AS runner
 
 WORKDIR /app
 
-# Don't run production as root
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
-USER nextjs
+# Use root for broader PaaS compatibility
 
 COPY --from=builder /app/public ./public
 
@@ -85,4 +82,4 @@ ENV NODE_ENV=production \
 
 EXPOSE 3000
 
-CMD ["node", "/app/server.js"]
+ENTRYPOINT ["node", "/app/server.js"]
