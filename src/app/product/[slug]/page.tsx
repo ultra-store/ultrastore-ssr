@@ -146,7 +146,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
             {product.weight && (
               <div>
                 <span className="font-medium text-gray-900">Вес:</span>
-                <span className="ml-2 text-gray-600">{product.weight} кг</span>
+                <span className="ml-2 text-gray-600">{product.weight} г.</span>
               </div>
             )}
             {product.average_rating && parseFloat(product.average_rating) > 0 && (
