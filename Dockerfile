@@ -14,7 +14,7 @@ RUN apt-get update -y && \
     && rm -rf /var/lib/apt/lists/*
 
 FROM base AS deps
-COPY package*.json ./
+COPY package*.json ./.npmrc ./
 # Install all deps for building
 RUN npm ci
 
@@ -29,10 +29,9 @@ RUN npm run build
 FROM base AS runner
 ENV NODE_ENV=production
 
-# Copy only production node_modules to keep image slim
-COPY package*.json ./
-COPY --from=deps /app/node_modules ./node_modules
-RUN npm prune --omit=dev
+# Install only production dependencies to keep image slim
+COPY package*.json ./.npmrc ./
+RUN npm ci --omit=dev
 
 # Copy Next.js build artifacts and public assets
 COPY --from=builder /app/.next ./.next
