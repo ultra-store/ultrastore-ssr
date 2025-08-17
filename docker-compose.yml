@@ -1,0 +1,24 @@
+services:
+  frontend:
+    container_name: ultrastore-frontend
+    build:
+      context: .
+      args:
+        NEXT_PUBLIC_WOOCOMMERCE_URL: ${NEXT_PUBLIC_WOOCOMMERCE_URL}
+        NEXT_PUBLIC_WOOCOMMERCE_CONSUMER_KEY: ${NEXT_PUBLIC_WOOCOMMERCE_CONSUMER_KEY}
+        NEXT_PUBLIC_WOOCOMMERCE_CONSUMER_SECRET: ${NEXT_PUBLIC_WOOCOMMERCE_CONSUMER_SECRET}
+        INTERNAL_WOOCOMMERCE_URL: ${INTERNAL_WOOCOMMERCE_URL}
+    env_file:
+      - .env
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://localhost:3000').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  # Add more containers below (nginx, postgres, etc.)
+
+networks: {}
