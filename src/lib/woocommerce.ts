@@ -28,28 +28,16 @@ class WooCommerceAPI {
     // Добавляем OAuth авторизацию для каждого запроса
     this.api.interceptors.request.use((config) => {
       const fullUrl = `${this.config.url}/wp-json/wc/v3${config.url}`;
-      const isHttps = this.config.url.startsWith('https://');
-      const baseParams = config.params || {};
-
-      // Если сайт доступен по HTTPS — используем query-параметры consumer_key/consumer_secret.
-      // Для HTTP — используем OAuth 1.0 подпись.
-      if (isHttps) {
-        config.params = {
-          ...baseParams,
-          consumer_key: this.config.consumerKey,
-          consumer_secret: this.config.consumerSecret,
-        };
-      } else {
-        const auth = this.generateOAuthSignature(
-          config.method?.toUpperCase() || 'GET',
-          fullUrl,
-          baseParams
-        );
-        config.params = {
-          ...baseParams,
-          ...auth,
-        };
-      }
+      const auth = this.generateOAuthSignature(
+        config.method?.toUpperCase() || 'GET',
+        fullUrl,
+        config.params || {}
+      );
+      
+      config.params = {
+        ...config.params,
+        ...auth
+      };
       
       return config;
     });
@@ -80,7 +68,7 @@ class WooCommerceAPI {
     // Сортируем параметры
     const sortedParams = Object.keys(oauthParams)
       .sort()
-      .map((key) => `${key}=${encodeURIComponent(String(oauthParams[key]))}`)
+      .map(key => `${key}=${encodeURIComponent(String(oauthParams[key]))}`)
       .join('&');
 
     // Создаем базовую строку для подписи
@@ -173,13 +161,8 @@ class WooCommerceAPI {
 }
 
 // Создаем экземпляр API клиента
-const isServer = typeof window === 'undefined';
-const resolvedBaseUrl = isServer
-  ? (process.env.INTERNAL_WOOCOMMERCE_URL || process.env.NEXT_PUBLIC_WOOCOMMERCE_URL || 'https://wp.ultrastore.khizrim.online')
-  : (process.env.NEXT_PUBLIC_WOOCOMMERCE_URL || '');
-
 const woocommerceConfig: WooCommerceConfig = {
-  url: resolvedBaseUrl || 'https://wp.ultrastore.khizrim.online',
+  url: process.env.NEXT_PUBLIC_WOOCOMMERCE_URL || 'http://localhost:8080',
   consumerKey: process.env.NEXT_PUBLIC_WOOCOMMERCE_CONSUMER_KEY || '',
   consumerSecret: process.env.NEXT_PUBLIC_WOOCOMMERCE_CONSUMER_SECRET || ''
 };

@@ -1,31 +1,40 @@
 import type { Metadata } from "next";
-import { App } from "../components/App";
-import { Header } from "../components/Header";
+import { Geist, Geist_Mono } from "next/font/google";
+import "./globals.css";
+import { CartProvider } from "@/contexts/CartContext";
+import Header from "@/components/Header";
 
-import "@gravity-ui/uikit/styles/fonts.css";
-import "@gravity-ui/uikit/styles/styles.css";
-import "../styles/globals.css";
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
 
-export const dynamic = "force-dynamic";
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
-  title: "Ultrastore",
-  description:
-    "Ultrastore — интернет-магазин Apple в Санкт-Петербурге. Оригинальные iPhone, iPad, MacBook, Apple Watch и аксессуары по выгодным ценам. Продажа новой техники, трейд-ин, быстрая доставка и гарантия. Купить Apple в СПб с гарантией.",
+  title: "UltraStore - WooCommerce & Next.js",
+  description: "Интеграция WooCommerce и Next.js для современного интернет-магазина",
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
     <html lang="ru">
-      <body className={"body"}>
-        <App>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50`}
+      >
+        <CartProvider>
           <Header />
-          {children}
-        </App>
+          <main className="min-h-screen">
+            {children}
+          </main>
+        </CartProvider>
       </body>
     </html>
   );
