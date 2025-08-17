@@ -78,6 +78,11 @@ ENV INTERNAL_WOOCOMMERCE_URL=${INTERNAL_WOOCOMMERCE_URL}
 # Uncomment the following line to disable telemetry at run time
 # ENV NEXT_TELEMETRY_DISABLED 1
 
-# Note: Don't expose ports here, Compose will handle that for us
+# Ensure correct runtime defaults on most PaaS providers
+ENV NODE_ENV=production \
+    PORT=3000 \
+    HOSTNAME=0.0.0.0
+
+EXPOSE 3000
 
 CMD ["node", "server.js"]
