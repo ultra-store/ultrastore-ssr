@@ -5,14 +5,14 @@ Next.js витрина магазина, работающая через WooComm
 ## Быстрый старт
 
 ```bash
-pnpm install
-pnpm dev        # http://localhost:3000
+npm install
+npm run dev     # http://localhost:3000
 ```
 
 ## Требования
 
 * Node.js ≥ 18
-* pnpm ≥ 8
+* npm
 
 ## Переменные окружения
 
@@ -29,8 +29,8 @@ cp .env.example .env
 ## Команды
 
 ```bash
-pnpm dev       # Запуск разработки
-pnpm build     # Сборка для продакшена
-pnpm start     # Запуск собранного приложения
-pnpm lint      # Проверка кода
+npm run dev    # Запуск разработки
+npm run build  # Сборка для продакшена
+npm run start  # Запуск собранного приложения
+npm run lint   # Проверка кода
 ```

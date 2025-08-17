@@ -175,11 +175,11 @@ class WooCommerceAPI {
 // Создаем экземпляр API клиента
 const isServer = typeof window === 'undefined';
 const resolvedBaseUrl = isServer
-  ? (process.env.INTERNAL_WOOCOMMERCE_URL || process.env.NEXT_PUBLIC_WOOCOMMERCE_URL || 'http://backend')
+  ? (process.env.INTERNAL_WOOCOMMERCE_URL || process.env.NEXT_PUBLIC_WOOCOMMERCE_URL || 'https://wp.ultrastore.khizrim.online')
   : (process.env.NEXT_PUBLIC_WOOCOMMERCE_URL || '');
 
 const woocommerceConfig: WooCommerceConfig = {
-  url: resolvedBaseUrl || 'http://localhost:8080',
+  url: resolvedBaseUrl || 'https://wp.ultrastore.khizrim.online',
   consumerKey: process.env.NEXT_PUBLIC_WOOCOMMERCE_CONSUMER_KEY || '',
   consumerSecret: process.env.NEXT_PUBLIC_WOOCOMMERCE_CONSUMER_SECRET || ''
 };
