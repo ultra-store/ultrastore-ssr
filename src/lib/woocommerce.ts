@@ -2,7 +2,8 @@ import axios, { AxiosInstance } from 'axios';
 import {
   WooCommerceProduct,
   WooCommerceOrder,
-  CreateOrderPayload
+  CreateOrderPayload,
+  WooCommerceProductVariation
 } from '@/types/woocommerce';
 
 import crypto from 'crypto-js';
@@ -108,6 +109,15 @@ class WooCommerceAPI {
   // Получение товара по ID
   async getProduct(id: number): Promise<WooCommerceProduct> {
     const response = await this.api.get(`/products/${id}`);
+    return response.data;
+  }
+
+  // Получение вариаций товара
+  async getProductVariations(
+    productId: number,
+    params: { page?: number; per_page?: number } = {}
+  ): Promise<WooCommerceProductVariation[]> {
+    const response = await this.api.get(`/products/${productId}/variations`, { params });
     return response.data;
   }
 

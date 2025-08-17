@@ -1,7 +1,10 @@
 import React, { Suspense } from 'react';
+import Link from 'next/link';
 import { woocommerce } from '@/lib/woocommerce';
 import ProductCard from '@/components/ProductCard';
 import { WooCommerceProduct, WooCommerceCategory } from '@/types/woocommerce';
+import { Card, CardBody, CardHeader, Divider, Input, Button, Chip, Skeleton } from '@heroui/react';
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 
 export const revalidate = 60; // Обновляем кэш каждые 60 секунд
 
@@ -89,11 +92,13 @@ function ProductGridSkeleton() {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
       {Array.from({ length: 12 }).map((_, i) => (
-        <div key={i} className="animate-pulse">
-          <div className="aspect-square bg-gray-200 rounded-lg mb-4"></div>
-          <div className="h-4 bg-gray-200 rounded mb-2"></div>
-          <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
-          <div className="h-6 bg-gray-200 rounded w-1/2"></div>
+        <div key={i}>
+          <Skeleton className="rounded-lg mb-4">
+            <div className="aspect-square rounded-lg" />
+          </Skeleton>
+          <Skeleton className="h-4 rounded mb-2" />
+          <Skeleton className="h-4 rounded w-3/4 mb-2" />
+          <Skeleton className="h-6 rounded w-1/2" />
         </div>
       ))}
     </div>
@@ -116,91 +121,81 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Sidebar */}
         <aside className="lg:w-64 flex-shrink-0">
-          <div className="bg-white rounded-lg shadow-sm p-6">
-            <h2 className="text-lg font-semibold mb-4">Фильтры</h2>
-            
-            {/* Search */}
-            <div className="mb-6">
-              <label htmlFor="search" className="block text-sm font-medium text-gray-700 mb-2">
-                Поиск
-              </label>
-              <form action="/catalog" method="GET">
-                <input
-                  type="text"
-                  id="search"
-                  name="search"
-                  defaultValue={resolvedSearchParams.search || ''}
-                  placeholder="Введите название товара"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-                <button
-                  type="submit"
-                  className="w-full mt-2 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors duration-200"
-                >
-                  Найти
-                </button>
-              </form>
-            </div>
-
-            {/* Quick Filters */}
-            <div className="mb-6">
-              <h3 className="text-sm font-medium text-gray-700 mb-2">Быстрые фильтры</h3>
-              <div className="space-y-2">
-                <a
-                  href="/catalog?featured=true"
-                  className={`block px-3 py-2 text-sm rounded-md transition-colors duration-200 ${
-                    resolvedSearchParams.featured === 'true'
-                      ? 'bg-blue-100 text-blue-800'
-                      : 'text-gray-600 hover:bg-gray-100'
-                  }`}
-                >
-                  Рекомендуемые
-                </a>
-                <a
-                  href="/catalog?on_sale=true"
-                  className={`block px-3 py-2 text-sm rounded-md transition-colors duration-200 ${
-                    resolvedSearchParams.on_sale === 'true'
-                      ? 'bg-red-100 text-red-800'
-                      : 'text-gray-600 hover:bg-gray-100'
-                  }`}
-                >
-                  Со скидкой
-                </a>
+          <Card shadow="sm">
+            <CardHeader className="pb-0">
+              <h2 className="text-lg font-semibold">Фильтры</h2>
+            </CardHeader>
+            <CardBody className="pt-4">
+              {/* Search */}
+              <div className="mb-6">
+                <form action="/catalog" method="GET" className="space-y-2">
+                  <Input
+                    name="search"
+                    id="search"
+                    defaultValue={resolvedSearchParams.search || ''}
+                    placeholder="Введите название товара"
+                    startContent={<MagnifyingGlassIcon className="h-5 w-5 text-gray-400" />}
+                  />
+                  <Button type="submit" color="primary" className="w-full">
+                    Найти
+                  </Button>
+                </form>
               </div>
-            </div>
 
-            {/* Categories */}
-            {categories.length > 0 && (
-              <div>
-                <h3 className="text-sm font-medium text-gray-700 mb-2">Категории</h3>
-                <div className="space-y-1">
-                  <a
-                    href="/catalog"
-                    className={`block px-3 py-2 text-sm rounded-md transition-colors duration-200 ${
-                      !resolvedSearchParams.category
-                        ? 'bg-blue-100 text-blue-800'
-                        : 'text-gray-600 hover:bg-gray-100'
-                    }`}
+              <Divider className="my-4" />
+
+              {/* Quick Filters */}
+              <div className="mb-6">
+                <h3 className="text-sm font-medium text-gray-700 mb-2">Быстрые фильтры</h3>
+                <div className="flex flex-wrap gap-2">
+                  <Chip
+                    as={Link}
+                    href="/catalog?featured=true"
+                    color={resolvedSearchParams.featured === 'true' ? 'primary' : 'default'}
+                    variant={resolvedSearchParams.featured === 'true' ? 'solid' : 'flat'}
                   >
-                    Все категории
-                  </a>
-                  {categories.map((category: WooCommerceCategory & { count: number }) => (
-                    <a
-                      key={category.id}
-                      href={`/catalog?category=${category.id}`}
-                      className={`block px-3 py-2 text-sm rounded-md transition-colors duration-200 ${
-                        resolvedSearchParams.category === category.id.toString()
-                          ? 'bg-blue-100 text-blue-800'
-                          : 'text-gray-600 hover:bg-gray-100'
-                      }`}
-                    >
-                      {category.name} ({category.count})
-                    </a>
-                  ))}
+                    Рекомендуемые
+                  </Chip>
+                  <Chip
+                    as={Link}
+                    href="/catalog?on_sale=true"
+                    color={resolvedSearchParams.on_sale === 'true' ? 'danger' : 'default'}
+                    variant={resolvedSearchParams.on_sale === 'true' ? 'solid' : 'flat'}
+                  >
+                    Со скидкой
+                  </Chip>
                 </div>
               </div>
-            )}
-          </div>
+
+              {/* Categories */}
+              {categories.length > 0 && (
+                <div>
+                  <h3 className="text-sm font-medium text-gray-700 mb-2">Категории</h3>
+                  <div className="flex flex-col gap-2">
+                    <Chip
+                      as={Link}
+                      href="/catalog"
+                      color={!resolvedSearchParams.category ? 'primary' : 'default'}
+                      variant={!resolvedSearchParams.category ? 'solid' : 'flat'}
+                    >
+                      Все категории
+                    </Chip>
+                    {categories.map((category: WooCommerceCategory & { count: number }) => (
+                      <Chip
+                        key={category.id}
+                        as={Link}
+                        href={`/catalog?category=${category.id}`}
+                        color={resolvedSearchParams.category === category.id.toString() ? 'primary' : 'default'}
+                        variant={resolvedSearchParams.category === category.id.toString() ? 'solid' : 'flat'}
+                      >
+                        {category.name} ({category.count})
+                      </Chip>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </CardBody>
+          </Card>
         </aside>
 
         {/* Main Content */}
@@ -214,9 +209,7 @@ export default async function CatalogPage({ searchParams }: CatalogPageProps) {
               {!resolvedSearchParams.search && !resolvedSearchParams.featured && !resolvedSearchParams.on_sale && 'Каталог товаров'}
             </h1>
             
-            <div className="text-sm text-gray-500">
-              Найдено товаров: {products.length}
-            </div>
+            <Chip variant="flat" className="w-max">Найдено товаров: {products.length}</Chip>
           </div>
 
           {/* Products Grid */}

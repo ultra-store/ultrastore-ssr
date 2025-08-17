@@ -8,6 +8,7 @@ import { useCart } from '@/contexts/CartContext';
 import { formatPrice } from '@/lib/woocommerce';
 import { woocommerce } from '@/lib/woocommerce';
 import { CreateOrderPayload } from '@/types/woocommerce';
+import { Button, Card, CardBody, CardHeader, Divider, Input, Textarea, RadioGroup, Radio, Alert } from '@heroui/react';
 
 interface FormData {
   first_name: string;
@@ -48,22 +49,17 @@ export default function CheckoutPage() {
   // Если корзина пуста, перенаправляем в каталог
   if (state.items.length === 0) {
     return (
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="text-center">
-          <svg className="w-24 h-24 mx-auto text-gray-400 mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.8 9.2M7 13l1.8-9.2M7 13v6a2 2 0 002 2h8a2 2 0 002-2v-6M9 19v2m6-2v2" />
-          </svg>
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">Корзина пуста</h1>
-          <p className="text-lg text-gray-600 mb-8">
-            Добавьте товары в корзину для оформления заказа
-          </p>
-          <Link
-            href="/catalog"
-            className="inline-block bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200"
-          >
-            Перейти в каталог
-          </Link>
-        </div>
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <Card shadow="sm">
+          <CardBody className="py-12 text-center">
+            <svg className="w-24 h-24 mx-auto text-gray-400 mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.8 9.2M7 13l1.8-9.2M7 13v6a2 2 0 002 2h8a2 2 0 002-2v-6M9 19v2m6-2v2" />
+            </svg>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">Корзина пуста</h1>
+            <p className="text-lg text-gray-600 mb-8">Добавьте товары в корзину для оформления заказа</p>
+            <Button as={Link} href="/catalog" color="primary" size="lg">Перейти в каталог</Button>
+          </CardBody>
+        </Card>
       </div>
     );
   }
@@ -112,7 +108,8 @@ export default function CheckoutPage() {
           country: formData.country
         },
         line_items: state.items.map(item => ({
-          product_id: item.id,
+          product_id: item.productId ?? item.id,
+          variation_id: item.variationId,
           quantity: item.quantity
         })),
         customer_note: formData.customer_note
@@ -145,297 +142,195 @@ export default function CheckoutPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Billing Information */}
           <div>
-            <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-6">Контактная информация</h2>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label htmlFor="first_name" className="block text-sm font-medium text-gray-700 mb-1">
-                    Имя *
-                  </label>
-                  <input
-                    type="text"
-                    id="first_name"
+            <Card shadow="sm" className="mb-6">
+              <CardHeader className="pb-0">
+                <h2 className="text-xl font-semibold text-gray-900">Контактная информация</h2>
+              </CardHeader>
+              <CardBody className="pt-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <Input
+                    label="Имя"
                     name="first_name"
-                    required
                     value={formData.first_name}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    isRequired
                   />
-                </div>
-                
-                <div>
-                  <label htmlFor="last_name" className="block text-sm font-medium text-gray-700 mb-1">
-                    Фамилия *
-                  </label>
-                  <input
-                    type="text"
-                    id="last_name"
+                  <Input
+                    label="Фамилия"
                     name="last_name"
-                    required
                     value={formData.last_name}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    isRequired
                   />
                 </div>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                    Email *
-                  </label>
-                  <input
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+                  <Input
                     type="email"
-                    id="email"
+                    label="Email"
                     name="email"
-                    required
                     value={formData.email}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    isRequired
                   />
-                </div>
-                
-                <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
-                    Телефон *
-                  </label>
-                  <input
+                  <Input
                     type="tel"
-                    id="phone"
+                    label="Телефон"
                     name="phone"
-                    required
                     value={formData.phone}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    isRequired
                   />
                 </div>
-              </div>
-            </div>
+              </CardBody>
+            </Card>
 
             {/* Shipping Address */}
-            <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-6">Адрес доставки</h2>
-              
-              <div className="mb-4">
-                <label htmlFor="address_1" className="block text-sm font-medium text-gray-700 mb-1">
-                  Адрес *
-                </label>
-                <input
-                  type="text"
-                  id="address_1"
-                  name="address_1"
-                  required
-                  value={formData.address_1}
-                  onChange={handleInputChange}
-                  placeholder="Улица, дом, квартира"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-              </div>
-
-              <div className="mb-4">
-                <label htmlFor="address_2" className="block text-sm font-medium text-gray-700 mb-1">
-                  Дополнительный адрес
-                </label>
-                <input
-                  type="text"
-                  id="address_2"
-                  name="address_2"
-                  value={formData.address_2}
-                  onChange={handleInputChange}
-                  placeholder="Подъезд, этаж, домофон"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div>
-                  <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-1">
-                    Город *
-                  </label>
-                  <input
-                    type="text"
-                    id="city"
-                    name="city"
-                    required
-                    value={formData.city}
+            <Card shadow="sm" className="mb-6">
+              <CardHeader className="pb-0">
+                <h2 className="text-xl font-semibold text-gray-900">Адрес доставки</h2>
+              </CardHeader>
+              <CardBody className="pt-4">
+                <div className="mb-4">
+                  <Input
+                    label="Адрес"
+                    name="address_1"
+                    value={formData.address_1}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="Улица, дом, квартира"
+                    isRequired
                   />
                 </div>
-                
-                <div>
-                  <label htmlFor="state" className="block text-sm font-medium text-gray-700 mb-1">
-                    Регион
-                  </label>
-                  <input
-                    type="text"
-                    id="state"
+                <div className="mb-4">
+                  <Input
+                    label="Дополнительный адрес"
+                    name="address_2"
+                    value={formData.address_2}
+                    onChange={handleInputChange}
+                    placeholder="Подъезд, этаж, домофон"
+                  />
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <Input
+                    label="Город"
+                    name="city"
+                    value={formData.city}
+                    onChange={handleInputChange}
+                    isRequired
+                  />
+                  <Input
+                    label="Регион"
                     name="state"
                     value={formData.state}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   />
-                </div>
-                
-                <div>
-                  <label htmlFor="postcode" className="block text-sm font-medium text-gray-700 mb-1">
-                    Индекс *
-                  </label>
-                  <input
-                    type="text"
-                    id="postcode"
+                  <Input
+                    label="Индекс"
                     name="postcode"
-                    required
                     value={formData.postcode}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    isRequired
                   />
                 </div>
-              </div>
-            </div>
+              </CardBody>
+            </Card>
 
             {/* Payment Method */}
-            <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-6">Способ оплаты</h2>
-              
-              <div className="space-y-3">
-                <label className="flex items-center p-3 border border-gray-300 rounded-md cursor-pointer hover:bg-gray-50">
-                  <input
-                    type="radio"
-                    name="payment_method"
-                    value="cod"
-                    checked={formData.payment_method === 'cod'}
-                    onChange={handleInputChange}
-                    className="mr-3"
-                  />
-                  <div>
-                    <div className="font-medium text-gray-900">Оплата при получении</div>
-                    <div className="text-sm text-gray-600">Наличными или картой курьеру</div>
-                  </div>
-                </label>
-                
-                <label className="flex items-center p-3 border border-gray-300 rounded-md cursor-pointer hover:bg-gray-50">
-                  <input
-                    type="radio"
-                    name="payment_method"
-                    value="online"
-                    checked={formData.payment_method === 'online'}
-                    onChange={handleInputChange}
-                    className="mr-3"
-                  />
-                  <div>
-                    <div className="font-medium text-gray-900">Онлайн оплата</div>
-                    <div className="text-sm text-gray-600">Банковской картой на сайте</div>
-                  </div>
-                </label>
-              </div>
-            </div>
+            <Card shadow="sm" className="mb-6">
+              <CardHeader className="pb-0">
+                <h2 className="text-xl font-semibold text-gray-900">Способ оплаты</h2>
+              </CardHeader>
+              <CardBody className="pt-4">
+                <RadioGroup
+                  value={formData.payment_method}
+                  onValueChange={(val) => setFormData(prev => ({ ...prev, payment_method: val }))}
+                >
+                  <Radio value="cod" description="Наличными или картой курьеру">Оплата при получении</Radio>
+                  <Radio value="online" description="Банковской картой на сайте">Онлайн оплата</Radio>
+                </RadioGroup>
+              </CardBody>
+            </Card>
 
             {/* Order Notes */}
-            <div className="bg-white rounded-lg shadow-sm p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-6">Комментарий к заказу</h2>
-              
-              <textarea
-                id="customer_note"
-                name="customer_note"
-                rows={4}
-                value={formData.customer_note}
-                onChange={handleInputChange}
-                placeholder="Дополнительная информация о заказе..."
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
-            </div>
+            <Card shadow="sm">
+              <CardHeader className="pb-0">
+                <h2 className="text-xl font-semibold text-gray-900">Комментарий к заказу</h2>
+              </CardHeader>
+              <CardBody className="pt-4">
+                <Textarea
+                  name="customer_note"
+                  value={formData.customer_note}
+                  onChange={handleInputChange}
+                  placeholder="Дополнительная информация о заказе..."
+                  minRows={4}
+                />
+              </CardBody>
+            </Card>
           </div>
 
           {/* Order Summary */}
           <div>
-            <div className="bg-white rounded-lg shadow-sm p-6 sticky top-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-6">Ваш заказ</h2>
-              
-              {/* Order Items */}
-              <div className="space-y-4 mb-6">
-                {state.items.map((item) => (
-                  <div key={item.id} className="flex items-center">
-                    <div className="flex-shrink-0 w-16 h-16 rounded-md overflow-hidden bg-gray-200">
-                      <Image
-                        src={item.image || '/placeholder-product.svg'}
-                        alt={item.name}
-                        width={64}
-                        height={64}
-                        className="w-full h-full object-cover object-center"
-                      />
-                    </div>
-                    <div className="flex-1 ml-4">
-                      <h3 className="text-sm font-medium text-gray-900">{item.name}</h3>
-                      <p className="text-sm text-gray-600">Количество: {item.quantity}</p>
-                    </div>
-                    <div className="text-sm font-medium text-gray-900">
-                      {formatPrice(parseFloat(item.price) * item.quantity)}
-                    </div>
+            <Card shadow="sm" className="sticky top-6">
+              <CardHeader className="pb-0">
+                <h2 className="text-xl font-semibold text-gray-900">Ваш заказ</h2>
+              </CardHeader>
+              <CardBody className="pt-4">
+                {/* Order Items */}
+                <div className="space-y-4 mb-6">
+                  {state.items.map((item, index) => (
+                    <React.Fragment key={item.id}>
+                      <div className="flex items-center">
+                        <div className="flex-shrink-0 w-16 h-16 rounded-md overflow-hidden bg-gray-200">
+                          <Image
+                            src={item.image || '/placeholder-product.svg'}
+                            alt={item.name}
+                            width={64}
+                            height={64}
+                            className="w-full h-full object-cover object-center"
+                          />
+                        </div>
+                        <div className="flex-1 ml-4">
+                          <h3 className="text-sm font-medium text-gray-900">{item.name}</h3>
+                          <p className="text-sm text-gray-600">Количество: {item.quantity}</p>
+                        </div>
+                        <div className="text-sm font-medium text-gray-900">
+                          {formatPrice(parseFloat(item.price) * item.quantity)}
+                        </div>
+                      </div>
+                      {index < state.items.length - 1 && <Divider />}
+                    </React.Fragment>
+                  ))}
+                </div>
+                {/* Order Totals */}
+                <div className="space-y-3">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-600">Товары ({state.itemCount} шт.)</span>
+                    <span className="text-gray-900">{formatPrice(state.total)}</span>
                   </div>
-                ))}
-              </div>
-
-              {/* Order Totals */}
-              <div className="border-t border-gray-200 pt-4 space-y-3">
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-600">Товары ({state.itemCount} шт.)</span>
-                  <span className="text-gray-900">{formatPrice(state.total)}</span>
-                </div>
-                
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-600">Доставка</span>
-                  <span className="text-gray-900">Бесплатно</span>
-                </div>
-                
-                <div className="border-t border-gray-200 pt-3">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-600">Доставка</span>
+                    <span className="text-gray-900">Бесплатно</span>
+                  </div>
+                  <Divider className="my-2" />
                   <div className="flex justify-between">
                     <span className="text-lg font-medium text-gray-900">Итого</span>
-                    <span className="text-xl font-bold text-gray-900">
-                      {formatPrice(state.total)}
-                    </span>
+                    <span className="text-xl font-bold text-gray-900">{formatPrice(state.total)}</span>
                   </div>
                 </div>
-              </div>
-
-              {/* Error Message */}
-              {error && (
-                <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-md">
-                  <p className="text-red-800 text-sm">{error}</p>
-                </div>
-              )}
-
-              {/* Submit Button */}
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className={`w-full mt-6 py-3 px-4 rounded-lg font-medium transition-colors duration-200 ${
-                  isSubmitting
-                    ? 'bg-gray-400 text-gray-700 cursor-not-allowed'
-                    : 'bg-blue-600 text-white hover:bg-blue-700'
-                }`}
-              >
-                {isSubmitting ? (
-                  <>
-                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    Оформляем заказ...
-                  </>
-                ) : (
-                  'Оформить заказ'
+                {/* Error Message */}
+                {error && (
+                  <Alert color="danger" variant="flat" className="mt-4">
+                    {error}
+                  </Alert>
                 )}
-              </button>
-
-              <Link
-                href="/cart"
-                className="w-full border border-gray-300 text-gray-700 py-3 px-4 rounded-lg font-medium hover:bg-gray-50 transition-colors duration-200 mt-3 block text-center"
-              >
-                Вернуться в корзину
-              </Link>
-            </div>
+                {/* Submit Button */}
+                <Button type="submit" color="primary" className="w-full mt-6" size="lg" isLoading={isSubmitting}>
+                  {isSubmitting ? 'Оформляем заказ...' : 'Оформить заказ'}
+                </Button>
+                <Button as={Link} href="/cart" variant="bordered" className="w-full mt-3">
+                  Вернуться в корзину
+                </Button>
+              </CardBody>
+            </Card>
           </div>
         </div>
       </form>

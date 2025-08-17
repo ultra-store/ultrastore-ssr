@@ -66,6 +66,48 @@ export interface WooCommerceProduct {
   date_modified_gmt: string;
 }
 
+// WooCommerce Product Variation
+export interface WooCommerceProductVariation {
+  id: number;
+  date_created: string;
+  date_created_gmt: string;
+  date_modified: string;
+  date_modified_gmt: string;
+  description: string;
+  permalink: string;
+  sku: string;
+  price: string;
+  regular_price: string;
+  sale_price: string;
+  on_sale: boolean;
+  purchasable: boolean;
+  virtual: boolean;
+  downloadable: boolean;
+  downloads: WooCommerceDownload[];
+  download_limit: number;
+  download_expiry: number;
+  tax_status: 'taxable' | 'shipping' | 'none';
+  tax_class: string;
+  manage_stock: boolean;
+  stock_quantity: number | null;
+  stock_status: 'instock' | 'outofstock' | 'onbackorder';
+  backorders: 'no' | 'notify' | 'yes';
+  backorders_allowed: boolean;
+  backordered: boolean;
+  weight: string;
+  dimensions: {
+    length: string;
+    width: string;
+    height: string;
+  };
+  shipping_class: string;
+  shipping_class_id: number;
+  image?: WooCommerceImage;
+  attributes: WooCommerceVariationAttribute[];
+  menu_order: number;
+  meta_data: WooCommerceMetaData[];
+}
+
 export interface WooCommerceCategory {
   id: number;
   name: string;
@@ -87,6 +129,12 @@ export interface WooCommerceImage {
   src: string;
   name: string;
   alt: string;
+}
+
+export interface WooCommerceVariationAttribute {
+  id: number;
+  name: string;
+  option: string;
 }
 
 // WooCommerce Order Types
@@ -179,12 +227,16 @@ export interface WooCommerceLineItem {
 
 // Cart Item Type (для локального состояния корзины)
 export interface CartItem {
+  // Unique id used inside cart: for simple products equals productId, for variable equals variationId
   id: number;
+  productId: number;
+  variationId?: number;
   name: string;
   price: string;
   quantity: number;
   image?: string;
   slug: string;
+  attributes?: WooCommerceVariationAttribute[];
 }
 
 // API Response Types
@@ -276,6 +328,7 @@ export interface CreateOrderPayload {
   shipping?: WooCommerceShippingAddress;
   line_items: {
     product_id: number;
+    variation_id?: number;
     quantity: number;
   }[];
   customer_note?: string;

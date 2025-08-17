@@ -1,22 +1,15 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
 import { CartProvider } from "@/contexts/CartContext";
 import Header from "@/components/Header";
+import Providers from "./providers";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "UltraStore - WooCommerce & Next.js",
-  description: "Интеграция WooCommerce и Next.js для современного интернет-магазина",
+  description:
+    "Интеграция WooCommerce и Next.js для современного интернет-магазина",
 };
 
 export default function RootLayout({
@@ -26,15 +19,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50`}
-      >
-        <CartProvider>
-          <Header />
-          <main className="min-h-screen">
-            {children}
-          </main>
-        </CartProvider>
+      <body>
+        <Providers>
+          <CartProvider>
+            <Header />
+            <main className="min-h-screen">{children}</main>
+          </CartProvider>
+        </Providers>
       </body>
     </html>
   );

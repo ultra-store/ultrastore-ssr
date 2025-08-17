@@ -3,7 +3,19 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { woocommerce, formatPrice, getProductImage } from '@/lib/woocommerce';
-import AddToCartButton from '@/components/AddToCartButton';
+// Removed direct AddToCartButton usage in favor of VariationSelectorAndAddToCart
+import ProductImagesGallery from '@/components/ProductImagesGallery';
+import VariationSelectorAndAddToCart from '@/components/VariationSelectorAndAddToCart';
+import {
+  Breadcrumbs,
+  BreadcrumbItem,
+  Card,
+  CardBody,
+  CardFooter,
+  Chip,
+  Divider
+} from '@heroui/react';
+import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/24/outline';
 
 export const revalidate = 60; // Обновляем кэш каждые 60 секунд
 
@@ -52,75 +64,22 @@ export default async function ProductPage({ params }: ProductPageProps) {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {/* Breadcrumb */}
-      <nav className="flex mb-8" aria-label="Breadcrumb">
-        <ol className="inline-flex items-center space-x-1 md:space-x-3">
-          <li className="inline-flex items-center">
-            <Link href="/" className="text-gray-500 hover:text-blue-600">
-              Главная
-            </Link>
-          </li>
-          <li>
-            <div className="flex items-center">
-              <svg className="w-4 h-4 text-gray-400 mx-1" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
-              </svg>
-              <Link href="/catalog" className="text-gray-500 hover:text-blue-600">
-                Каталог
-              </Link>
-            </div>
-          </li>
+      <div className="mb-8">
+        <Breadcrumbs>
+          <BreadcrumbItem href="/">Главная</BreadcrumbItem>
+          <BreadcrumbItem href="/catalog">Каталог</BreadcrumbItem>
           {product.categories.length > 0 && (
-            <li>
-              <div className="flex items-center">
-                <svg className="w-4 h-4 text-gray-400 mx-1" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
-                </svg>
-                <span className="text-gray-500">{product.categories[0].name}</span>
-              </div>
-            </li>
+            <BreadcrumbItem>{product.categories[0].name}</BreadcrumbItem>
           )}
-          <li>
-            <div className="flex items-center">
-              <svg className="w-4 h-4 text-gray-400 mx-1" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
-              </svg>
-              <span className="text-gray-900 font-medium">{product.name}</span>
-            </div>
-          </li>
-        </ol>
-      </nav>
+          <BreadcrumbItem>{product.name}</BreadcrumbItem>
+        </Breadcrumbs>
+      </div>
 
       {/* Product Info */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
         {/* Product Images */}
         <div>
-          <div className="aspect-square w-full overflow-hidden rounded-lg bg-gray-200 mb-4">
-            <Image
-              src={getProductImage(product)}
-              alt={product.name}
-              width={600}
-              height={600}
-              className="h-full w-full object-cover object-center"
-              priority
-            />
-          </div>
-          
-          {/* Additional Images */}
-          {product.images.length > 1 && (
-            <div className="grid grid-cols-4 gap-2">
-              {product.images.slice(1, 5).map((image, index) => (
-                <div key={image.id} className="aspect-square overflow-hidden rounded bg-gray-200">
-                  <Image
-                    src={image.src}
-                    alt={`${product.name} - изображение ${index + 2}`}
-                    width={150}
-                    height={150}
-                    className="h-full w-full object-cover object-center cursor-pointer hover:opacity-75"
-                  />
-                </div>
-              ))}
-            </div>
-          )}
+          <ProductImagesGallery images={product.images} name={product.name} />
         </div>
 
         {/* Product Details */}
@@ -129,8 +88,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
             {product.name}
           </h1>
 
-          {/* Price */}
-          <div className="flex items-center space-x-4 mb-6">
+          {/* Price (base, variation price handled in client via AddToCartButton props) */}
+          <div className="flex items-center gap-4 mb-6">
             {product.on_sale && product.regular_price ? (
               <>
                 <span className="text-3xl font-bold text-red-600">
@@ -139,9 +98,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 <span className="text-xl text-gray-500 line-through">
                   {formatPrice(product.regular_price)}
                 </span>
-                <span className="bg-red-100 text-red-800 text-sm font-medium px-2 py-1 rounded">
-                  СКИДКА
-                </span>
+                <Chip color="danger" size="sm" variant="solid">СКИДКА</Chip>
               </>
             ) : (
               <span className="text-3xl font-bold text-gray-900">
@@ -161,70 +118,58 @@ export default async function ProductPage({ params }: ProductPageProps) {
           {/* Stock Status */}
           <div className="mb-6">
             {product.stock_status === 'instock' ? (
-              <div className="flex items-center text-green-600">
-                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-                В наличии
-                {product.manage_stock && product.stock_quantity !== null && (
-                  <span className="ml-2 text-gray-500">
-                    ({product.stock_quantity} шт.)
-                  </span>
-                )}
-              </div>
+              <Chip color="success" variant="flat" startContent={<CheckCircleIcon className="w-5 h-5" />}>
+                В наличии{product.manage_stock && product.stock_quantity !== null ? ` (${product.stock_quantity} шт.)` : ''}
+              </Chip>
             ) : (
-              <div className="flex items-center text-red-600">
-                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
+              <Chip color="danger" variant="flat" startContent={<XCircleIcon className="w-5 h-5" />}>
                 Нет в наличии
-              </div>
+              </Chip>
             )}
           </div>
 
           {/* Product Meta */}
-          <div className="border-t border-gray-200 pt-6 mb-6">
-            <div className="grid grid-cols-2 gap-4 text-sm">
-              {product.sku && (
-                <div>
-                  <span className="font-medium text-gray-900">Артикул:</span>
-                  <span className="ml-2 text-gray-600">{product.sku}</span>
-                </div>
-              )}
-              
-              {product.categories.length > 0 && (
-                <div>
-                  <span className="font-medium text-gray-900">Категория:</span>
-                  <span className="ml-2 text-gray-600">{product.categories[0].name}</span>
-                </div>
-              )}
-
-              {product.weight && (
-                <div>
-                  <span className="font-medium text-gray-900">Вес:</span>
-                  <span className="ml-2 text-gray-600">{product.weight} кг</span>
-                </div>
-              )}
-
-              {product.average_rating && parseFloat(product.average_rating) > 0 && (
-                <div>
-                  <span className="font-medium text-gray-900">Рейтинг:</span>
-                  <span className="ml-2 text-gray-600">
-                    {product.average_rating}/5 ★ ({product.rating_count} отзывов)
-                  </span>
-                </div>
-              )}
-            </div>
+          <Divider className="my-6" />
+          <div className="grid grid-cols-2 gap-4 text-sm">
+            {product.sku && (
+              <div>
+                <span className="font-medium text-gray-900">Артикул:</span>
+                <span className="ml-2 text-gray-600">{product.sku}</span>
+              </div>
+            )}
+            {product.categories.length > 0 && (
+              <div>
+                <span className="font-medium text-gray-900">Категория:</span>
+                <span className="ml-2 text-gray-600">{product.categories[0].name}</span>
+              </div>
+            )}
+            {product.weight && (
+              <div>
+                <span className="font-medium text-gray-900">Вес:</span>
+                <span className="ml-2 text-gray-600">{product.weight} кг</span>
+              </div>
+            )}
+            {product.average_rating && parseFloat(product.average_rating) > 0 && (
+              <div>
+                <span className="font-medium text-gray-900">Рейтинг:</span>
+                <span className="ml-2 text-gray-600">
+                  {product.average_rating}/5 ★ ({product.rating_count} отзывов)
+                </span>
+              </div>
+            )}
           </div>
 
-          {/* Add to Cart */}
-          <AddToCartButton product={product} />
+          {/* Add to Cart with variations */}
+          <div className="mt-6">
+            <VariationSelectorAndAddToCart product={product} />
+          </div>
         </div>
       </div>
 
       {/* Product Description */}
       {product.description && (
-        <div className="border-t border-gray-200 pt-8 mb-12">
+        <div className="pt-8 mb-12">
+          <Divider className="mb-8" />
           <h2 className="text-2xl font-bold text-gray-900 mb-4">Описание</h2>
           <div 
             className="prose max-w-none text-gray-700"
@@ -235,31 +180,36 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
       {/* Related Products */}
       {relatedProducts.length > 0 && (
-        <div className="border-t border-gray-200 pt-8">
+        <div className="pt-8">
+          <Divider className="mb-8" />
           <h2 className="text-2xl font-bold text-gray-900 mb-6">Похожие товары</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {relatedProducts.map((relatedProduct) => (
-              <div key={relatedProduct.id} className="group">
-                <div className="aspect-square w-full overflow-hidden rounded-lg bg-gray-200 group-hover:opacity-75">
+              <Card key={relatedProduct.id} shadow="sm" className="group">
+                <CardBody className="p-0">
                   <Link href={`/product/${relatedProduct.slug}`}>
-                    <Image
-                      src={getProductImage(relatedProduct)}
-                      alt={relatedProduct.name}
-                      width={300}
-                      height={300}
-                      className="h-full w-full object-cover object-center"
-                    />
+                    <div className="aspect-square w-full overflow-hidden rounded-lg bg-gray-200 group-hover:opacity-75">
+                      <Image
+                        src={getProductImage(relatedProduct)}
+                        alt={relatedProduct.name}
+                        width={300}
+                        height={300}
+                        className="h-full w-full object-cover object-center"
+                      />
+                    </div>
                   </Link>
-                </div>
-                <h3 className="mt-4 text-sm text-gray-700">
-                  <Link href={`/product/${relatedProduct.slug}`}>
-                    {relatedProduct.name}
-                  </Link>
-                </h3>
-                <p className="mt-1 text-lg font-medium text-gray-900">
-                  {formatPrice(relatedProduct.price)}
-                </p>
-              </div>
+                </CardBody>
+                <CardFooter className="flex flex-col items-start gap-1">
+                  <h3 className="text-sm text-gray-700">
+                    <Link href={`/product/${relatedProduct.slug}`}>
+                      {relatedProduct.name}
+                    </Link>
+                  </h3>
+                  <p className="text-lg font-medium text-gray-900">
+                    {formatPrice(relatedProduct.price)}
+                  </p>
+                </CardFooter>
+              </Card>
             ))}
           </div>
         </div>
