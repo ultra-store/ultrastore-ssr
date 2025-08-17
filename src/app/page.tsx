@@ -25,7 +25,7 @@ export default async function HomePage() {
       {/* Header */}
       <section className="text-center py-10 mb-10">
         <h1 className="text-4xl font-bold mb-3">WooCommerce + Next.js + МойСклад</h1>
-        <p className="text-lg text-gray-600 mb-6">Демостендт для тестирования интеграции WooCommerce и Next.js с МойСклад</p>
+        <p className="text-lg text-gray-600 mb-6">Демостенд для тестирования интеграции WooCommerce и Next.js с МойСклад</p>
         <Link
           href="/catalog"
           className="inline-flex items-center justify-center bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
