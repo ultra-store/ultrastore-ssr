@@ -1,15 +1,46 @@
 services:
-  app:
+  frontend:
+    container_name: ultrastore-frontend
     build:
       context: .
-      dockerfile: Dockerfile
-      args:
-        NEXT_PUBLIC_WOOCOMMERCE_URL: ${NEXT_PUBLIC_WOOCOMMERCE_URL}
-    environment:
-      NODE_ENV: production
-      NEXT_PUBLIC_WOOCOMMERCE_URL: ${NEXT_PUBLIC_WOOCOMMERCE_URL}
     ports:
       - "3000:3000"
+    env_file:
+      - .env
+    environment:
+      - NEXT_PUBLIC_WOOCOMMERCE_URL=${NEXT_PUBLIC_WOOCOMMERCE_URL}
+      - INTERNAL_WOOCOMMERCE_URL=${INTERNAL_WOOCOMMERCE_URL}
+      - NEXT_PUBLIC_WOOCOMMERCE_CONSUMER_KEY=${NEXT_PUBLIC_WOOCOMMERCE_CONSUMER_KEY}
+      - NEXT_PUBLIC_WOOCOMMERCE_CONSUMER_SECRET=${NEXT_PUBLIC_WOOCOMMERCE_CONSUMER_SECRET}
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:3000/api/woocommerce/ping | grep -q '\"ok\":true' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 15s
     restart: unless-stopped
+
+  frontend-dev:
+    container_name: ultrastore-frontend-dev
+    image: node:18-alpine
+    working_dir: /app
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - node_modules:/app/node_modules
+    env_file:
+      - .env
+    environment:
+      - NEXT_PUBLIC_WOOCOMMERCE_URL=${NEXT_PUBLIC_WOOCOMMERCE_URL}
+      - INTERNAL_WOOCOMMERCE_URL=${INTERNAL_WOOCOMMERCE_URL}
+      - NEXT_PUBLIC_WOOCOMMERCE_CONSUMER_KEY=${NEXT_PUBLIC_WOOCOMMERCE_CONSUMER_KEY}
+      - NEXT_PUBLIC_WOOCOMMERCE_CONSUMER_SECRET=${NEXT_PUBLIC_WOOCOMMERCE_CONSUMER_SECRET}
+    command: sh -c "corepack enable pnpm && pnpm i --frozen-lockfile && pnpm dev -- -H 0.0.0.0 -p 3000"
+    restart: unless-stopped
+    profiles: ["dev"]
+
+volumes:
+  node_modules:
 
 

@@ -1,51 +1,64 @@
-# Multi-stage Dockerfile for Next.js production runtime
-# Uses Debian slim to avoid Alpine musl issues with native deps
+FROM node:18-alpine AS base
 
-FROM node:20-slim AS base
+# Install dependencies only when needed
+FROM base AS deps
+# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
+RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-# Install system deps often required by Next.js/SWC/native addons
-RUN apt-get update -y && \
-    apt-get install -y --no-install-recommends \
-      ca-certificates \
-      curl \
-      git \
-      openssh-client \
-    && rm -rf /var/lib/apt/lists/*
+# Install dependencies based on the preferred package manager
+COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* .npmrc* ./
+RUN \
+  if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
+  elif [ -f package-lock.json ]; then npm ci; \
+  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm i --frozen-lockfile; \
+  else echo "Lockfile not found." && exit 1; \
+  fi
 
-FROM base AS deps
-COPY package*.json ./.npmrc ./
-# Install all deps for building
-RUN npm ci
 
-FROM deps AS builder
-# Build-time public env for Next.js (inlined at build time)
-ARG NEXT_PUBLIC_WOOCOMMERCE_URL
-ENV NEXT_PUBLIC_WOOCOMMERCE_URL=${NEXT_PUBLIC_WOOCOMMERCE_URL}
-
+# Rebuild the source code only when needed
+FROM base AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-RUN npm run build
 
+# Next.js collects completely anonymous telemetry data about general usage.
+# Learn more here: https://nextjs.org/telemetry
+# Uncomment the following line in case you want to disable telemetry during the build.
+# ENV NEXT_TELEMETRY_DISABLED=1
+
+RUN \
+  if [ -f yarn.lock ]; then yarn run build; \
+  elif [ -f package-lock.json ]; then npm run build; \
+  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm run build; \
+  else echo "Lockfile not found." && exit 1; \
+  fi
+
+# Production image, copy all the files and run next
 FROM base AS runner
+WORKDIR /app
+
 ENV NODE_ENV=production
+# Uncomment the following line in case you want to disable telemetry during runtime.
+# ENV NEXT_TELEMETRY_DISABLED=1
 
-# Install only production dependencies to keep image slim
-COPY package*.json ./.npmrc ./
-RUN npm ci --omit=dev
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
 
-# Copy Next.js build artifacts and public assets
-COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
 
-# Ensure Next binds to all interfaces
-ENV HOSTNAME=0.0.0.0
-ENV PORT=3000
+# Automatically leverage output traces to reduce image size
+# https://nextjs.org/docs/advanced-features/output-file-tracing
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+USER nextjs
+
 EXPOSE 3000
 
-# Healthcheck: wait for Next.js to respond
-HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \
-  CMD node -e "require('http').get({host:'127.0.0.1',port:process.env.PORT,path:'/'},r=>process.exit(r.statusCode<500?0:1)).on('error',()=>process.exit(1))"
+ENV PORT=3000
 
-CMD ["npm", "run", "start", "--", "-H", "0.0.0.0", "-p", "3000"]
-
-
+# server.js is created by next build from the standalone output
+# https://nextjs.org/docs/pages/api-reference/config/next-config-js/output
+ENV HOSTNAME="0.0.0.0"
+CMD ["node", "server.js"]
