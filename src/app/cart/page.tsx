@@ -14,14 +14,12 @@ export default function CartPage() {
   if (state.items.length === 0) {
     return (
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <Card shadow="sm">
-          <CardBody className="py-12 text-center">
-            <ShoppingCartIcon className="w-20 h-20 mx-auto text-gray-400 mb-4" />
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Ваша корзина пуста</h1>
-            <p className="text-lg text-gray-600 mb-8">Добавьте товары в корзину, чтобы продолжить покупки</p>
-            <Button as={Link} href="/catalog" color="primary" size="lg" startContent={<ShoppingCartIcon className="w-5 h-5" />}>Перейти в каталог</Button>
-          </CardBody>
-        </Card>
+        <div className="py-12 text-center">
+          <ShoppingCartIcon className="w-20 h-20 mx-auto text-gray-400 mb-4" />
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Ваша корзина пуста</h1>
+          <p className="text-lg text-gray-600 mb-8">Добавьте товары в корзину, чтобы продолжить покупки</p>
+          <Button as={Link} href="/catalog" color="primary" size="lg" startContent={<ShoppingCartIcon className="w-5 h-5" />}>Перейти в каталог</Button>
+        </div>
       </div>
     );
   }
