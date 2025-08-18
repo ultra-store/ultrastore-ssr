@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { useCart } from '@/contexts/CartContext';
-import { Navbar, NavbarBrand, NavbarContent, NavbarItem, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, Button } from '@heroui/react';
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Button } from '@heroui/react';
 import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 
 export default function Header() {
@@ -52,23 +52,9 @@ export default function Header() {
             )}
           </div>
         </NavbarItem>
-        <NavbarItem className="md:hidden">
-          <NavbarMenuToggle aria-label="Открыть меню" />
-        </NavbarItem>
+        
       </NavbarContent>
-
-      <NavbarMenu>
-        <NavbarMenuItem>
-          <Link href="/" className="w-full text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors duration-200">
-            Главная
-          </Link>
-        </NavbarMenuItem>
-        <NavbarMenuItem>
-          <Link href="/catalog" className="w-full text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors duration-200">
-            Каталог
-          </Link>
-        </NavbarMenuItem>
-      </NavbarMenu>
+      
     </Navbar>
   );
 }
