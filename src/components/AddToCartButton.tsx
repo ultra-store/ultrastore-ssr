@@ -141,7 +141,6 @@ export default function AddToCartButton({ product, selectedVariation, selectedAt
             variant="bordered"
             color="primary"
             size="lg"
-            className="flex-1 sm:flex-none"
           >
             Купить сейчас
           </Button>
