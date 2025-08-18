@@ -42,7 +42,7 @@ export default function CartPage() {
                 <div className="flex-shrink-0 w-24 h-24 rounded-lg overflow-hidden bg-gray-200">
                   <Link href={`/product/${item.slug}`}>
                     <Image
-                      src={item.image || '/placeholder-product.svg'}
+                      src={item.image || '/placeholder-product.png'}
                       alt={item.name}
                       width={96}
                       height={96}

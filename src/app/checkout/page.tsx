@@ -281,7 +281,7 @@ export default function CheckoutPage() {
                       <div className="flex items-center">
                         <div className="flex-shrink-0 w-16 h-16 rounded-md overflow-hidden bg-gray-200">
                           <Image
-                            src={item.image || '/placeholder-product.svg'}
+                            src={item.image || '/placeholder-product.png'}
                             alt={item.name}
                             width={64}
                             height={64}

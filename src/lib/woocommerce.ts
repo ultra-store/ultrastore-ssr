@@ -193,7 +193,7 @@ export const getProductImage = (product: WooCommerceProduct): string => {
   if (product.images && product.images.length > 0) {
     return product.images[0].src;
   }
-  return '/placeholder-product.svg'; // fallback изображение
+  return '/placeholder-product.png'; // fallback изображение
 };
 
 export default woocommerce;

@@ -17,9 +17,9 @@ export default function ProductImagesGallery({ images, name }: ProductImagesGall
   const hasImages = images && images.length > 0;
 
   const mainSrc = useMemo(() => {
-    if (!hasImages) return '/placeholder-product.svg';
-    if (failedIndices.has(selectedIndex)) return '/placeholder-product.svg';
-    return images[selectedIndex]?.src || '/placeholder-product.svg';
+    if (!hasImages) return '/placeholder-product.png';
+    if (failedIndices.has(selectedIndex)) return '/placeholder-product.png';
+    return images[selectedIndex]?.src || '/placeholder-product.png';
   }, [hasImages, images, selectedIndex, failedIndices]);
 
   const handleMainError = () => {
@@ -66,7 +66,7 @@ export default function ProductImagesGallery({ images, name }: ProductImagesGall
                 }`}
               >
                 <Image
-                  src={failedIndices.has(index) ? '/placeholder-product.svg' : src}
+                  src={failedIndices.has(index) ? '/placeholder-product.png' : src}
                   alt={`${name} - изображение ${index + 1}`}
                   width={150}
                   height={150}
