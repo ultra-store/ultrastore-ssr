@@ -1,31 +1,18 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import { CartProvider } from "@/contexts/CartContext";
 import Header from "@/components/Header";
-import Providers from "./providers";
-
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "UltraStore - WooCommerce & Next.js",
-  description:
-    "Интеграция WooCommerce и Next.js для современного интернет-магазина",
+  title: "Store",
+  description: "Simple store layout",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ru">
+    <html lang="en">
       <body>
-        <Providers>
-          <CartProvider>
-            <Header />
-            <main className="min-h-screen">{children}</main>
-          </CartProvider>
-        </Providers>
+        <Header />
+        <main>{children}</main>
       </body>
     </html>
   );

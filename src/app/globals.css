@@ -1,40 +1,25 @@
-@import "tailwindcss";
-
-@config "../../tailwind.config.js";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
 body {
-  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
-  background: var(--background);
-  color: var(--foreground);
+  font-family: system-ui, sans-serif;
+  margin: 2rem;
+  line-height: 1.6;
 }
 
-/* Prevent iOS Safari from zooming inputs on focus by ensuring a minimum 16px font-size */
-@supports (-webkit-touch-callout: none) {
-  input, select, textarea, [contenteditable="true"], [data-slot="input"] {
-    font-size: 16px !important;
-  }
+h1 {
+  margin-bottom: 1rem;
 }
 
-/* Remove native controls on number inputs (cross-browser) */
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+p {
+  margin-bottom: 0.5rem;
 }
 
-input[type="number"] {
-  -moz-appearance: textfield;
-  appearance: textfield;
+a {
+  color: blue;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+ul {
+  margin-left: 2rem;
 }
