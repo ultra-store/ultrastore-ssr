@@ -23,4 +23,4 @@ jobs:
             echo "${{ secrets.SERVER_ENV }}" > .env
             pnpm install
             pnpm run build
-            pm2 reload ultrastore-ssr --update-env || pm2 start npm --name "ultrastore-ssr" -- start
+            pm2 restart ultrastore-ssr
