@@ -21,6 +21,6 @@ jobs:
             git pull origin master
             rm -f .env
             echo "${{ secrets.SERVER_ENV }}" > .env
-            pnpm install
+            pnpm install --frozen-lockfile
             pnpm run build
-            pm2 restart ultrastore-ssr
+            pm2 reload ultrastore-ssr --update-env
