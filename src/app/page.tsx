@@ -55,7 +55,7 @@ export default async function HomePage() {
   return (
     <div>
       <h1>Home Page</h1>
-      <p>Welcome to the store.</p>
+      <p>Welcome to the store. ✨ Deployment test successful!</p>
       
       <div style={{
         margin: '20px 0',
