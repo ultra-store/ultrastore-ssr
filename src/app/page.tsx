@@ -6,7 +6,7 @@ async function checkWordPressConnection() {
   if (!wpUrl) {
     return {
       status: 'not_configured',
-      message: 'WooCommerce URL not configured. Please set NEXT_PUBLIC_WOOCOMMERCE_URL in your environment variables.',
+      message: 'WooCommerce URL не настроен. Пожалуйста, установите NEXT_PUBLIC_WOOCOMMERCE_URL в переменных окружения.',
       url: null
     };
   }
@@ -27,23 +27,23 @@ async function checkWordPressConnection() {
       const data = await response.json();
       return {
         status: 'connected',
-        message: `Successfully connected to WooCommerce/WordPress`,
+        message: `Успешно подключено к WooCommerce/WordPress`,
         url: wpUrl,
-        siteName: data.name || 'Unknown',
+        siteName: data.name || 'Неизвестно',
         description: data.description || ''
       };
     } else {
       return {
         status: 'error',
-        message: `Failed to connect: HTTP ${response.status}`,
+        message: `Не удалось подключиться: HTTP ${response.status}`,
         url: wpUrl
       };
     }
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    const errorMessage = error instanceof Error ? error.message : 'Неизвестная ошибка';
     return {
       status: 'error',
-      message: `Connection failed: ${errorMessage}`,
+      message: `Ошибка подключения: ${errorMessage}`,
       url: wpUrl
     };
   }
@@ -54,8 +54,8 @@ export default async function HomePage() {
   
   return (
     <div>
-      <h1>Home Page</h1>
-      <p>Welcome to the store. ✨ Deployment test successful!</p>
+      <h1>Главная страница</h1>
+      <p>Добро пожаловать в магазин. ✨ Тест развертывания успешен!</p>
       
       <div style={{
         margin: '20px 0',
@@ -64,26 +64,26 @@ export default async function HomePage() {
         borderRadius: '5px',
         backgroundColor: wpStatus.status === 'connected' ? '#d4edda' : wpStatus.status === 'error' ? '#f8d7da' : '#fff3cd'
       }}>
-        <h2 style={{ marginTop: 0, fontSize: '1.2em' }}>WooCommerce Connection Status</h2>
+        <h2 style={{ marginTop: 0, fontSize: '1.2em' }}>Статус подключения WooCommerce</h2>
         <p style={{ margin: '5px 0' }}>
-          <strong>Status:</strong> {' '}
+          <strong>Статус:</strong> {' '}
           <span style={{
             color: wpStatus.status === 'connected' ? '#155724' : wpStatus.status === 'error' ? '#721c24' : '#856404'
           }}>
-            {wpStatus.status === 'connected' ? '✓ Connected' : wpStatus.status === 'error' ? '✗ Error' : '⚠ Not Configured'}
+            {wpStatus.status === 'connected' ? '✓ Подключено' : wpStatus.status === 'error' ? '✗ Ошибка' : '⚠ Не настроено'}
           </span>
         </p>
-        <p style={{ margin: '5px 0' }}><strong>Message:</strong> {wpStatus.message}</p>
+        <p style={{ margin: '5px 0' }}><strong>Сообщение:</strong> {wpStatus.message}</p>
         {wpStatus.url && <p style={{ margin: '5px 0' }}><strong>URL:</strong> {wpStatus.url}</p>}
         {wpStatus.status === 'connected' && wpStatus.siteName && (
           <>
-            <p style={{ margin: '5px 0' }}><strong>Site Name:</strong> {wpStatus.siteName}</p>
-            {wpStatus.description && <p style={{ margin: '5px 0' }}><strong>Description:</strong> {wpStatus.description}</p>}
+            <p style={{ margin: '5px 0' }}><strong>Название сайта:</strong> {wpStatus.siteName}</p>
+            {wpStatus.description && <p style={{ margin: '5px 0' }}><strong>Описание:</strong> {wpStatus.description}</p>}
           </>
         )}
       </div>
       
-      <p><Link href="/catalog">Browse Catalog</Link></p>
+      <p><Link href="/catalog">Посмотреть каталог</Link></p>
     </div>
   );
 }

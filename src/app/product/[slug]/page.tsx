@@ -5,9 +5,9 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
   
   return (
     <div>
-      <h1>Product: {slug}</h1>
-      <p>Product details will go here.</p>
-      <p><Link href="/catalog">Back to Catalog</Link></p>
+      <h1>Товар: {slug}</h1>
+      <p>Информация о товаре будет здесь.</p>
+      <p><Link href="/catalog">Вернуться в каталог</Link></p>
     </div>
   );
 }

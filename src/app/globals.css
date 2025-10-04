@@ -1,25 +1,403 @@
-body {
-  font-family: system-ui, sans-serif;
-  margin: 2rem;
-  line-height: 1.6;
+/* CSS Custom Properties - Design System Variables */
+:root {
+  /* Background Colors */
+  --background-primary: #fffcfc;
+
+  /* Surface Colors */
+  --surface-primary: #ffffff;
+  --surface-primary-hover: rgba(255, 255, 255, 0.5);
+  --surface-interactive: #ffe5e9;
+  --surface-interactive-hover: #ffc0cb;
+
+  /* Outline Colors */
+  --outline-primary: #0d0000;
+  --outline-hover: #4d4d4d;
+  --outline-placeholder: #808080;
+  --outline-inital: #a6a3a3;
+  --outline-faint: #e6e6e6;
+  --outline-faint-hover: #d1d1d1;
+  --outline-light-static: #fffcfc;
+  --outline-interactive: #ff1c42;
+
+  /* Fill Colors */
+  --fill-interactive: #ff3355;
+  --fill-interactive-hover: #ed1337;
+  --fill-secondary: #eaeaea;
+  --fill-secondary-hover: #dbdbdb;
+
+  /* Brand Gradient */
+  --gradient-brand: linear-gradient(180deg, var(--surface-primary) 15%, var(--surface-interactive) 100%);
+
+  /* Typography - Desktop (default) */
+  --font-size-heading-1: 38px;
+  --font-size-number: 28px;
+  --font-size-heading-2: 24px;
+  --font-size-large: 17px;
+  --font-size-secondary: 17px;
+  --font-size-medium: 15px;
+
+  /* Typography - Mobile */
+  --font-size-heading-1-mobile: 24px;
+  --font-size-number-mobile: 24px;
+  --font-size-heading-2-mobile: 20px;
+  --font-size-large-mobile: 17px;
+  --font-size-secondary-mobile: 15px;
+  --font-size-medium-mobile: 15px;
+
+  /* Line Heights - Desktop */
+  --line-height-heading-1: 45px;
+  --line-height-heading-1-regular: 40px;
+  --line-height-number: 30px;
+  --line-height-heading-2: 28px;
+  --line-height-large: 25px;
+  --line-height-secondary: 20px;
+  --line-height-medium: 20px;
+
+  /* Line Heights - Mobile */
+  --line-height-heading-1-mobile: 26px;
+  --line-height-heading-1-regular-mobile: 26px;
+  --line-height-number-mobile: 28px;
+  --line-height-heading-2-mobile: 24px;
+  --line-height-large-mobile: 25px;
+  --line-height-secondary-mobile: 17px;
+  --line-height-medium-mobile: 20px;
+
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
 }
 
+/* Global Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Global Styles */
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-formular);
+  background-color: var(--background-primary);
+  color: var(--outline-primary);
+  font-size: var(--font-size-medium);
+  line-height: var(--line-height-body);
+  font-weight: 400;
+}
+
+/* Typography Utility Classes - Desktop */
+.heading-1 {
+  font-size: var(--font-size-heading-1);
+  line-height: var(--line-height-heading-1);
+  font-weight: 700;
+}
+
+.heading-1-regular {
+  font-size: var(--font-size-heading-1);
+  line-height: var(--line-height-heading-1-regular);
+  font-weight: 400;
+}
+
+.number {
+  font-size: var(--font-size-number);
+  line-height: var(--line-height-number);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.heading-2 {
+  font-size: var(--font-size-heading-2);
+  line-height: var(--line-height-heading-2);
+  font-weight: 700;
+}
+
+.large {
+  font-size: var(--font-size-large);
+  line-height: var(--line-height-large);
+  font-weight: 400;
+}
+
+.large-bold {
+  font-size: var(--font-size-large);
+  line-height: var(--line-height-large);
+  font-weight: 700;
+}
+
+.secondary {
+  font-size: var(--font-size-secondary);
+  line-height: var(--line-height-secondary);
+  font-weight: 400;
+}
+
+.secondary-bold {
+  font-size: var(--font-size-secondary);
+  line-height: var(--line-height-secondary);
+  font-weight: 700;
+}
+
+.medium {
+  font-size: var(--font-size-medium);
+  line-height: var(--line-height-medium);
+  font-weight: 400;
+}
+
+.medium-bold {
+  font-size: var(--font-size-medium);
+  line-height: var(--line-height-medium);
+  font-weight: 700;
+}
+
+/* Responsive Typography - Mobile */
+@media (max-width: 768px) {
+  .heading-1 {
+    font-size: var(--font-size-heading-1-mobile);
+    line-height: var(--line-height-heading-1-mobile);
+  }
+
+  .heading-1-regular {
+    font-size: var(--font-size-heading-1-mobile);
+    line-height: var(--line-height-heading-1-regular-mobile);
+  }
+
+  .number {
+    font-size: var(--font-size-number-mobile);
+    line-height: var(--line-height-number-mobile);
+  }
+
+  .heading-2 {
+    font-size: var(--font-size-heading-2-mobile);
+    line-height: var(--line-height-heading-2-mobile);
+  }
+
+  .large,
+  .large-bold {
+    font-size: var(--font-size-large-mobile);
+    line-height: var(--line-height-large-mobile);
+  }
+
+  .secondary,
+  .secondary-bold {
+    font-size: var(--font-size-secondary-mobile);
+    line-height: var(--line-height-secondary-mobile);
+  }
+
+  .medium,
+  .medium-bold {
+    font-size: var(--font-size-medium-mobile);
+    line-height: var(--line-height-medium-mobile);
+  }
+}
+
+/* HTML Elements */
 h1 {
-  margin-bottom: 1rem;
+  font-size: var(--font-size-heading-1);
+  line-height: var(--line-height-heading-1);
+  font-weight: 700;
+  margin-bottom: var(--spacing-md);
+  color: var(--outline-primary);
+}
+
+h2 {
+  font-size: var(--font-size-heading-2);
+  line-height: var(--line-height-heading-2);
+  font-weight: 700;
+  margin-bottom: var(--spacing-md);
+  color: var(--outline-primary);
+}
+
+h3 {
+  font-size: var(--font-size-large);
+  line-height: var(--line-height-large);
+  font-weight: 700;
+  margin-bottom: var(--spacing-sm);
+  color: var(--outline-primary);
 }
 
 p {
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--spacing-sm);
+  color: var(--outline-primary);
 }
 
 a {
-  color: blue;
+  color: var(--fill-interactive);
+  text-decoration: none;
+  transition: color 0.2s ease;
 }
 
 a:hover {
+  color: var(--fill-interactive-hover);
   text-decoration: underline;
 }
 
-ul {
-  margin-left: 2rem;
+ul,
+ol {
+  margin-left: var(--spacing-xl);
+  margin-bottom: var(--spacing-md);
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Color Utility Classes */
+.bg-primary {
+  background-color: var(--background-primary);
+}
+
+.surface-primary {
+  background-color: var(--surface-primary);
+}
+
+.surface-interactive {
+  background-color: var(--surface-interactive);
+}
+
+.surface-interactive:hover {
+  background-color: var(--surface-interactive-hover);
+}
+
+.text-primary {
+  color: var(--outline-primary);
+}
+
+.text-hover {
+  color: var(--outline-hover);
+}
+
+.text-placeholder {
+  color: var(--outline-placeholder);
+}
+
+.text-inital {
+  color: var(--outline-inital);
+}
+
+.text-faint {
+  color: var(--outline-faint);
+}
+
+.text-interactive {
+  color: var(--outline-interactive);
+}
+
+.bg-gradient-brand {
+  background: var(--gradient-brand);
+}
+
+/* Button Utility Classes */
+.btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-weight: 500;
+  display: inline-block;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-interactive {
+  background-color: var(--fill-interactive);
+  color: var(--surface-primary);
+}
+
+.btn-interactive:hover {
+  background-color: var(--fill-interactive-hover);
+  text-decoration: none;
+}
+
+.btn-secondary {
+  background-color: var(--fill-secondary);
+  color: var(--outline-primary);
+}
+
+.btn-secondary:hover {
+  background-color: var(--fill-secondary-hover);
+  text-decoration: none;
+}
+
+.btn-outline {
+  background-color: transparent;
+  border: 1px solid var(--outline-faint);
+  color: var(--outline-primary);
+}
+
+.btn-outline:hover {
+  border-color: var(--outline-hover);
+  text-decoration: none;
+}
+
+/* Layout Utilities */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-xl);
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.gap-sm {
+  gap: var(--spacing-sm);
+}
+
+.gap-md {
+  gap: var(--spacing-md);
+}
+
+.gap-lg {
+  gap: var(--spacing-lg);
+}
+
+/* Responsive Typography for HTML Elements */
+@media (max-width: 768px) {
+  h1 {
+    font-size: var(--font-size-heading-1-mobile);
+    line-height: var(--line-height-heading-1-mobile);
+  }
+
+  h2 {
+    font-size: var(--font-size-heading-2-mobile);
+    line-height: var(--line-height-heading-2-mobile);
+  }
+
+  h3 {
+    font-size: var(--font-size-large-mobile);
+    line-height: var(--line-height-large-mobile);
+  }
+
+  body {
+    font-size: var(--font-size-medium-mobile);
+    line-height: var(--line-height-medium-mobile);
+  }
 }

@@ -3,10 +3,10 @@ import Link from 'next/link';
 export default function CatalogPage() {
   return (
     <div>
-      <h1>Catalog</h1>
-      <p>Product listings will go here.</p>
+      <h1>Каталог</h1>
+      <p>Список товаров будет здесь.</p>
       <ul>
-        <li><Link href="/product/sample-product">Sample Product</Link></li>
+        <li><Link href="/product/sample-product">Пример товара</Link></li>
       </ul>
     </div>
   );

@@ -4,11 +4,11 @@ export default function Header() {
   return (
     <header>
       <nav>
-        <Link href="/">Home</Link>
+        <Link href="/">Главная</Link>
         {' | '}
-        <Link href="/catalog">Catalog</Link>
+        <Link href="/catalog">Каталог</Link>
         {' | '}
-        <Link href="/cart">Cart</Link>
+        <Link href="/cart">Корзина</Link>
       </nav>
       <hr />
     </header>
