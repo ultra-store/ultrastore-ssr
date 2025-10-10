@@ -28,7 +28,7 @@ async function checkWordPressConnection() {
       return {
         status: 'connected',
         message: `Успешно подключено к WooCommerce/WordPress`,
-        url: wpUrl,
+        url: wpUrl + '/wp-json/ultra/v1',
         siteName: data.name || 'Неизвестно',
         description: data.description || ''
       };
@@ -72,7 +72,7 @@ export default async function HomePage() {
           </span>
         </p>
         <p style={{ margin: '5px 0' }}><strong>Сообщение:</strong> {wpStatus.message}</p>
-        {wpStatus.url && <p style={{ margin: '5px 0' }}><strong>URL:</strong> {wpStatus.url}</p>}
+        {wpStatus.url && <p style={{ margin: '5px 0' }}><strong>Backend URL:</strong> {wpStatus.url}</p>}
         {wpStatus.status === 'connected' && wpStatus.siteName && (
           <>
             <p style={{ margin: '5px 0' }}><strong>Название сайта:</strong> {wpStatus.siteName}</p>
