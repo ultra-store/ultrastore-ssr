@@ -72,7 +72,7 @@ export default async function HomePage() {
           </span>
         </p>
         <p style={{ margin: '5px 0' }}><strong>Сообщение:</strong> {wpStatus.message}</p>
-        {wpStatus.url && <p style={{ margin: '5px 0' }}><strong>Backend URL:</strong> {wpStatus.url}</p>}
+        {wpStatus.url && <p style={{ margin: '5px 0' }}><strong>Backend URL:</strong> <a href={wpStatus.url} target="_blank" rel="noopener noreferrer">{wpStatus.url}</a></p>}
         {wpStatus.status === 'connected' && wpStatus.siteName && (
           <>
             <p style={{ margin: '5px 0' }}><strong>Название сайта:</strong> {wpStatus.siteName}</p>
