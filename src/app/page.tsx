@@ -54,9 +54,7 @@ export default async function HomePage() {
   
   return (
     <div>
-      <h1>Главная страница</h1>
-      <p>Добро пожаловать в магазин. ✨ Тест развертывания успешен!</p>
-      
+      <h1>Главная страница</h1>      
       <div style={{
         margin: '20px 0',
         padding: '15px',
