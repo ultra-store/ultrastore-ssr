@@ -1,0 +1,11 @@
+.catalogButtonWrapper {
+  display: flex;
+  flex-shrink: 0;
+}
+
+@media (max-width: var(--bp-sm)) {
+  .catalogButtonWrapper {
+    display: none;
+  }
+}
+

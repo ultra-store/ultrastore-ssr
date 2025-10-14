@@ -1,31 +1,32 @@
 {
-  "name": "ultrastore-frontend",
+  "name": "ultrastore-ssr",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint",
+    "lint:fix": "eslint --fix"
   },
   "dependencies": {
-    "next": "15.5.4",
+    "next": "15.5.5",
     "react": "19.2.0",
     "react-dom": "19.2.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
-    "@eslint/js": "^9.37.0",
+    "@next/eslint-plugin-next": "15.5.5",
     "@stylistic/eslint-plugin": "^5.4.0",
-    "@types/node": "^24.6.2",
-    "@types/react": "^19.2.0",
-    "@types/react-dom": "^19.2.0",
-    "eslint": "^9.36.0",
-    "eslint-config-next": "15.5.4",
+    "@types/node": "^24.7.2",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
+    "eslint": "^9.37.0",
+    "eslint-config-next": "15.5.5",
     "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-import-x": "^4.16.1",
-    "eslint-plugin-no-relative-import-paths": "^1.6.1",
+    "eslint-plugin-react-hooks": "^7.0.0",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.46.0"
+    "typescript-eslint": "^8.46.1"
   }
 }

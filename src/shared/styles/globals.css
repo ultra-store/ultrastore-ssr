@@ -1,5 +1,11 @@
 /* CSS Custom Properties - Design System Variables */
 :root {
+  /* Breakpoints */
+  --bp-sm: 760px;
+  --bp-md: 1024px;
+  /* Layout */
+  --container-max: 1400px;
+
   /* Background Colors */
   --background-primary: #fffcfc;
 
@@ -22,8 +28,10 @@
   /* Fill Colors */
   --fill-interactive: #ff3355;
   --fill-interactive-hover: #ed1337;
+  --fill-interactive-active: #d61130;
   --fill-secondary: #eaeaea;
   --fill-secondary-hover: #dbdbdb;
+  --fill-secondary-active: #9ca3af;
 
   /* Brand Gradient */
   --gradient-brand: linear-gradient(180deg, var(--surface-primary) 15%, var(--surface-interactive) 100%);
@@ -84,6 +92,7 @@
 html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  height: 100%;
 }
 
 body {
@@ -93,6 +102,9 @@ body {
   font-size: var(--font-size-medium);
   line-height: var(--line-height-body);
   font-weight: 400;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Typography Utility Classes - Desktop */
@@ -158,7 +170,7 @@ body {
 }
 
 /* Responsive Typography - Mobile */
-@media (max-width: 768px) {
+@media (max-width: var(--bp-sm)) {
   .heading-1 {
     font-size: var(--font-size-heading-1-mobile);
     line-height: var(--line-height-heading-1-mobile);
@@ -342,7 +354,7 @@ button {
 /* Layout Utilities */
 .container {
   width: 100%;
-  max-width: 1200px;
+  max-width: var(--container-max);
   margin: 0 auto;
   padding: 0 var(--spacing-xl);
 }
@@ -380,7 +392,7 @@ button {
 }
 
 /* Responsive Typography for HTML Elements */
-@media (max-width: 768px) {
+@media (max-width: var(--bp-sm)) {
   h1 {
     font-size: var(--font-size-heading-1-mobile);
     line-height: var(--line-height-heading-1-mobile);

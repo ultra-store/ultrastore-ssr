@@ -1,0 +1,29 @@
+.headerMainBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  height: 55px;
+}
+
+.logo {
+  margin-right: 30px;
+}
+
+.catalogAndSearch {
+  display: flex;
+  max-height: inherit;
+  align-items: center;
+  gap: 10px;
+}
+
+.headerActions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  flex-grow: 1;
+}
+

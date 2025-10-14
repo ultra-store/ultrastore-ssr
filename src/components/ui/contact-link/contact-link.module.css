@@ -1,0 +1,33 @@
+.contactLink {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+  gap: 5px;
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+.contactLink:hover {
+  text-decoration: none;
+  opacity: 0.7;
+}
+
+.text {
+  font-family: 'Formular';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  color: var(--outline-placeholder);
+}
+
+.textBold {
+  font-family: 'Formular';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 20px;
+  color: var(--outline-placeholder);
+}
+

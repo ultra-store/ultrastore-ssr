@@ -1,0 +1,96 @@
+/* Base button styles */
+.button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 20px;
+  gap: 10px;
+  height: 45px;
+  
+  /* Typography */
+  font-family: 'Formular', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 25px;
+  
+  /* Colors */
+  color: #FFFCFC;
+  
+  /* Interaction */
+  cursor: pointer;
+  transition: all 200ms ease-in-out;
+  border: none;
+  outline: none;
+}
+
+/* Primary variant using data attributes */
+.button[data-variant='primary'] {
+  background: #FF3355;
+  border-radius: 15px;
+  min-width: 200px;
+}
+
+.button[data-variant='primary']:hover:not(:disabled) {
+  background: #ED1337;
+}
+
+.button[data-variant='primary']:active:not(:disabled) {
+  background: #D61130;
+}
+
+/* Mobile styles */
+@media (max-width: var(--bp-sm)) {
+  .button[data-variant='primary'] {
+    border-radius: 20px;
+    min-width: 100px;
+  }
+}
+
+/* Secondary variant using data attributes */
+.button[data-variant='secondary'] {
+  background: #E5E7EB;
+  color: #1F2937;
+  border-radius: 15px;
+  min-width: 200px;
+}
+
+.button[data-variant='secondary']:hover:not(:disabled) {
+  background: #D1D5DB;
+}
+
+.button[data-variant='secondary']:active:not(:disabled) {
+  background: #9CA3AF;
+}
+
+/* Compact variant using data attributes */
+.button[data-variant='compact'] {
+  padding: 15px;
+  gap: 10px;
+  width: 133px;
+  height: 55px;
+  background: #FF3355;
+  border-radius: 5px;
+  align-self: stretch;
+}
+
+.button[data-variant='compact']:hover:not(:disabled) {
+  background: #ED1337;
+}
+
+.button[data-variant='compact']:active:not(:disabled) {
+  background: #D61130;
+}
+
+/* Full width modifier using data attributes */
+.button[data-full-width] {
+  width: 100%;
+}
+
+/* Disabled state */
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+

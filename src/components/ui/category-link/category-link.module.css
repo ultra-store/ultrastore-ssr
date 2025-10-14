@@ -1,0 +1,18 @@
+.categoryLink {
+  margin: 0 auto;
+  font-family: 'Formular';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 25px;
+  color: var(--outline-primary);
+  text-decoration: none;
+  transition: color 0.3s ease;
+  white-space: nowrap;
+}
+
+.categoryLink:hover {
+  color: var(--outline-hover);
+  text-decoration: none;
+}
+

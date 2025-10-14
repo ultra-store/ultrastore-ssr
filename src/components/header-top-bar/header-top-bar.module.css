@@ -1,0 +1,19 @@
+.topBar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  gap: 15px;
+}
+
+/* Contact section containing contact links and social media buttons */
+.contactSection {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 25px;
+}
+

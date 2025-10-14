@@ -1,16 +1,24 @@
-import eslint from '@eslint/js'
-import stylistic from '@stylistic/eslint-plugin'
+import { dirname } from 'path'
+import { fileURLToPath } from 'url'
+import { FlatCompat } from '@eslint/eslintrc'
 import { importX, flatConfigs as importXFlatConfigs } from 'eslint-plugin-import-x'
-import noRelativeImports from 'eslint-plugin-no-relative-import-paths'
 import * as tsResolver from 'eslint-import-resolver-typescript'
+import stylistic from '@stylistic/eslint-plugin'
 import { configs as tsConfigs, parser as tsParser, plugin as tsPlugin } from 'typescript-eslint'
 
-export default [
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
+
+const compat = new FlatCompat({
+  baseDirectory: __dirname,
+})
+
+const eslintConfig = [
+  ...compat.extends('next/core-web-vitals', 'next/typescript'),
   {
-    ignores: ['**/dist/*', '**/node_modules/*', '**/public/*'],
+    ignores: ['node_modules/**', '.next/**', 'out/**', 'build/**', 'next-env.d.ts'],
   },
 
-  eslint.configs.recommended,
   ...tsConfigs.recommended,
   ...tsConfigs.stylistic,
   importXFlatConfigs.recommended,
@@ -34,7 +42,6 @@ export default [
       '@typescript-eslint': tsPlugin,
       '@stylistic': stylistic,
       'import-x': importX,
-      'no-relative-import-paths': noRelativeImports,
     },
 
     settings: {
@@ -60,7 +67,7 @@ export default [
       ],
       '@stylistic/arrow-parens': ['error', 'always'],
       '@stylistic/object-property-newline': 'error',
-      '@stylistic/object-curly-newline': ['error', { minProperties: 1 }],
+      '@stylistic/object-curly-newline': ['error', { multiline: true, consistent: false }],
       '@stylistic/curly-newline': ['error', 'always'],
       '@stylistic/array-element-newline': ['error', 'consistent'],
       '@stylistic/array-bracket-newline': ['error', 'consistent'],
@@ -74,7 +81,6 @@ export default [
       '@typescript-eslint/consistent-type-exports': 'error',
 
       // Imports
-      'no-relative-import-paths/no-relative-import-paths': ['warn', { allowSameFolder: true }],
       'import-x/first': 'error',
       'import-x/newline-after-import': 'off',
       'import-x/no-default-export': 'off',
@@ -99,3 +105,5 @@ export default [
     },
   },
 ]
+
+export default eslintConfig

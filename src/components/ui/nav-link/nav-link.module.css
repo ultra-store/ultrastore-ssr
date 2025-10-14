@@ -1,0 +1,32 @@
+.navLink {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  padding: 0px;
+  gap: 3px;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.navLink:hover {
+  text-decoration: none;
+}
+
+.navLink:hover .text {
+  color: var(--outline-hover);
+}
+
+.text {
+  font-family: 'Formular';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  color: var(--outline-placeholder);
+  transition: color 0.3s ease;
+}
+
+.icon {
+  flex-shrink: 0;
+}
+

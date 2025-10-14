@@ -1,0 +1,9 @@
+/* Media query for tablet portrait */
+@media (max-width: var(--bp-sm)) {
+  /* Use this file to export media query mixins/utilities if needed */
+}
+
+/* Media query for tablet landscape */
+@media (max-width: var(--bp-md)) {
+  /* Use this file to export media query mixins/utilities if needed */
+}
