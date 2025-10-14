@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 
+import { Footer } from '@/components/footer';
 import { Header } from '@/components/header';
 import { formular } from '@/shared/styles/fonts';
 
@@ -18,11 +19,12 @@ export const metadata: Metadata = {
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ru" className={formular.variable}>
-      <body>
+      <body className="page">
         <Header />
         <main className="container" style={{ flex: 1 }}>
           {children}
         </main>
+        <Footer />
       </body>
     </html>
   );

@@ -7,7 +7,6 @@
   gap: 10px;
   height: 55px;
   width: 100%;
-  max-width: var(--container-max);
   border: 2px solid var(--outline-interactive);
   border-radius: 5px;
   background-color: var(--surface-primary);

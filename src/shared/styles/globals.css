@@ -352,31 +352,15 @@ button {
 }
 
 /* Layout Utilities */
+.page {
+  min-height: 100vh;
+}
+
 .container {
   width: 100%;
   max-width: var(--container-max);
   margin: 0 auto;
   padding: 0 var(--spacing-xl);
-}
-
-.flex {
-  display: flex;
-}
-
-.flex-col {
-  flex-direction: column;
-}
-
-.items-center {
-  align-items: center;
-}
-
-.justify-center {
-  justify-content: center;
-}
-
-.justify-between {
-  justify-content: space-between;
 }
 
 .gap-sm {
