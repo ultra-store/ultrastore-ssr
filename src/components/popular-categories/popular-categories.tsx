@@ -27,7 +27,7 @@ export const PopularCategories = ({ title = 'Популярные категор
                   src={c.image || '/placeholder-product.png'}
                   alt={c.name}
                   width={180}
-                  height={120}
+                  height={100}
                 />
               </div>
               <div className="large">

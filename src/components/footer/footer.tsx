@@ -31,7 +31,7 @@ export const Footer = ({ menu, contacts, socials }: FooterProps) => {
 
   return (
     <footer className={styles.footer}>
-      <section className={`container ${styles.content}`}>
+      <section className={styles.content}>
         <section className={styles.brandBlock}>
           <Logo href="/" title="Ultrastore" full height={40} className={styles.logo} />
 

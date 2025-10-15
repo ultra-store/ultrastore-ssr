@@ -362,10 +362,14 @@ button {
 }
 
 .container {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   max-width: var(--container-max);
+  padding: 70px 0;
+  gap: 70px;
+  flex: 1;
   margin: 0 auto;
-  padding: 0;
 }
 
 .gap-sm {

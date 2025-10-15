@@ -11,6 +11,7 @@
     "generate": "openapi-typescript https://backend.ultrastore.khizrim.online/rest-api/schema -o ./src/shared/api/v1.ts"
   },
   "dependencies": {
+    "@pbe/react-yandex-maps": "^1.2.5",
     "next": "15.5.5",
     "openapi-fetch": "^0.15.0",
     "react": "19.2.0",

@@ -28,7 +28,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           contacts={contacts}
           socials={social}
         />
-        <main className="container" style={{ flex: 1 }}>
+        <main className="container">
           {children}
         </main>
         <Footer socials={social} menu={footer.menu} contacts={contacts} />
