@@ -10,14 +10,14 @@ export interface HeaderProps {
   topMenu?: MenuItem[]
   categoriesMenu?: MenuItem[]
   contacts?: Contacts
-  social?: Social
+  socials?: Social[]
 }
 
-export const Header = ({ topMenu, categoriesMenu, contacts }: HeaderProps) => {
+export const Header = ({ topMenu, categoriesMenu, contacts, socials }: HeaderProps) => {
   return (
     <header className={styles.header}>
       <section className={styles.container}>
-        <HeaderTopBar menu={topMenu} contacts={contacts} />
+        <HeaderTopBar menu={topMenu} contacts={contacts} socials={socials} />
         <HeaderMainBar />
       </section>
       <CategoriesNav items={categoriesMenu} />

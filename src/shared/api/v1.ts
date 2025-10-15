@@ -209,10 +209,10 @@ export interface paths {
                                 map_iframe?: string;
                             };
                             social: {
-                                telegram?: string;
-                                whatsapp?: string;
-                                vk?: string;
-                            };
+                                id: string;
+                                href: string;
+                                alt: string;
+                            }[];
                             page_metadata: {
                                 title?: string;
                                 description?: string;
@@ -300,26 +300,47 @@ export interface paths {
             };
             requestBody?: never;
             responses: {
-                /** @description OK */
+                /** @description Success */
                 200: {
                     headers: {
                         [name: string]: unknown;
                     };
-                    content?: never;
+                    content: {
+                        "application/json": {
+                            [key: string]: {
+                                id: number;
+                                title: string;
+                                url: string;
+                                target?: string;
+                                parent_id?: number;
+                                order?: number;
+                            }[];
+                        };
+                    };
                 };
                 /** @description Bad Request */
                 400: {
                     headers: {
                         [name: string]: unknown;
                     };
-                    content?: never;
+                    content: {
+                        "application/json": {
+                            error: string;
+                            message: string;
+                        };
+                    };
                 };
-                /** @description Not Found */
-                404: {
+                /** @description Internal Server Error */
+                500: {
                     headers: {
                         [name: string]: unknown;
                     };
-                    content?: never;
+                    content: {
+                        "application/json": {
+                            error: string;
+                            message: string;
+                        };
+                    };
                 };
             };
         };
@@ -354,26 +375,57 @@ export interface paths {
             };
             requestBody?: never;
             responses: {
-                /** @description OK */
+                /** @description Success */
                 200: {
                     headers: {
                         [name: string]: unknown;
                     };
-                    content?: never;
+                    content: {
+                        "application/json": {
+                            id: number;
+                            title: string;
+                            url: string;
+                            target?: string;
+                            parent_id?: number;
+                            order?: number;
+                        }[];
+                    };
                 };
                 /** @description Bad Request */
                 400: {
                     headers: {
                         [name: string]: unknown;
                     };
-                    content?: never;
+                    content: {
+                        "application/json": {
+                            error: string;
+                            message: string;
+                        };
+                    };
                 };
                 /** @description Not Found */
                 404: {
                     headers: {
                         [name: string]: unknown;
                     };
-                    content?: never;
+                    content: {
+                        "application/json": {
+                            error: string;
+                            message: string;
+                        };
+                    };
+                };
+                /** @description Internal Server Error */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: string;
+                            message: string;
+                        };
+                    };
                 };
             };
         };
@@ -730,10 +782,10 @@ export interface paths {
                                 map_iframe?: string;
                             };
                             social?: {
-                                telegram?: string;
-                                whatsapp?: string;
-                                vk?: string;
-                            };
+                                id: string;
+                                href: string;
+                                alt: string;
+                            }[];
                             popular_categories?: {
                                 id: number;
                                 name: string;

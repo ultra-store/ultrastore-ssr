@@ -75,9 +75,9 @@ export interface Contacts {
 }
 
 export interface Social {
-  telegram?: string
-  whatsapp?: string
-  vk?: string
+  id: string
+  href: string
+  alt: string
 }
 
 export interface PageMetadata {

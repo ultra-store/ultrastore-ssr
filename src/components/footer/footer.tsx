@@ -10,9 +10,9 @@ import styles from './footer.module.css';
 export interface FooterProps {
   menu?: MenuItem[]
   contacts?: Contacts
-  social?: Social
+  socials?: Social[]
 }
-export const Footer = ({ menu, contacts }: FooterProps) => {
+export const Footer = ({ menu, contacts, socials }: FooterProps) => {
   const parents = menu?.filter(({ parent_id }) => !parent_id || Number(parent_id) === 0)
     .sort((a, b) => (a.order || 0) - (b.order || 0));
 
@@ -52,6 +52,7 @@ export const Footer = ({ menu, contacts }: FooterProps) => {
             </ul>
             <SocialButtons
               size="s"
+              socials={socials}
             />
           </div>
         </section>
