@@ -3,70 +3,31 @@ import Link from 'next/link';
 import { Logo } from '@/components/logo';
 import { SocialButtons } from '@/components/social-buttons';
 
+import type { Contacts, MenuItem, Social } from '@/shared/types';
+
 import styles from './footer.module.css';
 
-export const Footer = () => {
-  const catalogLinks = [
-    {
-      href: '/catalog/smartphones',
-      text: 'Смартфоны',
-    },
-    {
-      href: '/catalog/tablets',
-      text: 'Планшеты',
-    },
-    {
-      href: '/catalog/laptops',
-      text: 'Ноутбуки и моноблоки',
-    },
-    {
-      href: '/catalog/consoles',
-      text: 'Игровые приставки',
-    },
-    {
-      href: '/catalog/audio',
-      text: 'Наушники и аудио',
-    },
-    {
-      href: '/catalog/watches',
-      text: 'Умные часы и браслеты',
-    },
-    {
-      href: '/catalog/beauty-health',
-      text: 'Красота и здоровье',
-    },
-    {
-      href: '/catalog/home-gadgets',
-      text: 'Гаджеты для дома',
-    },
-  ];
+export interface FooterProps {
+  menu?: MenuItem[]
+  contacts?: Contacts
+  social?: Social
+}
+export const Footer = ({ menu, contacts }: FooterProps) => {
+  const parents = menu?.filter(({ parent_id }) => !parent_id || Number(parent_id) === 0)
+    .sort((a, b) => (a.order || 0) - (b.order || 0));
 
-  const buyerLinks = [
-    {
-      href: '/account',
-      text: 'Личный кабинет',
-    },
-    {
-      href: '/about',
-      text: 'О нас',
-    },
-    {
-      href: '/warranty',
-      text: 'Гарантия',
-    },
-    {
-      href: '/trade-in',
-      text: 'Трейд-ин',
-    },
-    {
-      href: '/installment',
-      text: 'Рассрочка',
-    },
-    {
-      href: '/loyalty',
-      text: 'Программа лояльности',
-    },
-  ];
+  const getChildren = (parentId: number) =>
+    menu
+      ?.filter(({ parent_id }) => Number(parent_id) === parentId)
+      .sort((a, b) => (a.order || 0) - (b.order || 0));
+
+  const mapHref = contacts?.map_iframe || 'https://yandex.ru/maps/-/CLRcJ67q';
+  const phoneText = contacts?.phone_primary || '+7 (999) 999-99-99';
+  const phoneHref = `tel:${phoneText.replace(/[^+\d]/g, '')}`;
+  const emailText = contacts?.email || 'info@ultrastore.ru';
+  const emailHref = `mailto:${emailText}`;
+  const address = contacts?.address || 'Санкт-Петербург, Лиговский 71, м. Площадь Восстания';
+  const workingHours = contacts?.working_hours || 'Ежедневно с 10:00 до 22:00';
 
   return (
     <footer className={styles.footer}>
@@ -77,43 +38,42 @@ export const Footer = () => {
           <div className={styles.contacts}>
             <ul className={styles.contactList}>
               <li className={styles.contactItem}>
-                <Link href="https://yandex.ru/maps/-/CLRcJ67q" target="_blank" rel="noopener noreferrer">
-                  Санкт-Петербург, Лиговский 71, м. Площадь Восстания
+                <Link href={mapHref} target="_blank" rel="noopener noreferrer">
+                  {address}
                 </Link>
               </li>
               <li className={styles.contactItem}>
-                <Link href="tel:+79999999999">+7 (999) 999-99-99</Link>
+                <Link href={phoneHref}>{phoneText}</Link>
               </li>
               <li className={styles.contactItem}>
-                <Link href="mailto:info@ultrastore.ru">info@ultrastore.ru</Link>
+                <Link href={emailHref}>{emailText}</Link>
               </li>
-              <li className={styles.contactItem}>Ежедневно с 10:00 до 22:00</li>
+              <li className={styles.contactItem}>{workingHours}</li>
             </ul>
-            <SocialButtons size="s" />
+            <SocialButtons
+              size="s"
+            />
           </div>
         </section>
 
-        <nav className={styles.navColumn} aria-label="Каталог">
-          <h3>Каталог</h3>
-          <ul className={styles.linkList} role="list">
-            {catalogLinks.map((link) => (
-              <li key={link.href}>
-                <Link href={link.href} className={styles.linkItem}>{link.text}</Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
+        {parents?.map((parent) => {
+          const children = getChildren(parent.id);
 
-        <nav className={styles.navColumn} aria-label="Покупателям">
-          <h3>Покупателям</h3>
-          <ul className={styles.linkList} role="list">
-            {buyerLinks.map((link) => (
-              <li key={link.href}>
-                <Link href={link.href} className={styles.linkItem}>{link.text}</Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
+          return (
+            <nav key={parent.id} className={styles.navColumn} aria-label={parent.title}>
+              <ul className={styles.linkList} role="list">
+                <li>
+                  <Link href={parent.url} className={`${styles.linkItem} ${styles.parentItem}`}>{parent.title}</Link>
+                </li>
+                {children?.map((child) => (
+                  <li key={child.id}>
+                    <Link href={child.url} className={styles.linkItem}>{child.title}</Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          );
+        })}
       </section>
     </footer>
   );

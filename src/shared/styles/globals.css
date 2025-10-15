@@ -360,7 +360,7 @@ button {
   width: 100%;
   max-width: var(--container-max);
   margin: 0 auto;
-  padding: 0 var(--spacing-xl);
+  padding: 0;
 }
 
 .gap-sm {

@@ -1,18 +1,17 @@
 import { CategoryLink } from '@/components/ui/category-link';
 
+import type { MenuItem } from '@/shared/types';
+
 import styles from './categories-nav.module.css';
 
-/**
- * CategoriesNav - Product category navigation
- * Displays main product categories for quick access
- */
-export const CategoriesNav = () => {
+export interface CategoriesNavProps { items?: MenuItem[] }
+
+export const CategoriesNav = ({ items }: CategoriesNavProps) => {
   return (
     <nav className={styles.categoriesNav} aria-label="Категории товаров">
-      <CategoryLink href="/catalog/apple" text="Apple" />
-      <CategoryLink href="/catalog/airpods" text="Airpods" />
-      <CategoryLink href="/catalog/garmin" text="Garmin" />
-      <CategoryLink href="/catalog/accessories" text="Аксессуары" />
+      {items?.map((c) => (
+        <CategoryLink key={c.id} href={c.url} text={c.title} />
+      ))}
     </nav>
   );
 };

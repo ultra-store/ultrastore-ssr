@@ -1,16 +1,17 @@
 import { NavLink } from '@/components/ui/nav-link';
 
+import type { MenuItem } from '@/shared/types';
+
 import styles from './header-utility-nav.module.css';
 
-export const HeaderUtilityNav = () => {
+export const HeaderUtilityNav = ({ menu }: { menu?: MenuItem[] }) => {
   return (
     <nav className={styles.topNav} aria-label="Основная навигация">
-      <NavLink href="/customers" text="Покупателям" />
-      <NavLink href="/trade-in" text="Трейд-ин" />
-      <NavLink href="/service" text="Сервисный центр" />
-      <NavLink href="/blog" text="Блог" />
-      <NavLink href="/about" text="О нас" />
-      <NavLink href="/contacts" text="Контакты" />
+      {
+        menu?.map((item) => (
+          <NavLink key={item.id} href={item.url} text={item.title} />
+        ))
+      }
     </nav>
   );
 };

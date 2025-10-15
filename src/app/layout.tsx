@@ -2,9 +2,10 @@ import type { Metadata } from 'next';
 
 import { Footer } from '@/components/footer';
 import { Header } from '@/components/header';
+import { getLayoutData } from '@/shared/api/getLayoutData';
 import { formular } from '@/shared/styles/fonts';
-
 import '@/shared/styles/globals.css';
+import type { CategoriesMenu, Menu } from '@/shared/types/types';
 
 export const metadata: Metadata = {
   title: 'Ultrastore',
@@ -17,14 +18,16 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const { header, footer, contacts, social } = await getLayoutData('front-page');
+
   return (
     <html lang="ru" className={formular.variable}>
       <body className="page">
-        <Header />
+        <Header topMenu={header.top_menu} categoriesMenu={header.categories_menu} contacts={contacts} social={social} />
         <main className="container" style={{ flex: 1 }}>
           {children}
         </main>
-        <Footer />
+        <Footer social={social} menu={footer.menu} contacts={contacts} />
       </body>
     </html>
   );

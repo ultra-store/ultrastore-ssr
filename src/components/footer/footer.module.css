@@ -10,7 +10,7 @@
 
 .content {
   display: grid;
-  grid-template-columns: 1.6fr 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: var(--spacing-2xl);
   padding: var(--spacing-2xl) 0;
 }
@@ -67,6 +67,11 @@
 .linkItem {
   color: var(--outline-primary);
   text-decoration: none;
+}
+
+.parentItem {
+  font-weight: 700;
+  color: var(--text-primary);
 }
 
 @media (max-width: var(--bp-md)) {
