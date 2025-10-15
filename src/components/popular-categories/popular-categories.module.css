@@ -1,8 +1,5 @@
-.wrapper {
-}
-
 .title {
-  margin-bottom: var(--spacing-lg);
+  margin-bottom: 0;
 }
 
 .grid {

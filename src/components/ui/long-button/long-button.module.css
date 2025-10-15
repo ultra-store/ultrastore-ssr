@@ -1,22 +1,4 @@
-.title {
-  margin-bottom: 0;
-}
-
-.row {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-  isolation: isolate;
-}
-
-@media (max-width: var(--bp-md)) {
-  .row {
-    grid-template-columns: 1fr;
-  }
-}
-
-.cta {
-  margin-top: 20px;
+.button {
   width: 100%;
   background: var(--surface-primary);
   border: 1px solid var(--outline-faint);
@@ -27,15 +9,17 @@
   padding: 25px 20px;
 }
 
-.ctaText {
+.text {
   color: var(--outline-primary);
   font-size: var(--font-size-large);
   line-height: var(--line-height-large);
 }
 
 @media (hover: hover) {
-  .cta:hover {
+  .button:hover {
     background: var(--surface-primary-hover);
     border-color: var(--outline-faint-hover);
   }
 }
+
+

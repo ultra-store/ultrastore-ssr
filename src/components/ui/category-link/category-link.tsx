@@ -1,3 +1,5 @@
+import type { AnchorHTMLAttributes } from 'react';
+
 import Link from 'next/link';
 
 import type { WithClassName } from '@/shared/types/utils';

@@ -1,3 +1,5 @@
+import type { AnchorHTMLAttributes } from 'react';
+
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -10,7 +12,7 @@ export type ContactLinkProps = {
   icon: string
   text: string
   bold?: boolean
-} & React.AnchorHTMLAttributes<HTMLAnchorElement>;
+} & AnchorHTMLAttributes<HTMLAnchorElement>;
 
 export const ContactLink = ({
   href,

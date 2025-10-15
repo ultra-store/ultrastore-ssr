@@ -1,3 +1,5 @@
+import type { AnchorHTMLAttributes } from 'react';
+
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -9,7 +11,7 @@ export type NavLinkProps = {
   href: string
   text: string
   icon?: string
-} & React.AnchorHTMLAttributes<HTMLAnchorElement>;
+} & AnchorHTMLAttributes<HTMLAnchorElement>;
 
 export const NavLink = ({
   href,

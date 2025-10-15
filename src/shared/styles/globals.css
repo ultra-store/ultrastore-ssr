@@ -372,6 +372,12 @@ button {
   margin: 0 auto;
 }
 
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
 .gap-sm {
   gap: var(--spacing-sm);
 }

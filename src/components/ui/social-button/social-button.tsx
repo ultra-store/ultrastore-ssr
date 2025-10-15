@@ -1,3 +1,5 @@
+import type { AnchorHTMLAttributes } from 'react';
+
 import type { StaticImageData } from 'next/image';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -12,7 +14,7 @@ export type SocialButtonProps = {
   alt: string
   size: number
   variant?: 'default' | 'greyscale'
-} & React.AnchorHTMLAttributes<HTMLAnchorElement>;
+} & AnchorHTMLAttributes<HTMLAnchorElement>;
 
 export const SocialButton = ({ href, icon, alt, size = 20, variant = 'default', ...props }: WithClassName<SocialButtonProps>) => {
   return (

@@ -35,7 +35,7 @@ export const HowToFindUs = async ({ title = 'Как нас найти', contacts
   const workingHours = resolvedContacts?.working_hours || 'Ежедневно с 10:00 до 22:00';
 
   return (
-    <section className={styles.section} aria-label={title}>
+    <section className={`section ${styles.section}`} aria-label={title}>
       <h2 className={`heading-1 ${styles.title}`}>{title}</h2>
       <div className={styles.panel}>
         <div className={styles.map}>

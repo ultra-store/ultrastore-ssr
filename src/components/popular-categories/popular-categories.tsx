@@ -16,7 +16,7 @@ export const PopularCategories = ({ title = 'Популярные категор
   }
 
   return (
-    <section className={styles.wrapper} aria-label={title}>
+    <section className={`section ${styles.section}`} aria-label={title}>
       <h2 className={`heading-1 ${styles.title}`}>{title}</h2>
       <div className={styles.grid}>
         {items.map((c) => (

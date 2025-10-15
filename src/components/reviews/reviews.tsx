@@ -1,3 +1,4 @@
+import { LongButton } from '@/components/ui/long-button';
 import type { Review } from '@/shared/types';
 
 import { ReviewCard } from './review-card/review-card';
@@ -17,7 +18,7 @@ export const Reviews = ({ title = 'Отзывы', items }: ReviewsProps) => {
   const firstFour = items.slice(0, 4);
 
   return (
-    <section className={styles.section} aria-label={title}>
+    <section className={`section ${styles.section}`} aria-label={title}>
       <h2 className={`heading-1 ${styles.title}`}>{title}</h2>
       <div className={styles.row}>
         {firstFour.map((r) => (
@@ -25,9 +26,9 @@ export const Reviews = ({ title = 'Отзывы', items }: ReviewsProps) => {
         ))}
       </div>
 
-      <button type="button" className={styles.cta} aria-label="Оставить свой отзыв">
-        <span className={styles.ctaText}>Оставить свой отзыв →</span>
-      </button>
+      <LongButton asButton>
+        Оставить свой отзыв →
+      </LongButton>
     </section>
   );
 };
