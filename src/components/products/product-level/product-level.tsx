@@ -24,7 +24,7 @@ export const ProductLevel = ({ title = 'Новинки', items = [], ctaText = '
     return null;
   }
 
-  const visible = items.slice(0, 4);
+  const visible = items.slice(0, 5);
 
   return (
     <section className={`section ${styles.section}`} aria-label={title}>

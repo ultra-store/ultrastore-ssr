@@ -29,7 +29,6 @@
 .button[data-variant='primary'] {
   background: #FF3355;
   border-radius: 15px;
-  min-width: 200px;
 }
 
 .button[data-variant='primary']:hover:not(:disabled) {
@@ -44,7 +43,6 @@
 @media (max-width: var(--bp-sm)) {
   .button[data-variant='primary'] {
     border-radius: 20px;
-    min-width: 100px;
   }
 }
 
@@ -53,7 +51,6 @@
   background: #E5E7EB;
   color: #1F2937;
   border-radius: 15px;
-  min-width: 200px;
 }
 
 .button[data-variant='secondary']:hover:not(:disabled) {

@@ -22,7 +22,7 @@ export const ProductCard = ({ name, image, price }: ProductCardProps) => {
       <div className={styles.title}>{name}</div>
       <div className={styles.price}>{price}</div>
 
-      <Button variant="primary">В корзину</Button>
+      <Button variant="primary" fullWidth>В корзину</Button>
     </article>
   );
 };
