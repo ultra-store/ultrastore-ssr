@@ -1,6 +1,7 @@
 import { InfoBlock } from '@/components/info-block';
 import { PopularCategories } from '@/components/popular-categories';
 import { getHomepageData } from '@/shared/api/getHomepageData';
+import { Reviews } from '@/components/reviews';
 
 export default async function HomePage() {
   const data = await getHomepageData();
@@ -15,6 +16,10 @@ export default async function HomePage() {
       {data.info_blocks?.[1] && (
         <InfoBlock {...data.info_blocks[1]} />
       )}
+
+      {data.reviews?.length ? (
+        <Reviews items={data.reviews} />
+      ) : null}
     </div>
   );
 }

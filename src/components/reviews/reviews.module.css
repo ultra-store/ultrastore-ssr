@@ -1,0 +1,48 @@
+.section {
+  margin: var(--spacing-2xl) 0;
+}
+
+.title {
+  margin-bottom: var(--spacing-lg);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  isolation: isolate;
+}
+
+@media (max-width: var(--bp-md)) {
+  .row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cta {
+  margin-top: 20px;
+  width: 100%;
+  background: var(--surface-primary);
+  border: 1px solid var(--outline-faint);
+  border-radius: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 25px 20px;
+}
+
+
+.ctaText {
+  color: var(--outline-primary);
+  font-size: var(--font-size-large);
+  line-height: var(--line-height-large);
+}
+
+
+@media (hover: hover) {
+  .cta:hover {
+    background: var(--surface-primary-hover);
+    border-color: var(--outline-faint-hover);
+  }
+}
+
