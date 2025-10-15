@@ -35,6 +35,11 @@
 
   /* Brand Gradient */
   --gradient-brand: linear-gradient(180deg, var(--surface-primary) 15%, var(--surface-interactive) 100%);
+  --gradient-brand-radial: radial-gradient(
+    50% 50% at 50% 50%,
+    var(--surface-primary) 15%,
+    var(--surface-interactive) 100%
+  );
 
   /* Typography - Desktop (default) */
   --font-size-heading-1: 38px;
