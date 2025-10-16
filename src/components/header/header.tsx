@@ -1,6 +1,4 @@
-import { CategoriesNav } from '@/components/categories-nav';
-import { HeaderMainBar } from '@/components/header-main-bar';
-import { HeaderTopBar } from '@/components/header-top-bar';
+import { CategoriesNav, HeaderMainBar, HeaderTopBar } from '@/components/header';
 
 import type { Contacts, MenuItem, Social } from '@/shared/types';
 

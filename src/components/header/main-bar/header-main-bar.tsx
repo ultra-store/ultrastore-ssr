@@ -1,10 +1,8 @@
-import { Logo } from '@/components/logo';
-
+import { CatalogButton } from '@/components/ui/catalog-button';
+import { IconButton } from '@/components/ui/icon-button';
+import { Logo } from '@/components/ui/logo';
+import { SearchBar } from '@/components/ui/search-bar';
 import icons from '@/shared/icons';
-
-import { CatalogButton } from '../ui/catalog-button';
-import { IconButton } from '../ui/icon-button';
-import { SearchBar } from '../ui/search-bar';
 
 import styles from './header-main-bar.module.css';
 

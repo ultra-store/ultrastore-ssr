@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
-import { Logo } from '@/components/logo';
 import { SocialButtons } from '@/components/social-buttons';
+import { Logo } from '@/components/ui/logo';
 
 import type { Contacts, MenuItem, Social } from '@/shared/types';
 
