@@ -4,6 +4,7 @@ import Catalog from './catalog.svg';
 import Close from './close.svg';
 import Comparison from './comparison.svg';
 import Favorite from './favorite.svg';
+import Home from './home.svg';
 import Mail from './mail.svg';
 import Phone from './phone.svg';
 import Pin from './pin.svg';
@@ -20,6 +21,7 @@ const icons = {
   close: Close,
   comparison: Comparison,
   favorite: Favorite,
+  home: Home,
   mail: Mail,
   phone: Phone,
   pin: Pin,
