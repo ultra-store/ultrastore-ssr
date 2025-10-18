@@ -2,18 +2,10 @@
   display: flex;
   flex-direction: row;
   align-items: flex-end;
-  padding: 0px;
+  padding: 0;
   gap: 3px;
   text-decoration: none;
   transition: color 0.3s ease;
-}
-
-.navLink:hover {
-  text-decoration: none;
-}
-
-.navLink:hover .text {
-  color: var(--outline-hover);
 }
 
 .text {
@@ -30,3 +22,12 @@
   flex-shrink: 0;
 }
 
+@media (hover: hover) {
+  .navLink:hover {
+    text-decoration: none;
+  }
+
+  .navLink:hover .text {
+    color: var(--outline-hover);
+  }
+}
