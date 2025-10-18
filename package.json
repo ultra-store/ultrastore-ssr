@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "lint:fix": "eslint --fix",
+    "lint:css": "stylelint \"src/**/*.{css,scss}\"",
+    "lint:css:fix": "stylelint \"src/**/*.{css,scss}\" --fix",
+    "lint:fix": "eslint --fix && pnpm run lint:css:fix",
     "generate": "openapi-typescript https://backend.ultrastore.khizrim.online/rest-api/schema -o ./src/shared/api/v1.ts"
   },
   "dependencies": {
@@ -31,6 +33,12 @@
     "eslint-plugin-react-hooks": "^7.0.0",
     "openapi-typescript": "^7.10.0",
     "openapi-typescript-helpers": "^0.0.15",
+    "stylelint": "^16.25.0",
+    "stylelint-config-css-modules": "^4.5.1",
+    "stylelint-config-recommended": "^17.0.0",
+    "stylelint-config-standard": "^39.0.1",
+    "stylelint-declaration-block-no-ignored-properties": "^2.8.0",
+    "stylelint-order": "^7.0.0",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.46.1"
   }
