@@ -8,7 +8,10 @@ interface ContactLinksProps {
   phone?: string
 }
 
-export const ContactLinks = ({ city = 'Санкт-Петербург', phone = '+7 999 999 99 99' }: ContactLinksProps) => {
+const DEFAULT_CITY = 'Санкт-Петербург';
+const DEFAULT_PHONE = '+7 (999) 999-99-99';
+
+export const ContactLinks = ({ city = DEFAULT_CITY, phone = DEFAULT_PHONE }: ContactLinksProps) => {
   const telHref = `tel:${phone.replace(/[^+\d]/g, '')}`;
 
   return (
@@ -17,7 +20,7 @@ export const ContactLinks = ({ city = 'Санкт-Петербург', phone = '
       <ContactLink
         href={telHref}
         icon={icons.phone}
-        text={phone}
+        text={phone || DEFAULT_PHONE || ''}
         bold
         aria-label={`Позвонить по номеру ${phone}`}
       />
