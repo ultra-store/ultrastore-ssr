@@ -1,31 +1,42 @@
-/* CSS Custom Properties - Design System Variables */
 :root {
   /* Breakpoints */
-  --bp-sm: 760px;
-  --bp-md: 1024px;
+  --bp-sm: 759px;
+  --bp-md: 1279px;
+
   /* Layout */
   --container-max: 1400px;
 
-  /* Background Colors */
+  /* Spacing Scale */
+  --spacing-xs: 5px;
+  --spacing-sm: 10px;
+  --spacing-md: 15px;
+  --spacing-lg: 20px;
+  --spacing-xl: 25px;
+  --spacing-2xl: 30px;
+  --spacing-3xl: 50px;
+  --spacing-4xl: 70px;
+  --spacing-5xl: 140px;
+
+  /* Colors - Background */
   --background-primary: #fffcfc;
 
-  /* Surface Colors */
+  /* Colors - Surface */
   --surface-primary: #ffffff;
   --surface-primary-hover: rgba(255, 255, 255, 0.5);
   --surface-interactive: #ffe5e9;
   --surface-interactive-hover: #ffc0cb;
 
-  /* Outline Colors */
+  /* Colors - Outline/Text */
   --outline-primary: #0d0000;
   --outline-hover: #4d4d4d;
   --outline-placeholder: #808080;
-  --outline-inital: #a6a3a3;
+  --outline-initial: #a6a3a3;
   --outline-faint: #e6e6e6;
   --outline-faint-hover: #d1d1d1;
   --outline-light-static: #fffcfc;
   --outline-interactive: #ff1c42;
 
-  /* Fill Colors */
+  /* Colors - Fill */
   --fill-interactive: #ff3355;
   --fill-interactive-hover: #ed1337;
   --fill-interactive-active: #d61130;
@@ -33,15 +44,11 @@
   --fill-secondary-hover: #dbdbdb;
   --fill-secondary-active: #9ca3af;
 
-  /* Brand Gradient */
+  /* Gradients */
   --gradient-brand: linear-gradient(180deg, var(--surface-primary) 15%, var(--surface-interactive) 100%);
-  --gradient-brand-radial: radial-gradient(
-    50% 50% at 50% 50%,
-    var(--surface-primary) 15%,
-    var(--surface-interactive) 100%
-  );
+  --gradient-brand-radial: radial-gradient(50% 50% at 50% 50%, var(--surface-primary) 15%, var(--surface-interactive) 100%);
 
-  /* Typography - Desktop (default) */
+  /* Typography - Desktop */
   --font-size-heading-1: 38px;
   --font-size-number: 28px;
   --font-size-heading-2: 24px;
@@ -74,14 +81,6 @@
   --line-height-large-mobile: 25px;
   --line-height-secondary-mobile: 17px;
   --line-height-medium-mobile: 20px;
-
-  /* Spacing */
-  --spacing-xs: 0.25rem;
-  --spacing-sm: 0.5rem;
-  --spacing-md: 1rem;
-  --spacing-lg: 1.5rem;
-  --spacing-xl: 2rem;
-  --spacing-2xl: 3rem;
 }
 
 /* Global Reset */
@@ -93,7 +92,7 @@
   padding: 0;
 }
 
-/* Global Styles */
+/* Base Styles */
 html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -105,14 +104,63 @@ body {
   background-color: var(--background-primary);
   color: var(--outline-primary);
   font-size: var(--font-size-medium);
-  line-height: var(--line-height-body);
+  line-height: var(--line-height-medium);
   font-weight: 400;
   min-height: 100%;
   display: flex;
   flex-direction: column;
 }
 
-/* Typography Utility Classes - Desktop */
+/* Base Typography */
+h1 {
+  font-size: var(--font-size-heading-1);
+  line-height: var(--line-height-heading-1);
+  font-weight: 700;
+  margin-bottom: 1em;
+  color: var(--outline-primary);
+}
+
+h2 {
+  font-size: var(--font-size-heading-2);
+  line-height: var(--line-height-heading-2);
+  font-weight: 700;
+  margin-bottom: 1em;
+  color: var(--outline-primary);
+}
+
+h3 {
+  font-size: var(--font-size-large);
+  line-height: var(--line-height-large);
+  font-weight: 700;
+  margin-bottom: 1em;
+  color: var(--outline-primary);
+}
+
+p {
+  margin-bottom: 1em;
+  color: var(--outline-primary);
+}
+
+a {
+  color: var(--fill-interactive);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+ul,
+ol {
+  margin-left: 2em;
+  margin-bottom: 1em;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Typography Utility Classes */
 .heading-1 {
   font-size: var(--font-size-heading-1);
   line-height: var(--line-height-heading-1);
@@ -174,8 +222,114 @@ body {
   font-weight: 700;
 }
 
-/* Responsive Typography - Mobile */
-@media (max-width: var(--bp-sm)) {
+/* Color Utility Classes */
+.bg-primary {
+  background-color: var(--background-primary);
+}
+
+.surface-primary {
+  background-color: var(--surface-primary);
+}
+
+.surface-interactive {
+  background-color: var(--surface-interactive);
+}
+
+.text-primary {
+  color: var(--outline-primary);
+}
+
+.text-hover {
+  color: var(--outline-hover);
+}
+
+.text-placeholder {
+  color: var(--outline-placeholder);
+}
+
+.text-initial {
+  color: var(--outline-initial);
+}
+
+.text-faint {
+  color: var(--outline-faint);
+}
+
+.text-interactive {
+  color: var(--outline-interactive);
+}
+
+.bg-gradient-brand {
+  background: var(--gradient-brand);
+}
+
+/* Layout Utilities */
+.page {
+  min-height: 100vh;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: var(--container-max);
+  padding: var(--spacing-4xl) 0;
+  gap: var(--spacing-4xl);
+  flex: 1;
+  margin: 0 auto;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.gap-xs {
+  gap: var(--spacing-xs);
+}
+
+.gap-sm {
+  gap: var(--spacing-sm);
+}
+
+.gap-md {
+  gap: var(--spacing-md);
+}
+
+.gap-lg {
+  gap: var(--spacing-lg);
+}
+
+.gap-xl {
+  gap: var(--spacing-xl);
+}
+
+.gap-2xl {
+  gap: var(--spacing-2xl);
+}
+
+/* Interactive States */
+@media (hover: hover) {
+  a:hover {
+    color: var(--fill-interactive-hover);
+    text-decoration: underline;
+  }
+
+  .surface-interactive:hover {
+    background-color: var(--surface-interactive-hover);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1279px) {
+  .container {
+    padding-bottom: var(--spacing-5xl);
+  }
+}
+
+@media (max-width: 759px) {
+  /* Mobile Typography */
   .heading-1 {
     font-size: var(--font-size-heading-1-mobile);
     line-height: var(--line-height-heading-1-mobile);
@@ -213,185 +367,8 @@ body {
     font-size: var(--font-size-medium-mobile);
     line-height: var(--line-height-medium-mobile);
   }
-}
 
-/* HTML Elements */
-h1 {
-  font-size: var(--font-size-heading-1);
-  line-height: var(--line-height-heading-1);
-  font-weight: 700;
-  margin-bottom: var(--spacing-md);
-  color: var(--outline-primary);
-}
-
-h2 {
-  font-size: var(--font-size-heading-2);
-  line-height: var(--line-height-heading-2);
-  font-weight: 700;
-  margin-bottom: var(--spacing-md);
-  color: var(--outline-primary);
-}
-
-h3 {
-  font-size: var(--font-size-large);
-  line-height: var(--line-height-large);
-  font-weight: 700;
-  margin-bottom: var(--spacing-sm);
-  color: var(--outline-primary);
-}
-
-p {
-  margin-bottom: var(--spacing-sm);
-  color: var(--outline-primary);
-}
-
-a {
-  color: var(--fill-interactive);
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-a:hover {
-  color: var(--fill-interactive-hover);
-  text-decoration: underline;
-}
-
-ul,
-ol {
-  margin-left: var(--spacing-xl);
-  margin-bottom: var(--spacing-md);
-}
-
-button {
-  font-family: inherit;
-  cursor: pointer;
-  border: none;
-  transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-/* Color Utility Classes */
-.bg-primary {
-  background-color: var(--background-primary);
-}
-
-.surface-primary {
-  background-color: var(--surface-primary);
-}
-
-.surface-interactive {
-  background-color: var(--surface-interactive);
-}
-
-.surface-interactive:hover {
-  background-color: var(--surface-interactive-hover);
-}
-
-.text-primary {
-  color: var(--outline-primary);
-}
-
-.text-hover {
-  color: var(--outline-hover);
-}
-
-.text-placeholder {
-  color: var(--outline-placeholder);
-}
-
-.text-inital {
-  color: var(--outline-inital);
-}
-
-.text-faint {
-  color: var(--outline-faint);
-}
-
-.text-interactive {
-  color: var(--outline-interactive);
-}
-
-.bg-gradient-brand {
-  background: var(--gradient-brand);
-}
-
-/* Button Utility Classes */
-.btn {
-  padding: 0.75rem 1.5rem;
-  border-radius: 4px;
-  font-weight: 500;
-  display: inline-block;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.btn-interactive {
-  background-color: var(--fill-interactive);
-  color: var(--surface-primary);
-}
-
-.btn-interactive:hover {
-  background-color: var(--fill-interactive-hover);
-  text-decoration: none;
-}
-
-.btn-secondary {
-  background-color: var(--fill-secondary);
-  color: var(--outline-primary);
-}
-
-.btn-secondary:hover {
-  background-color: var(--fill-secondary-hover);
-  text-decoration: none;
-}
-
-.btn-outline {
-  background-color: transparent;
-  border: 1px solid var(--outline-faint);
-  color: var(--outline-primary);
-}
-
-.btn-outline:hover {
-  border-color: var(--outline-hover);
-  text-decoration: none;
-}
-
-/* Layout Utilities */
-.page {
-  min-height: 100vh;
-}
-
-.container {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: var(--container-max);
-  padding: 70px 0;
-  gap: 70px;
-  flex: 1;
-  margin: 0 auto;
-}
-
-.section {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.gap-sm {
-  gap: var(--spacing-sm);
-}
-
-.gap-md {
-  gap: var(--spacing-md);
-}
-
-.gap-lg {
-  gap: var(--spacing-lg);
-}
-
-/* Responsive Typography for HTML Elements */
-@media (max-width: var(--bp-sm)) {
+  /* Mobile Base Typography */
   h1 {
     font-size: var(--font-size-heading-1-mobile);
     line-height: var(--line-height-heading-1-mobile);
