@@ -44,9 +44,27 @@ export interface Review {
   order?: number
 }
 
+export interface Product {
+  id: number
+  name: string
+  slug: string
+  price: string
+  regular_price?: string
+  sale_price?: string
+  on_sale?: boolean
+  currency?: string
+  image?: string
+  link?: string
+  rating?: number
+  rating_count?: number
+  in_stock?: boolean
+}
+
 export interface HomepageData {
   promoBanners: PromoBanner[]
+  newProducts: Product[]
   infoBlocks: InfoBlock[]
+  saleProducts: Product[]
   popularCategories: Category[]
   reviews: Review[]
 }
