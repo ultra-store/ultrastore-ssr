@@ -10,20 +10,6 @@
   transition: all 0.3s ease;
 }
 
-.infoBlock::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  border-radius: 25px;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-}
-
 .infoBlockLink {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -86,10 +72,6 @@
   .infoBlock:hover {
     transform: translateY(-4px);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  }
-
-  .infoBlock:hover::before {
-    opacity: 1;
   }
 
   .infoBlock:hover .infoBlockDescription {
