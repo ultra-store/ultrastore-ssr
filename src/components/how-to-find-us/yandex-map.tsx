@@ -3,21 +3,35 @@
 import { Map, Placemark, YMaps } from '@pbe/react-yandex-maps';
 
 export interface YandexMapProps {
-  /** Full iframe HTML or just URL from contacts.map_iframe */
-  iframe?: string
-  /** Fallback coordinates if not parsed from iframe */
+  url?: string
+  coordinates?: string
   coords?: [number, number]
-  /** Width/height inherit from parent container */
 }
 
-function parseCoordsFromIframe(iframe?: string): [number, number] | null {
-  if (!iframe) {
+function parseCoordsFromString(coordinates?: string): [number, number] | null {
+  if (!coordinates) {
     return null;
   }
 
-  const url = iframe.includes('<iframe')
-    ? (/src="([^"]+)"/.exec(iframe)?.[1] || '')
-    : iframe;
+  // Ожидаемый формат: "lat,lng" или "lat,lng"
+  const parts = coordinates.split(',').map((n) => n.trim());
+
+  if (parts.length >= 2) {
+    const lat = Number(parts[0]);
+    const lng = Number(parts[1]);
+
+    if (!Number.isNaN(lat) && !Number.isNaN(lng)) {
+      return [lat, lng];
+    }
+  }
+
+  return null;
+}
+
+function parseCoordsFromUrl(url?: string): [number, number] | null {
+  if (!url) {
+    return null;
+  }
 
   try {
     const parsed = new URL(url);
@@ -35,7 +49,10 @@ function parseCoordsFromIframe(iframe?: string): [number, number] | null {
     const pt = parsed.searchParams.get('pt');
 
     if (pt) {
-      const [lon, lat] = pt.split(',').slice(0, 2).map((n) => Number(n));
+      const [lon, lat] = pt
+        .split(',')
+        .slice(0, 2)
+        .map((n) => Number(n));
 
       if (!Number.isNaN(lat) && !Number.isNaN(lon)) {
         return [lat, lon];
@@ -48,21 +65,52 @@ function parseCoordsFromIframe(iframe?: string): [number, number] | null {
   return null;
 }
 
-export const YandexMap = ({ iframe, coords }: YandexMapProps) => {
-  const parsed = parseCoordsFromIframe(iframe || '');
-  const center: [number, number] = parsed || coords || [59.9311, 30.3609];
+export const YandexMap = ({ url, coordinates, coords }: YandexMapProps) => {
+  let center: [number, number] = [59.9311, 30.3609];
+
+  // 1. Try direct coordinates string first
+  if (coordinates) {
+    const parsedCoords = parseCoordsFromString(coordinates);
+
+    if (parsedCoords) {
+      center = parsedCoords;
+    }
+  }
+
+  // 2. Try parsing from URL if coordinates not found
+  if (!coordinates && url) {
+    const parsedFromUrl = parseCoordsFromUrl(url);
+
+    if (parsedFromUrl) {
+      center = parsedFromUrl;
+    }
+  }
+
+  // 3. Use fallback coordinates if provided
+  if (coords) {
+    center = coords;
+  }
 
   return (
     <YMaps>
       <Map
         defaultState={{
           center,
-          zoom: 16,
+          zoom: 17,
         }}
         width="100%"
         height="100%"
       >
-        <Placemark geometry={center} />
+        <Placemark
+          modules={['geoObject.addon.balloon']}
+          geometry={center}
+          properties={{
+            balloonContentHeader: '',
+            balloonContentBody: `UltraStore`,
+            iconContent: 'UltraStore',
+          }}
+          options={{ preset: 'islands#pinkStretchyIcon' }}
+        />
       </Map>
     </YMaps>
   );

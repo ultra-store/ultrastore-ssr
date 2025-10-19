@@ -208,7 +208,9 @@ export interface paths {
                                 phone_secondary?: string;
                                 email?: string;
                                 working_hours?: string;
-                                map_iframe?: string;
+                                map_type?: string;
+                                map_src?: string;
+                                coordinates?: string;
                             };
                             social: {
                                 id: string;
@@ -783,7 +785,9 @@ export interface paths {
                                 phone_secondary?: string;
                                 email?: string;
                                 working_hours?: string;
-                                map_iframe?: string;
+                                map_type?: string;
+                                map_src?: string;
+                                coordinates?: string;
                             };
                             social?: {
                                 id: string;

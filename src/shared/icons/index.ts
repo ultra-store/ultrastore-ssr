@@ -1,6 +1,7 @@
 import Burger from './burger.svg';
 import Cart from './cart.svg';
 import Catalog from './catalog.svg';
+import Clock from './clock.svg';
 import Close from './close.svg';
 import Comparison from './comparison.svg';
 import Favorite from './favorite.svg';
@@ -18,6 +19,7 @@ const icons = {
   burger: Burger,
   cart: Cart,
   catalog: Catalog,
+  clock: Clock,
   close: Close,
   comparison: Comparison,
   favorite: Favorite,

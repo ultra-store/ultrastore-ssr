@@ -1,7 +1,11 @@
+import Image from 'next/image';
 import Link from 'next/link';
 
 import { SocialButtons } from '@/components/social-buttons';
+import { Section } from '@/components/ui/section';
 import { getLayoutData } from '@/shared/api/getLayoutData';
+
+import icons from '@/shared/icons';
 
 import type { Contacts, Social } from '@/shared/types';
 
@@ -26,7 +30,8 @@ export const HowToFindUs = async ({ title = 'Как нас найти', contacts
     resolvedSocials = resolvedSocials || layout.social;
   }
 
-  const mapSrc = resolvedContacts?.map_iframe;
+  const coordinates = resolvedContacts?.coordinates;
+  const url = resolvedContacts?.map_iframe || resolvedContacts?.map_src;
   const address = resolvedContacts?.address || 'Санкт-Петербург, Лиговский 71, м. Площадь Восстания';
   const phoneText = resolvedContacts?.phone_primary || '+7 (999) 999-99-99';
   const phoneHref = `tel:${phoneText.replace(/[^+\d]/g, '')}`;
@@ -35,15 +40,15 @@ export const HowToFindUs = async ({ title = 'Как нас найти', contacts
   const workingHours = resolvedContacts?.working_hours || 'Ежедневно с 10:00 до 22:00';
 
   return (
-    <section className={`section ${styles.section}`} aria-label={title}>
-      <h2 className={`heading-1 ${styles.title}`}>{title}</h2>
+    <Section title={title} ariaLabel={title}>
       <div className={styles.panel}>
         <div className={styles.map}>
-          <YandexMap iframe={mapSrc || undefined} />
+          <YandexMap url={url} coordinates={coordinates} />
         </div>
         <div className={styles.content}>
           <div className={styles.row}>
             <div className={styles.line}>
+              <Image src={icons.pin} alt="Адрес" width={17} height={17} />
               <span className={styles.label}>Адрес</span>
             </div>
             <span className={styles.value}>{address}</span>
@@ -51,21 +56,27 @@ export const HowToFindUs = async ({ title = 'Как нас найти', contacts
 
           <div className={styles.row}>
             <div className={styles.line}>
+              <Image src={icons.phone} alt="Телефон" width={17} height={17} />
               <span className={styles.label}>Телефон</span>
             </div>
-            <Link href={phoneHref} className={styles.value}>{phoneText}</Link>
+            <Link href={phoneHref} className={styles.value}>
+              {phoneText}
+            </Link>
           </div>
 
           <div className={styles.row}>
             <div className={styles.line}>
+              <Image src={icons.mail} alt="Почта" width={17} height={17} />
               <span className={styles.label}>Почта</span>
             </div>
-            <Link href={emailHref} className={styles.value}>{emailText}</Link>
+            <Link href={emailHref} className={styles.value}>
+              {emailText}
+            </Link>
           </div>
 
           <div className={styles.row}>
             <div className={styles.line}>
-              <span className={styles.label}>Почта</span>
+              <Image src={icons.clock} alt="Режим работы" width={17} height={17} />
               <span className={styles.label}>Режим работы</span>
             </div>
             <span className={styles.value}>{workingHours}</span>
@@ -77,6 +88,6 @@ export const HowToFindUs = async ({ title = 'Как нас найти', contacts
           </div>
         </div>
       </div>
-    </section>
+    </Section>
   );
 };

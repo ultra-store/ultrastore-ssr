@@ -92,6 +92,8 @@ export interface Contacts {
   email?: string
   working_hours?: string
   map_iframe?: string
+  map_src?: string
+  coordinates?: string
 }
 
 export interface Social {
