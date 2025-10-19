@@ -31,7 +31,6 @@ const tabs: TabItem[] = [
     href: '/cart',
     icon: 'cart',
     label: 'Корзина',
-    badge: 1,
   },
 ];
 
