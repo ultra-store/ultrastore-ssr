@@ -1,8 +1,27 @@
 .infoBlock {
+  position: relative;
   width: 100%;
+  margin: 0 auto;
   border-radius: 25px;
   background-color: var(--bg-color, var(--surface-interactive));
   overflow: hidden;
+  max-width: var(--container-max);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.infoBlock::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 25px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
 }
 
 .infoBlockLink {
@@ -18,18 +37,66 @@
 
 .infoBlockDescription {
   color: var(--outline-primary);
-  font-size: var(--font-size-heading-1);
-  font-weight: 500;
-  line-height: var(--line-height-heading-1);
   margin-bottom: 0;
+  transition: color 0.3s ease;
 }
 
 .infoBlockImage {
   height: auto;
+  transition: transform 0.3s ease;
+}
+
+.infoBlockImageDesktop {
+  display: block;
+}
+
+.infoBlockImageMobile {
+  display: none;
 }
 
 .infoBlockImage img {
   width: 100%;
-  height: auto;
-  object-fit: contain;
+  height: 100%;
+}
+
+@media (max-width: 1279px) {
+  .infoBlockLink {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .infoBlockContent {
+    padding-bottom: 0;
+  }
+
+  .infoBlockDescription {
+    max-width: 70%;
+  }
+
+  .infoBlockImageDesktop {
+    display: none;
+  }
+
+  .infoBlockImageMobile {
+    display: block;
+  }
+}
+
+@media (hover: hover) {
+  .infoBlock:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  }
+
+  .infoBlock:hover::before {
+    opacity: 1;
+  }
+
+  .infoBlock:hover .infoBlockDescription {
+    color: var(--fill-interactive);
+  }
+
+  .infoBlock:hover .infoBlockImage {
+    transform: scale(1.05);
+  }
 }

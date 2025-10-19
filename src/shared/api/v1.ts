@@ -47,6 +47,8 @@ export interface paths {
                                 description?: string;
                                 image?: string;
                                 image_alt?: string;
+                                mobile_image?: string;
+                                mobile_image_alt?: string;
                                 bg_color?: string;
                                 link?: string;
                                 order?: number;
@@ -518,6 +520,8 @@ export interface paths {
                                 description?: string;
                                 image?: string;
                                 image_alt?: string;
+                                mobile_image?: string;
+                                mobile_image_alt?: string;
                                 bg_color?: string;
                                 link?: string;
                                 order?: number;

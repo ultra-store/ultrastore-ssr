@@ -1,5 +1,6 @@
 // import { HowToFindUs } from '@/components/how-to-find-us';
 // import { InfoBlock } from '@/components/info-block';
+import { InfoBlock } from '@/components/info-block';
 import { PopularCategories } from '@/components/popular-categories';
 // import { ProductLevel } from '@/components/products';
 // import { PromoBanners } from '@/components/promo-banners';
@@ -7,11 +8,15 @@ import { PopularCategories } from '@/components/popular-categories';
 import { getHomepageData } from '@/shared/api/getHomepageData';
 
 export default async function HomePage() {
-  const data = await getHomepageData();
+  const { popular_categories, info_blocks } = await getHomepageData();
+
+  const [firstInfoBlock, secondInfoBlock] = info_blocks || [];
 
   return (
     <>
-      <PopularCategories items={data.popular_categories} />
+      <PopularCategories items={popular_categories} />
+      <InfoBlock {...firstInfoBlock} />
+      <InfoBlock {...secondInfoBlock} />
     </>
   );
 }
