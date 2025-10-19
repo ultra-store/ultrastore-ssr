@@ -31,7 +31,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
           contacts={contacts}
           socials={social}
         />
-        <main className="container">
+        <main className="main">
           {children}
         </main>
         <Footer socials={social} menu={footer.menu} contacts={contacts} />

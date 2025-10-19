@@ -10,7 +10,11 @@
   flex-grow: 0;
 }
 
-@media (max-width: 1279px) and (min-width: 760px) {
+.tabletNav {
+  display: none;
+}
+
+@media (max-width: 1279px) {
   .topNav {
     display: none;
   }

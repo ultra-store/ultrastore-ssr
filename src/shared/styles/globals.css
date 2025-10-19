@@ -13,6 +13,7 @@
   --spacing-lg: 20px;
   --spacing-xl: 25px;
   --spacing-2xl: 30px;
+  --spacing-25xl: 40px;
   --spacing-3xl: 50px;
   --spacing-4xl: 70px;
   --spacing-5xl: 140px;
@@ -53,6 +54,7 @@
 
   /* Typography - Desktop */
   --font-size-heading-1: 38px;
+  --font-size-heading-1-regular: 38px;
   --font-size-number: 28px;
   --font-size-heading-2: 24px;
   --font-size-large: 17px;
@@ -61,7 +63,8 @@
   --font-size-small: 13px;
 
   /* Typography - Mobile */
-  --font-size-heading-1-mobile: 24px;
+  --font-size-heading-1-mobile: 28px;
+  --font-size-heading-1-regular-mobile: 24px;
   --font-size-number-mobile: 24px;
   --font-size-heading-2-mobile: 20px;
   --font-size-large-mobile: 17px;
@@ -80,7 +83,7 @@
   --line-height-small: 16px;
 
   /* Line Heights - Mobile */
-  --line-height-heading-1-mobile: 26px;
+  --line-height-heading-1-mobile: 32px;
   --line-height-heading-1-regular-mobile: 26px;
   --line-height-number-mobile: 28px;
   --line-height-heading-2-mobile: 24px;
@@ -264,21 +267,14 @@ button {
   min-height: 100vh;
 }
 
-.container {
+.main {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-4xl);
   width: 100%;
   margin: 0 auto;
   padding: var(--spacing-4xl) 0;
-  max-width: var(--container-max);
   flex: 1;
-}
-
-.section {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-md);
 }
 
 .gap-xs {
@@ -330,5 +326,46 @@ button {
   body {
     font-size: var(--font-size-medium-mobile);
     line-height: var(--line-height-medium-mobile);
+  }
+
+  /* Mobile Typography Utility Classes */
+  .heading-1 {
+    font-size: var(--font-size-heading-1-mobile);
+    line-height: var(--line-height-heading-1-mobile);
+  }
+
+  .heading-1-regular {
+    font-size: var(--font-size-heading-1-regular-mobile);
+    line-height: var(--line-height-heading-1-regular-mobile);
+  }
+
+  .number {
+    font-size: var(--font-size-number-mobile);
+    line-height: var(--line-height-number-mobile);
+  }
+
+  .heading-2 {
+    font-size: var(--font-size-heading-2-mobile);
+    line-height: var(--line-height-heading-2-mobile);
+  }
+
+  .large {
+    font-size: var(--font-size-large-mobile);
+    line-height: var(--line-height-large-mobile);
+  }
+
+  .secondary {
+    font-size: var(--font-size-secondary-mobile);
+    line-height: var(--line-height-secondary-mobile);
+  }
+
+  .medium {
+    font-size: var(--font-size-medium-mobile);
+    line-height: var(--line-height-medium-mobile);
+  }
+
+  .main {
+    gap: var(--spacing-25xl);
+    padding: var(--spacing-25xl) 0;
   }
 }

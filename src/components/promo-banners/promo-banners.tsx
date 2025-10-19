@@ -1,3 +1,5 @@
+import { Section } from '@/components/ui/section';
+
 import { PromoBanner, type PromoBannerProps } from './promo-banner';
 
 import styles from './promo-banners.module.css';
@@ -10,12 +12,12 @@ export const PromoBanners = ({ items }: PromoBannersProps) => {
   }
 
   return (
-    <section className={`section ${styles.section}`} aria-label="Промо баннеры">
+    <Section title="Промо баннеры" className={styles.section} ariaLabel="Промо баннеры">
       <div className={styles.row}>
         {items.map((b, idx) => (
           <PromoBanner key={idx} {...b} />
         ))}
       </div>
-    </section>
+    </Section>
   );
 };
