@@ -16,6 +16,9 @@
 }
 
 @media (max-width: 1279px) {
+  .header {
+    padding: var(--spacing-xl) var(--spacing-2xl) 0;
+  }
 }
 
 @media (max-width: 759px) {

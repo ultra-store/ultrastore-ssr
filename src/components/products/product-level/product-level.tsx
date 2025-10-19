@@ -1,6 +1,7 @@
 import { ProductCard } from '@/components/products';
 import { LongButton } from '@/components/ui/long-button';
 
+import { Section } from '@/components/ui/section';
 import type { Product } from '@/shared/types/types';
 
 import styles from './product-level.module.css';
@@ -22,21 +23,19 @@ export const ProductLevel = ({
     return null;
   }
 
-  const visible = items.slice(0, 5);
-
   return (
-    <section className={`section ${styles.section}`} aria-label={title}>
-      <h2 className={`heading-1 ${styles.title}`}>{title}</h2>
+    <Section title={title} ariaLabel={title}>
       <div className={styles.row}>
-        {visible.map((product) => (
+        {items.map((product) => (
           <ProductCard
             key={product.id}
             {...product}
+            className={styles.productCard}
           />
         ))}
       </div>
 
       <LongButton href={ctaHref} asButton>{`${ctaText} →`}</LongButton>
-    </section>
+    </Section>
   );
 };

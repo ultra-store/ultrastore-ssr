@@ -29,10 +29,26 @@
   }
 }
 
+@media (max-width: 1499px) {
+  .content {
+    padding: 0 var(--spacing-3xl);
+  }
+}
+
 @media (max-width: 1279px) {
   .title {
-    padding: 0 var(--spacing-lg);
+    padding: 0 var(--spacing-2xl);
     font-size: var(--font-size-heading-1-mobile);
     line-height: var(--line-height-heading-1-mobile);
+  }
+
+  .content {
+    padding: 0 var(--spacing-2xl);
+  }
+}
+
+@media (max-width: 759px) {
+  .content {
+    padding: 0;
   }
 }
