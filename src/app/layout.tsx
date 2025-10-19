@@ -1,7 +1,10 @@
+import type { ReactNode } from 'react';
+
 import type { Metadata } from 'next';
 
 import { Footer } from '@/components/footer';
 import { Header } from '@/components/header';
+import { MobileTabBar } from '@/components/mobile-tabbar';
 import { getLayoutData } from '@/shared/api/getLayoutData';
 import { formular } from '@/shared/styles/fonts';
 import '@/shared/styles/globals.css';
@@ -16,7 +19,7 @@ export const metadata: Metadata = {
   manifest: '/manifest.webmanifest',
 };
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: ReactNode }) {
   const { header, footer, contacts, social } = await getLayoutData('front-page');
 
   return (
@@ -32,6 +35,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           {children}
         </main>
         <Footer socials={social} menu={footer.menu} contacts={contacts} />
+        <MobileTabBar />
       </body>
     </html>
   );

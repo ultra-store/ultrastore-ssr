@@ -2,15 +2,11 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 5px;
-  padding: 0px;
+  gap: var(--spacing-xs);
+  padding: 0;
   text-decoration: none;
   transition: opacity 0.3s ease;
-}
-
-.contactLink:hover {
-  text-decoration: none;
-  opacity: 0.7;
+  font-style: normal;
 }
 
 .text {
@@ -18,7 +14,6 @@
   font-size: var(--font-size-medium);
   font-weight: 400;
   line-height: var(--line-height-medium);
-  font-style: normal;
 }
 
 .textBold {
@@ -26,6 +21,10 @@
   font-size: var(--font-size-medium);
   font-weight: 700;
   line-height: var(--line-height-medium);
-  font-style: normal;
 }
 
+@media (hover: hover) {
+  .contactLink:hover {
+    opacity: 0.7;
+  }
+}

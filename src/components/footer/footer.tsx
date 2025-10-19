@@ -36,6 +36,7 @@ export const Footer = ({ menu, contacts, socials }: FooterProps) => {
           <Logo href="/" title="Ultrastore" full height={40} className={styles.logo} />
 
           <div className={styles.contacts}>
+            <h2 className={styles.contactsHeading}>Контакты</h2>
             <ul className={styles.contactList}>
               <li className={styles.contactItem}>
                 <Link href={mapHref} target="_blank" rel="noopener noreferrer">

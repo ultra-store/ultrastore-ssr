@@ -3,12 +3,22 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  gap: 15px;
+  gap: var(--spacing-md);
   width: 100%;
-  margin: 0 auto;
-  padding: 15px 0 25px;
+  margin: 0;
+  padding: var(--spacing-md) 0 var(--spacing-xl);
   border-top: 1px solid var(--outline-faint);
   max-width: var(--container-max);
 }
 
+@media (max-width: 1279px) {
+  .categoriesNav > *:nth-child(n + 6) {
+    display: none;
+  }
+}
 
+@media (max-width: 759px) {
+  .categoriesNav {
+    display: none;
+  }
+}

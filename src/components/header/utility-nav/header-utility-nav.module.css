@@ -1,7 +1,22 @@
 .topNav {
   display: flex;
+  flex-direction: row;
+  align-items: center;
   gap: var(--spacing-xl);
+  height: 20px;
   padding: 0;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
 }
 
+@media (max-width: 1279px) and (min-width: 760px) {
+  .topNav {
+    display: none;
+  }
+
+  .tabletNav {
+    display: block;
+  }
+}
 

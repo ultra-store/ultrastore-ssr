@@ -2,6 +2,8 @@ import { CategoriesNav, HeaderMainBar, HeaderTopBar } from '@/components/header'
 
 import type { Contacts, MenuItem, Social } from '@/shared/types';
 
+import { MobileStickyController } from './mobile-sticky-controller';
+
 import styles from './header.module.css';
 
 export interface HeaderProps {
@@ -13,7 +15,8 @@ export interface HeaderProps {
 
 export const Header = ({ topMenu, categoriesMenu, contacts, socials }: HeaderProps) => {
   return (
-    <header className={styles.header}>
+    <header id="site-header" className={styles.header}>
+      <MobileStickyController targetId="site-header" />
       <section className={styles.container}>
         <HeaderTopBar menu={topMenu} contacts={contacts} socials={socials} />
         <HeaderMainBar />

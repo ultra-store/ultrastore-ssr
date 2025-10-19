@@ -49,7 +49,6 @@
   transition: opacity 0.2s ease;
 }
 
-/* Tablet and Mobile styles */
 @media (max-width: 1279px) {
   .searchBar {
     justify-content: center;
@@ -61,7 +60,7 @@
     min-width: 55px;
     flex-grow: 0;
     transition: max-width 0.35s cubic-bezier(0.4, 0, 0.2, 1), padding 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-      background-color 0.35s cubic-bezier(0.4, 0, 0.2, 1), border 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    background-color 0.35s cubic-bezier(0.4, 0, 0.2, 1), border 0.15s cubic-bezier(0.4, 0, 0.2, 1);
     will-change: max-width;
   }
 
@@ -90,7 +89,7 @@
     background-color: var(--surface-primary);
     max-width: 100%;
     transition: max-width 0.35s cubic-bezier(0.4, 0, 0.2, 1), padding 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-      background-color 0.35s cubic-bezier(0.4, 0, 0.2, 1), border 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    background-color 0.35s cubic-bezier(0.4, 0, 0.2, 1), border 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .searchBar.expanded .input {

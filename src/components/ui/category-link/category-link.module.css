@@ -1,5 +1,4 @@
 .categoryLink {
-  margin: 0 auto;
   color: var(--outline-primary);
   font-size: var(--font-size-large);
   font-weight: 700;
@@ -9,8 +8,10 @@
   white-space: nowrap;
 }
 
-.categoryLink:hover {
-  color: var(--outline-hover);
-  text-decoration: none;
+@media (hover: hover) {
+  .categoryLink:hover {
+    color: var(--outline-hover);
+    text-decoration: none;
+  }
 }
 

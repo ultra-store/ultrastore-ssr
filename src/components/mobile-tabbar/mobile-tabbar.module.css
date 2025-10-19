@@ -1,0 +1,93 @@
+.mobileTabBar {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 65px;
+  padding: var(--spacing-sm) var(--spacing-xs);
+  background-color: var(--surface-primary);
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+}
+
+
+.tabLink {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+}
+
+.tabButton {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+  width: 100%;
+  transition: all 0.2s ease;
+  height: 64px;
+  max-width: 64px;
+}
+
+.tabButton.active .tabLabel {
+  color: var(--fill-interactive-active);
+}
+
+.tabLabel {
+  margin: 0;
+  padding: 0;
+  color: var(--outline-placeholder);
+  font-size: var(--font-size-small);
+  font-weight: 400;
+  line-height: var(--line-height-small);
+}
+
+.tabButton .badge {
+  position: absolute;
+  top: 4px;
+  right: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 16px;
+  padding: 0 var(--spacing-xs);
+  border-radius: 8px;
+  background-color: var(--fill-interactive);
+  color: var(--surface-primary);
+  font-size: var(--font-size-small);
+  font-weight: 700;
+  line-height: var(--line-height-small);
+  min-width: 16px;
+  box-sizing: border-box;
+}
+
+.tabButton img {
+  width: 24px;
+  height: 24px;
+}
+
+
+@media (min-width: 1280px) {
+  .mobileTabBar {
+    display: none;
+  }
+}
+
+@supports (padding: max(0px)) {
+  .mobileTabBar {
+    padding-bottom: max(8px, env(safe-area-inset-bottom));
+  }
+}
+
+@media (hover: hover) {
+  .tabButton:hover {
+    background-color: var(--surface-primary-hover);
+  }
+}

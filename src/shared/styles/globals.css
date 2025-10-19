@@ -48,6 +48,9 @@
   --gradient-brand: linear-gradient(180deg, var(--surface-primary) 15%, var(--surface-interactive) 100%);
   --gradient-brand-radial: radial-gradient(50% 50% at 50% 50%, var(--surface-primary) 15%, var(--surface-interactive) 100%);
 
+  /* Fonts */
+  --font-formular: 'Formular', sans-serif;
+
   /* Typography - Desktop */
   --font-size-heading-1: 38px;
   --font-size-number: 28px;
@@ -96,7 +99,7 @@
   padding: 0;
 }
 
-/* Base Styles */
+/* Global Styles */
 html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -160,7 +163,6 @@ ol {
 button {
   border: none;
   cursor: pointer;
-  font-family: inherit;
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
@@ -226,7 +228,6 @@ button {
   line-height: var(--line-height-medium);
 }
 
-/* Color Utility Classes */
 .bg-primary {
   background-color: var(--background-primary);
 }
@@ -259,15 +260,6 @@ button {
   color: var(--outline-faint);
 }
 
-.text-interactive {
-  color: var(--outline-interactive);
-}
-
-.bg-gradient-brand {
-  background: var(--gradient-brand);
-}
-
-/* Layout Utilities */
 .page {
   min-height: 100vh;
 }
@@ -313,19 +305,6 @@ button {
   gap: var(--spacing-2xl);
 }
 
-/* Interactive States */
-@media (hover: hover) {
-  a:hover {
-    color: var(--fill-interactive-hover);
-    text-decoration: underline;
-  }
-
-  .surface-interactive:hover {
-    background-color: var(--surface-interactive-hover);
-  }
-}
-
-/* Responsive Design */
 @media (max-width: 1279px) {
   .container {
     padding-bottom: var(--spacing-5xl);
@@ -333,46 +312,6 @@ button {
 }
 
 @media (max-width: 759px) {
-  /* Mobile Typography */
-  .heading-1 {
-    font-size: var(--font-size-heading-1-mobile);
-    line-height: var(--line-height-heading-1-mobile);
-  }
-
-  .heading-1-regular {
-    font-size: var(--font-size-heading-1-mobile);
-    line-height: var(--line-height-heading-1-regular-mobile);
-  }
-
-  .number {
-    font-size: var(--font-size-number-mobile);
-    line-height: var(--line-height-number-mobile);
-  }
-
-  .heading-2 {
-    font-size: var(--font-size-heading-2-mobile);
-    line-height: var(--line-height-heading-2-mobile);
-  }
-
-  .large,
-  .large-bold {
-    font-size: var(--font-size-large-mobile);
-    line-height: var(--line-height-large-mobile);
-  }
-
-  .secondary,
-  .secondary-bold {
-    font-size: var(--font-size-secondary-mobile);
-    line-height: var(--line-height-secondary-mobile);
-  }
-
-  .medium,
-  .medium-bold {
-    font-size: var(--font-size-medium-mobile);
-    line-height: var(--line-height-medium-mobile);
-  }
-
-  /* Mobile Base Typography */
   h1 {
     font-size: var(--font-size-heading-1-mobile);
     line-height: var(--line-height-heading-1-mobile);

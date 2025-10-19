@@ -1,20 +1,20 @@
 .button {
-  display: inline-flex;
+  display: flex;
   justify-content: center;
   align-items: center;
-  padding: 8px;
+  padding: 0;
   border: none;
   background: none;
-  color: inherit;
-  cursor: pointer;
+  line-height: 0;
   transition: opacity 0.2s ease;
-}
-
-.button:hover {
-  opacity: 0.7;
 }
 
 .button:active {
   opacity: 0.5;
 }
 
+@media (hover: hover) {
+  .button:hover {
+    opacity: 0.7;
+  }
+}
