@@ -27,7 +27,13 @@
   line-height: var(--line-height-large);
 }
 
-@media (max-width: 1279px) {
+@media (max-width: 1023px) {
+  .row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 599px) {
   .row {
     grid-template-columns: 1fr;
   }

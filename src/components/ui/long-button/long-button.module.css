@@ -15,11 +15,16 @@
   line-height: var(--line-height-large);
 }
 
+@media (max-width: 759px) {
+  .button {
+    padding: var(--spacing-md) var(--spacing-sm);
+  }
+}
+
 @media (hover: hover) {
   .button:hover {
     background: var(--surface-primary-hover);
     border-color: var(--outline-faint-hover);
   }
 }
-
 
