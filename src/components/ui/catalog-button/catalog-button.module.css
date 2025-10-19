@@ -3,9 +3,6 @@
   flex-shrink: 0;
 }
 
-@media (max-width: var(--bp-sm)) {
-  .catalogButtonWrapper {
-    display: none;
-  }
+.catalogButton img {
+  filter: invert(1);
 }
-

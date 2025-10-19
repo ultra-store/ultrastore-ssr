@@ -17,6 +17,7 @@ export const CatalogButton = ({ onClick, className }: CatalogButtonProps) => {
         variant="compact"
         onClick={onClick}
         aria-label="Открыть каталог"
+        className={styles.catalogButton}
       >
         <span>Каталог</span>
       </Button>
