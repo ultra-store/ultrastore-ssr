@@ -8,32 +8,20 @@
   gap: var(--spacing-lg);
 }
 
-@media (min-width: var(--bp-md)) {
-  .grid {
-    grid-template-columns: repeat(5, 1fr);
-  }
-}
-
-@media (min-width: 1400px) {
-  .grid {
-    grid-template-columns: repeat(6, 1fr);
-  }
-}
-
 .card {
-  background: var(--gradient-brand-radial);
+  padding: var(--spacing-lg) var(--spacing-sm) var(--spacing-lg);
   border-radius: 16px;
-  padding: 20px 16px 20px;
+  background: var(--gradient-brand-radial);
   text-align: center;
 }
 
 .image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   height: 120px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 20px;
+  margin-bottom: var(--spacing-lg);
 }
 
 .image img {
@@ -51,4 +39,14 @@
   color: inherit;
 }
 
+@media (min-width: 1279px) {
+  .grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
 
+@media (min-width: 1400px) {
+  .grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}

@@ -3,14 +3,14 @@
 }
 
 .panel {
-  box-sizing: border-box;
   display: grid;
-  grid-template-columns: 610px 1fr;
-  gap: 30px;
-  padding: 10px 0 10px 10px;
-  background: var(--surface-primary);
+  gap: var(--spacing-2xl);
+  padding: var(--spacing-sm) 0 var(--spacing-sm) var(--spacing-sm);
   border: 1px solid var(--outline-faint);
   border-radius: 25px;
+  background: var(--surface-primary);
+  box-sizing: border-box;
+  grid-template-columns: 610px 1fr;
 }
 
 .map {
@@ -31,20 +31,20 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 25px;
-  padding: 10px 30px 20px 0;
+  gap: var(--spacing-xl);
+  padding: var(--spacing-sm) var(--spacing-2xl) var(--spacing-lg) 0;
 }
 
 .row {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: var(--spacing-xs);
 }
 
 .line {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: var(--spacing-xs);
 }
 
 .icon {
@@ -61,20 +61,20 @@
 .value {
   color: var(--outline-primary);
   font-size: var(--font-size-large);
-  line-height: var(--line-height-large);
   font-weight: 700;
+  line-height: var(--line-height-large);
 }
 
 .socialsBlock {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: var(--spacing-sm);
 }
 
-@media (max-width: var(--bp-md)) {
+@media (max-width: 1279px) {
   .panel {
     grid-template-columns: 1fr;
-    padding: 10px;
+    padding: var(--spacing-sm);
   }
 
   .map {

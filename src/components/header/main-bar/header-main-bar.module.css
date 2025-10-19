@@ -1,28 +1,28 @@
 .headerMainBar {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
-  margin: 0 auto;
   height: 55px;
+  margin: 0 auto;
 }
 
 .logo {
-  margin-right: 30px;
+  margin-right: var(--spacing-2xl);
 }
 
 .catalogAndSearch {
   display: flex;
   max-height: inherit;
   align-items: center;
-  gap: 10px;
+  gap: var(--spacing-sm);
 }
 
 .headerActions {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  gap: 10px;
+  gap: var(--spacing-sm);
   flex-grow: 1;
 }
 

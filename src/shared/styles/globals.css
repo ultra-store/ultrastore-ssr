@@ -55,6 +55,7 @@
   --font-size-large: 17px;
   --font-size-secondary: 17px;
   --font-size-medium: 15px;
+  --font-size-small: 13px;
 
   /* Typography - Mobile */
   --font-size-heading-1-mobile: 24px;
@@ -63,6 +64,7 @@
   --font-size-large-mobile: 17px;
   --font-size-secondary-mobile: 15px;
   --font-size-medium-mobile: 15px;
+  --font-size-small-mobile: 13px;
 
   /* Line Heights - Desktop */
   --line-height-heading-1: 45px;
@@ -72,6 +74,7 @@
   --line-height-large: 25px;
   --line-height-secondary: 20px;
   --line-height-medium: 20px;
+  --line-height-small: 16px;
 
   /* Line Heights - Mobile */
   --line-height-heading-1-mobile: 26px;
@@ -81,6 +84,7 @@
   --line-height-large-mobile: 25px;
   --line-height-secondary-mobile: 17px;
   --line-height-medium-mobile: 20px;
+  --line-height-small-mobile: 16px;
 }
 
 /* Global Reset */
@@ -100,40 +104,40 @@ html {
 }
 
 body {
-  font-family: var(--font-formular);
+  display: flex;
+  flex-direction: column;
   background-color: var(--background-primary);
   color: var(--outline-primary);
   font-size: var(--font-size-medium);
-  line-height: var(--line-height-medium);
   font-weight: 400;
+  line-height: var(--line-height-medium);
+  font-family: var(--font-formular);
   min-height: 100%;
-  display: flex;
-  flex-direction: column;
 }
 
 /* Base Typography */
 h1 {
-  font-size: var(--font-size-heading-1);
-  line-height: var(--line-height-heading-1);
-  font-weight: 700;
-  margin-bottom: 1em;
   color: var(--outline-primary);
+  font-size: var(--font-size-heading-1);
+  font-weight: 700;
+  line-height: var(--line-height-heading-1);
+  margin-bottom: 1em;
 }
 
 h2 {
-  font-size: var(--font-size-heading-2);
-  line-height: var(--line-height-heading-2);
-  font-weight: 700;
-  margin-bottom: 1em;
   color: var(--outline-primary);
+  font-size: var(--font-size-heading-2);
+  font-weight: 700;
+  line-height: var(--line-height-heading-2);
+  margin-bottom: 1em;
 }
 
 h3 {
-  font-size: var(--font-size-large);
-  line-height: var(--line-height-large);
-  font-weight: 700;
-  margin-bottom: 1em;
   color: var(--outline-primary);
+  font-size: var(--font-size-large);
+  font-weight: 700;
+  line-height: var(--line-height-large);
+  margin-bottom: 1em;
 }
 
 p {
@@ -154,72 +158,72 @@ ol {
 }
 
 button {
-  font-family: inherit;
-  cursor: pointer;
   border: none;
+  cursor: pointer;
+  font-family: inherit;
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 /* Typography Utility Classes */
 .heading-1 {
   font-size: var(--font-size-heading-1);
-  line-height: var(--line-height-heading-1);
   font-weight: 700;
+  line-height: var(--line-height-heading-1);
 }
 
 .heading-1-regular {
   font-size: var(--font-size-heading-1);
-  line-height: var(--line-height-heading-1-regular);
   font-weight: 400;
+  line-height: var(--line-height-heading-1-regular);
 }
 
 .number {
   font-size: var(--font-size-number);
-  line-height: var(--line-height-number);
   font-weight: 700;
+  line-height: var(--line-height-number);
   font-variant-numeric: tabular-nums;
 }
 
 .heading-2 {
   font-size: var(--font-size-heading-2);
-  line-height: var(--line-height-heading-2);
   font-weight: 700;
+  line-height: var(--line-height-heading-2);
 }
 
 .large {
   font-size: var(--font-size-large);
-  line-height: var(--line-height-large);
   font-weight: 400;
+  line-height: var(--line-height-large);
 }
 
 .large-bold {
   font-size: var(--font-size-large);
-  line-height: var(--line-height-large);
   font-weight: 700;
+  line-height: var(--line-height-large);
 }
 
 .secondary {
   font-size: var(--font-size-secondary);
-  line-height: var(--line-height-secondary);
   font-weight: 400;
+  line-height: var(--line-height-secondary);
 }
 
 .secondary-bold {
   font-size: var(--font-size-secondary);
-  line-height: var(--line-height-secondary);
   font-weight: 700;
+  line-height: var(--line-height-secondary);
 }
 
 .medium {
   font-size: var(--font-size-medium);
-  line-height: var(--line-height-medium);
   font-weight: 400;
+  line-height: var(--line-height-medium);
 }
 
 .medium-bold {
   font-size: var(--font-size-medium);
-  line-height: var(--line-height-medium);
   font-weight: 700;
+  line-height: var(--line-height-medium);
 }
 
 /* Color Utility Classes */
@@ -271,12 +275,12 @@ button {
 .container {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  max-width: var(--container-max);
-  padding: var(--spacing-4xl) 0;
   gap: var(--spacing-4xl);
-  flex: 1;
+  width: 100%;
   margin: 0 auto;
+  padding: var(--spacing-4xl) 0;
+  max-width: var(--container-max);
+  flex: 1;
 }
 
 .section {

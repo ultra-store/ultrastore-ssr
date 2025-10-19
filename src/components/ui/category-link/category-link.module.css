@@ -1,11 +1,9 @@
 .categoryLink {
   margin: 0 auto;
-  font-family: 'Formular';
-  font-style: normal;
-  font-weight: 700;
-  font-size: 17px;
-  line-height: 25px;
   color: var(--outline-primary);
+  font-size: var(--font-size-large);
+  font-weight: 700;
+  line-height: var(--line-height-large);
   text-decoration: none;
   transition: color 0.3s ease;
   white-space: nowrap;

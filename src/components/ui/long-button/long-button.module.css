@@ -1,12 +1,12 @@
 .button {
-  width: 100%;
-  background: var(--surface-primary);
-  border: 1px solid var(--outline-faint);
-  border-radius: 25px;
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
   padding: 25px 20px;
+  border: 1px solid var(--outline-faint);
+  border-radius: 25px;
+  background: var(--surface-primary);
 }
 
 .text {

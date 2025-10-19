@@ -1,7 +1,7 @@
 .socialButton {
   display: inline-flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   transition: opacity 0.3s ease, filter 0.3s ease;
   opacity: 0.7;
 }

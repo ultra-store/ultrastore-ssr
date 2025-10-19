@@ -1,7 +1,7 @@
 .topNav {
   display: flex;
-  padding: 0px;
-  gap: 25px;
+  gap: var(--spacing-xl);
+  padding: 0;
 }
 
 

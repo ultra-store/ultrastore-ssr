@@ -5,32 +5,32 @@
 .row {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+  gap: var(--spacing-lg);
   isolation: isolate;
 }
 
-@media (max-width: var(--bp-md)) {
-  .row {
-    grid-template-columns: 1fr;
-  }
-}
-
 .cta {
-  margin-top: 20px;
-  width: 100%;
-  background: var(--surface-primary);
-  border: 1px solid var(--outline-faint);
-  border-radius: 25px;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 25px 20px;
+  width: 100%;
+  padding: var(--spacing-xl) var(--spacing-lg);
+  border: 1px solid var(--outline-faint);
+  border-radius: 25px;
+  background: var(--surface-primary);
+  margin-top: var(--spacing-lg);
 }
 
 .ctaText {
   color: var(--outline-primary);
   font-size: var(--font-size-large);
   line-height: var(--line-height-large);
+}
+
+@media (max-width: 1279px) {
+  .row {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (hover: hover) {

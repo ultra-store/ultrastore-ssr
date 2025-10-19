@@ -5,10 +5,10 @@
 .row {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 10px;
+  gap: var(--spacing-lg);
 }
 
-@media (max-width: var(--bp-md)) {
+@media (max-width: 1279px) {
   .row {
     grid-template-columns: 1fr;
   }

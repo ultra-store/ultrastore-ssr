@@ -1,26 +1,26 @@
 .infoBlock {
   width: 100%;
   border-radius: 25px;
-  overflow: hidden;
   background-color: var(--bg-color, var(--surface-interactive));
+  overflow: hidden;
 }
 
 .infoBlockLink {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  gap: var(--spacing-lg);
   text-decoration: none;
 }
 
 .infoBlockContent {
-  padding: 20px;
+  padding: var(--spacing-lg);
 }
 
 .infoBlockDescription {
-  font-size: var(--font-size-heading-1);
-  line-height: var(--line-height-heading-1);
   color: var(--outline-primary);
+  font-size: var(--font-size-heading-1);
   font-weight: 500;
+  line-height: var(--line-height-heading-1);
   margin-bottom: 0;
 }
 

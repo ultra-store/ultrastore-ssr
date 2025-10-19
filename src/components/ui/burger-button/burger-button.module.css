@@ -1,12 +1,12 @@
 .button {
   display: inline-flex;
-  align-items: center;
   justify-content: center;
-  background: none;
-  border: none;
+  align-items: center;
   padding: 8px;
-  cursor: pointer;
+  border: none;
+  background: none;
   color: inherit;
+  cursor: pointer;
   transition: opacity 0.2s ease;
 }
 
