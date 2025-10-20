@@ -23,7 +23,7 @@ export const PromoBanner = ({ link, image, alt_text, new_tab, bg_color, title }:
         alt={alt_text || title || ''}
         fill
         className={styles.bannerImage}
-        sizes="(max-width: 768px) 90vw, 335px"
+        sizes="(max-width: 759px) 35vw, (min-width: 1920px) 400px, (min-width: 1600px) 360px, (min-width: 1280px) 320px, 280px"
         priority
       />
     </Link>

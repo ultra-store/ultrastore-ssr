@@ -12,7 +12,7 @@ export const PromoBanners = ({ items }: PromoBannersProps) => {
   }
 
   return (
-    <Section title="Промо баннеры" ariaLabel="Промо баннеры">
+    <Section ariaLabel="Акционные предложения">
       <div className={styles.row}>
         {items.map((b, idx) => (
           <PromoBanner key={idx} {...b} />
