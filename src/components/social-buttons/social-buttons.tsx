@@ -44,7 +44,7 @@ export const SocialButtons = ({
       {socials.map((button) => (
         <SocialButton
           key={button.id}
-          href={button.id}
+          href={button.href}
           icon={icons[button.id as keyof typeof icons]}
           alt={button.alt}
           size={iconSize}
