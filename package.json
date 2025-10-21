@@ -10,7 +10,7 @@
     "lint:css": "stylelint \"src/**/*.{css,scss}\"",
     "lint:css:fix": "stylelint \"src/**/*.{css,scss}\" --fix",
     "lint:fix": "eslint --fix && pnpm run lint:css:fix",
-    "generate": "openapi-typescript https://backend.ultrastore.khizrim.online/rest-api/schema -o ./src/shared/api/v1.ts"
+    "generate": "openapi-typescript https://backend.ultrastore.khizrim.space/rest-api/schema -o ./src/shared/api/v1.ts"
   },
   "dependencies": {
     "@pbe/react-yandex-maps": "^1.2.5",

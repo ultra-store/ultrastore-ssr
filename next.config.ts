@@ -12,7 +12,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'backend.ultrastore.khizrim.online',
+        hostname: 'backend.ultrastore.khizrim.space',
         pathname: '/wp-content/**',
       },
     ],
