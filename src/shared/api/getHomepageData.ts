@@ -10,3 +10,12 @@ export const getHomepageData = async () => {
 
   return returnOrThrowWhenEmpty(data);
 };
+
+// Cache revalidation function
+export const revalidateHomepageData = async () => {
+  'use server';
+
+  // This would trigger revalidation of homepage data
+  // Note: This is a placeholder - you'd need to implement based on your backend
+  console.log('Homepage data cache revalidation triggered');
+};

@@ -7,6 +7,11 @@ import { Reviews } from '@/components/reviews';
 import { getHomepageData } from '@/shared/api/getHomepageData';
 import { getLayoutData } from '@/shared/api/getLayoutData';
 
+// Force dynamic rendering to prevent caching
+export const dynamic = 'force-dynamic';
+// Or set revalidate time (in seconds)
+// export const revalidate = 3600; // Revalidate every hour
+
 export default async function HomePage() {
   const {
     popular_categories,
