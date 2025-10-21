@@ -12,12 +12,11 @@ export const PromoBanner = ({ link, image, alt_text, new_tab, bg_color, title }:
     <Link
       href={link || '#'}
       className={styles.banner}
-      aria-label={alt_text || title || 'Промо'}
+      aria-label={alt_text || title || 'Акционные предложения'}
       target={new_tab ? '_blank' : undefined}
       rel={new_tab ? 'noopener noreferrer' : undefined}
       style={bg_color ? { background: bg_color } : undefined}
     >
-      {/* Using Next Image for optimization even with full-bleed background */}
       <Image
         src={image || '/placeholder-product.png'}
         alt={alt_text || title || ''}
