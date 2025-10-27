@@ -14,10 +14,11 @@ export interface CategorySearchParams {
 }
 
 export interface SeoContentBlock {
-  type: 'paragraph' | 'heading' | 'image'
+  type?: 'paragraph' | 'heading' | 'image' | string
   paragraphs?: string[]
   text?: string
-  level?: 'h2' | 'h3' | 'h4'
+  content?: string
+  level?: string
   url?: string
   alt?: string
   id?: number

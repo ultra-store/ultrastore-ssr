@@ -1,3 +1,4 @@
+import type { StaticImageData } from 'next/image';
 import Image from 'next/image';
 
 import icons from '@/shared/icons';
@@ -21,8 +22,10 @@ export interface ContactCardProps {
 }
 
 export const ContactCard = ({ title, subtitle, phone, email, social }: ContactCardProps) => {
-  const getIcon = (key: string): string => {
-    const iconMap: Record<string, string> = {
+  type IconSrc = string | StaticImageData;
+
+  const getIcon = (key: string): IconSrc => {
+    const iconMap: Record<string, IconSrc> = {
       telegram: icons.telegram,
       whatsapp: icons.whatsapp,
       vk: icons.vk,
@@ -67,7 +70,7 @@ export const ContactCard = ({ title, subtitle, phone, email, social }: ContactCa
               <span className={`large text-placeholder ${styles.socialLabel}`}>Мы в соцсетях</span>
               <div className={styles.socialIcons}>
                 {social.map((item) => {
-                  const icon = icons[item.id] || getIcon(item.id);
+                  const icon = (icons as Record<string, IconSrc>)[item.id] || getIcon(item.id);
 
                   return (
                     <a

@@ -670,6 +670,18 @@ export interface paths {
                                     slug: string;
                                 }[];
                             }[];
+                            variations?: {
+                                id: number;
+                                price: string;
+                                regular_price?: string;
+                                sale_price?: string;
+                                on_sale?: boolean;
+                                sku?: string;
+                                stock_quantity?: number;
+                                in_stock?: boolean;
+                                attributes?: Record<string, never>;
+                                image_id?: number;
+                            }[];
                             categories?: {
                                 id: number;
                                 name: string;
