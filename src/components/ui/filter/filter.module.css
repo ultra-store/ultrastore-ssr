@@ -1,0 +1,117 @@
+.filter {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  border: 1px solid var(--outline-faint);
+  transition: border-color 0.2s ease;
+  border-radius: 20px;
+}
+
+.filter:hover {
+  border-color: var(--outline-faint-hover);
+}
+
+.filterHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-sm);
+  width: 100%;
+  padding: var(--spacing-lg);
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.filterHeader:disabled {
+  cursor: default;
+}
+
+.dropdownButton {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--spacing-xs);
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  background: url('../../../shared/icons/arrow-down.svg') no-repeat center;
+  background-size: cover;
+  transition: transform 0.3s ease-in-out;
+  pointer-events: none;
+}
+
+.dropdownButton[data-open="true"] {
+  transform: rotate(180deg);
+}
+
+
+.filterContentWrapper {
+  width: 100%;
+  padding: 0 var(--spacing-lg);
+  transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out, margin-top 0.3s ease-in-out, padding-bottom 0.3s ease-in-out;
+  overflow: hidden;
+}
+
+.filterContentWrapper[data-collapsible="true"] {
+  max-height: 0;
+  opacity: 0;
+  margin-top: 0;
+}
+
+.filterContentWrapper[data-open="true"] {
+  padding-bottom: var(--spacing-lg);
+  max-height: 500px;
+  opacity: 1;
+}
+
+.filterContentWrapper[data-collapsible="false"] {
+  max-height: none;
+  opacity: 1;
+}
+
+.filterContent {
+  width: 100%;
+}
+
+.filterHeader[data-open="true"] {
+  padding-bottom: var(--spacing-sm);
+}
+
+.filter[data-oneline="true"] {
+  margin-top: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding-right: var(--spacing-lg);
+}
+
+.filter[data-oneline="true"] .filterContent {
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (max-width: 759px) {
+  .filter {
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+    border-top: none;
+  }
+
+  .filterHeader {
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: var(--spacing-md);
+    padding-bottom: var(--spacing-md);
+  }
+
+  .filterContentWrapper {
+    padding: 0 0 var(--spacing-md) 0;
+  }
+}

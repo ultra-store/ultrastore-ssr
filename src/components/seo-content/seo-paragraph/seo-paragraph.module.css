@@ -1,0 +1,31 @@
+.paragraph {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  color: var(--outline-primary);
+  font-size: var(--font-size-large);
+  font-weight: 400;
+  line-height: var(--line-height-large);
+  font-family: var(--font-formular);
+  font-style: normal;
+}
+
+.paragraph p {
+  margin: 0 0 1em 0;
+  padding: 0;
+}
+
+.paragraph p:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 1279px) {
+  .paragraph {
+    font-size: var(--font-size-large-mobile);
+    line-height: var(--line-height-large-mobile);
+  }
+}
+

@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
 
@@ -6,7 +7,7 @@ import type { Product } from '@/shared/types/types';
 
 import type { WithClassName } from '@/shared/types/utils';
 
-import { useFormattedPrice } from '@/shared/utils/format-price';
+import { formatPrice } from '@/shared/utils/format-price';
 
 import styles from './product-card.module.css';
 
@@ -31,23 +32,40 @@ export const ProductCard = ({
   regular_price,
   sale_price,
   on_sale,
+  slug,
+  category_slug,
 }: WithClassName<ProductCardProps>) => {
-  const formattedPrice = useFormattedPrice(price, currency, regular_price, sale_price, on_sale);
+  const displayPrice = on_sale && sale_price ? sale_price : price;
+  const formattedPrice = formatPrice(displayPrice, currency);
+  const formattedRegularPrice = regular_price ? formatPrice(regular_price, currency) : null;
+
+  const content = (
+    <div className={styles.content}>
+      <div className={styles.media}>
+        <Image src={image || '/placeholder-product.png'} alt={name} width={300} height={300} />
+      </div>
+
+      <div className={styles.info}>
+        <div className={`secondary-bold ${styles.title}`}>{name}</div>
+        <div className={styles.priceContainer}>
+          <span className={`number ${styles.price} ${on_sale ? styles.salePrice : ''}`}>{formattedPrice}</span>
+          {on_sale && formattedRegularPrice && (
+            <span className={`number ${styles.regularPrice}`}>{formattedRegularPrice}</span>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+
+  const productLink = category_slug ? `/${category_slug}/${slug}` : `/product/${slug}`;
 
   return (
     <article className={`${styles.card} ${className}`} aria-label={name}>
-      <div className={styles.content}>
-        <div className={styles.media}>
-          <Image src={image || '/placeholder-product.png'} alt={name} width={300} height={300} />
-        </div>
-
-        <div className={styles.info}>
-          <div className={`secondary-bold ${styles.title}`}>{name}</div>
-          <div className={`number ${styles.price}`}>{formattedPrice}</div>
-        </div>
+      <Link href={productLink} className={styles.overlayLink} aria-label={`Перейти к ${name}`} />
+      <div className={styles.cardWrapper}>
+        {content}
+        <Button variant="primary" fullWidth className={styles.button}>В корзину</Button>
       </div>
-
-      <Button variant="primary" fullWidth>В корзину</Button>
     </article>
   );
 };

@@ -1,0 +1,91 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(0, 0, 0, 0.5);
+  animation: fade-in 0.2s ease-in-out;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: var(--surface-primary);
+  overflow-y: auto;
+  animation: slide-in 0.3s ease-out;
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.body {
+  flex: 1;
+  padding: var(--spacing-lg);
+  overflow-y: auto;
+}
+
+.footer {
+  position: sticky;
+  bottom: 0;
+  padding: var(--spacing-lg);
+  padding-bottom: calc(var(--spacing-lg) + 65px);
+  border-top: 1px solid var(--outline-faint);
+  background-color: var(--surface-primary);
+}
+
+.applyButton {
+  width: 100%;
+  padding: var(--spacing-md);
+  border: none;
+  border-radius: 5px;
+  background-color: var(--fill-interactive);
+  color: var(--surface-primary);
+  font-size: var(--font-size-large);
+  font-weight: 400;
+  line-height: var(--line-height-large);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.applyButton:hover {
+  background-color: var(--fill-interactive-hover);
+}
+
+.applyButton:active {
+  background-color: var(--fill-interactive-active);
+}
+
+@media (max-width: 759px) {
+  .overlay {
+    top: 60px;
+  }
+
+  .body {
+    padding-top: var(--spacing-lg);
+  }
+}

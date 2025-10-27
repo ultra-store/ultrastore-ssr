@@ -30,6 +30,18 @@
   display: none;
 }
 
+.closeButton {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  width: 25px;
+  height: 25px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
 .headerActions {
   display: flex;
   justify-content: flex-end;
@@ -41,6 +53,12 @@
 @media (max-width: 1279px) {
   .burgerButton {
     display: block;
+    margin-right: var(--spacing-lg);
+    order: -1;
+  }
+
+  .closeButton {
+    display: flex;
     margin-right: var(--spacing-lg);
     order: -1;
   }
@@ -76,6 +94,11 @@
   }
 
   .burgerButton {
+    margin-right: 0;
+    order: 1;
+  }
+
+  .closeButton {
     margin-right: 0;
     order: 1;
   }

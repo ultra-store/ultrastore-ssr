@@ -1,0 +1,94 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  color: var(--color-primary);
+}
+
+.clearButton {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--spacing-xs);
+  width: auto;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--color-primary);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.clearButton:hover {
+  opacity: 0.8;
+}
+
+.clearIconWrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25px;
+  height: 25px;
+  transition: all 0.3s ease;
+}
+
+.checkmarkIcon {
+  animation: checkmark-pop 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.clearLabel[data-success="true"] {
+  animation: success-fade 0.7s ease-out;
+  color: var(--fill-interactive);
+}
+
+@keyframes checkmark-pop {
+  0% {
+    transform: scale(0);
+  }
+
+  60% {
+    transform: scale(0.9);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes success-fade {
+  0% { 
+    color: inherit;
+    opacity: 1;
+  }
+
+  20% { 
+    color: var(--fill-interactive);
+    opacity: 0.9;
+  }
+
+  60% {
+    color: var(--fill-interactive);
+    opacity: 1;
+  }
+
+  100% { 
+    color: inherit;
+    opacity: 1;
+  }
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+

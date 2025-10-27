@@ -1,0 +1,121 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.tabs {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--spacing-xl);
+  border-bottom: 1px solid var(--color-border-faint);
+}
+
+.tabButton {
+  appearance: none;
+  margin: 0;
+  padding: 0 0 var(--spacing-sm) 0;
+  border: 0;
+  background: none;
+  color: var(--color-text-primary);
+  font-size: 17px;
+  line-height: 25px;
+  cursor: pointer;
+}
+
+.tabActive {
+  font-weight: var(--font-weight-bold);
+  border-bottom: 2px solid var(--color-text-primary);
+}
+
+.tabPanel {
+  padding-top: var(--spacing-lg);
+}
+
+.text {
+  color: var(--color-text-primary);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-relaxed);
+
+  h2, h3, h4 {
+    margin: var(--spacing-md) 0 var(--spacing-sm);
+    color: var(--color-text-primary);
+    font-weight: var(--font-weight-bold);
+  }
+
+  h2 {
+    font-size: var(--font-size-xl);
+  }
+
+  h3 {
+    font-size: var(--font-size-lg);
+  }
+
+  h4 {
+    font-size: var(--font-size-base);
+  }
+
+  p {
+    margin-bottom: var(--spacing-sm);
+  }
+
+  ul, ol {
+    margin: var(--spacing-sm) 0;
+    padding-left: var(--spacing-md);
+  }
+
+  li {
+    margin-bottom: var(--spacing-xs);
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--radius-sm);
+  }
+
+  a {
+    color: var(--color-accent);
+    text-decoration: underline;
+  }
+}
+
+.shortDescription {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
+}
+
+.description { display: block; }
+
+.specsTable {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.specRow {
+  display: grid;
+  align-items: center;
+  gap: var(--spacing-md);
+  grid-template-columns: 1fr 2fr;
+}
+
+.specLabel {
+  color: var(--color-text-primary);
+  font-size: 15px;
+}
+
+.specValue {
+  color: var(--color-text-primary);
+  font-size: 15px;
+  font-weight: var(--font-weight-bold);
+}
+
+.empty {
+  color: var(--color-text-secondary);
+}
+
+.reviewsPlaceholder {
+  color: var(--color-text-secondary);
+}
+

@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 
 import type { Metadata } from 'next';
 
+import { ClientLayout } from '@/app/client-layout';
 import { Footer } from '@/components/footer';
 import { Header } from '@/components/header';
 import { MobileTabBar } from '@/components/mobile-tabbar';
@@ -25,17 +26,19 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   return (
     <html lang="ru" className={formular.variable}>
       <body className="page">
-        <Header
-          topMenu={header.top_menu}
-          categoriesMenu={header.categories_menu}
-          contacts={contacts}
-          socials={social}
-        />
-        <main className="main">
-          {children}
-        </main>
-        <Footer socials={social} menu={footer.menu} contacts={contacts} />
-        <MobileTabBar />
+        <ClientLayout>
+          <Header
+            topMenu={header.top_menu}
+            categoriesMenu={header.categories_menu}
+            contacts={contacts}
+            socials={social}
+          />
+          <main className="main">
+            {children}
+          </main>
+          <Footer socials={social} menu={footer.menu} contacts={contacts} />
+          <MobileTabBar />
+        </ClientLayout>
       </body>
     </html>
   );

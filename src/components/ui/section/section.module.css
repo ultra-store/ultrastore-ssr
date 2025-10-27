@@ -1,7 +1,7 @@
 .section {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-md);
+  gap: var(--spacing-lg);
 }
 
 .title {
@@ -16,7 +16,7 @@
 .content {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-md);
+  gap: var(--spacing-lg);
   width: 100%;
   margin: 0 auto;
   max-width: var(--container-max);
@@ -48,6 +48,10 @@
 }
 
 @media (max-width: 759px) {
+  .title {
+    padding: 0 var(--spacing-lg);
+  }
+
   .content {
     padding: 0;
   }

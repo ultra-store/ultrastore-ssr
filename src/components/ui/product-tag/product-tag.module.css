@@ -1,0 +1,27 @@
+.productTag {
+  display: inline-block;
+  padding: 10px 15px;
+  border: 1px solid var(--outline-faint);
+  border-radius: 10px;
+  background: var(--surface-primary);
+  color: var(--outline-primary);
+  white-space: nowrap;
+}
+
+.productTag a {
+  color: inherit;
+}
+
+@media (max-width: 759px) {
+  .productTag {
+    padding: var(--spacing-xs) var(--spacing-sm);
+  }
+}
+
+@media (hover: hover) {
+  .productTag a:hover {
+    background: var(--surface-primary-hover);
+    color: var(--fill-interactive);
+    border-color: var(--outline-faint-hover);
+  }
+}

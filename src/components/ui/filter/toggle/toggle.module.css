@@ -1,0 +1,30 @@
+.toggleContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--spacing-sm);
+  width: 42px;
+  height: 25px;
+  padding: 2px;
+  border: none;
+  border-radius: 12px;
+  background: var(--outline-faint);
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.toggleContainerActive {
+  background: var(--fill-interactive);
+}
+
+.toggleHandle {
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  background: var(--surface-primary);
+  transition: transform 0.3s ease-in-out;
+}
+
+.toggleHandleActive {
+  transform: translateX(18px);
+}

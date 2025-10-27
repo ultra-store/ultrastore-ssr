@@ -1,0 +1,101 @@
+.rangeFilter {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+}
+
+.rangeValues {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+}
+
+.rangeInput {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: -5px;
+  margin: 0;
+  padding: 5px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  text-align: left;
+  outline: none;
+  flex: 1;
+}
+
+.rangeInput:focus {
+  margin: -2px -4px;
+  padding: 2px 4px;
+  border-radius: 5px;
+  background: rgba(255, 54, 87, 0.1);
+}
+
+.rangeSeparator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.rangeSlider {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  height: 15px;
+  cursor: pointer;
+}
+
+.rangeTrack {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  left: 0;
+  height: 1px;
+  border: none;
+  background: rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+  transform: translateY(-50%);
+}
+
+.rangeSelected {
+  position: absolute;
+  top: 50%;
+  height: 1px;
+  border: none;
+  background: var(--fill-interactive);
+  pointer-events: none;
+  transform: translateY(-50%);
+}
+
+.rangeHandle {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  border: none;
+  border-radius: 50%;
+  background: var(--fill-interactive);
+  cursor: grab;
+  transform: translateX(-50%);
+  transition: transform 0.1s ease;
+}
+
+.rangeHandle:hover {
+  transform: translateX(-50%) scale(1.1);
+}
+
+.rangeHandle:active {
+  cursor: grabbing;
+  transform: translateX(-50%) scale(1.2);
+}
+
+.rangeHandle:focus {
+  outline: 2px solid var(--fill-interactive);
+  outline-offset: 2px;
+}

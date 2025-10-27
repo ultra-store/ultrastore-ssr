@@ -17,7 +17,7 @@ export const PopularCategories = ({ items }: PopularCategoriesProps) => {
     <Section title="Популярные категории" className={styles.section}>
       <div className={styles.grid}>
         {items.map((c) => (
-          <Link key={c.id} href={c.link || `/catalog/${c.slug}`} className={styles.link}>
+          <Link key={c.id} href={c.slug || `/${c.slug}`} className={styles.link}>
             <div className={styles.card}>
               <div className={styles.image}>
                 <Image src={c.image || '/placeholder-product.png'} alt={c.name} width={180} height={100} />
