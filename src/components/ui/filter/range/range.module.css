@@ -50,6 +50,7 @@
   width: 100%;
   height: 15px;
   cursor: pointer;
+  touch-action: none;
 }
 
 .rangeTrack {
@@ -82,6 +83,8 @@
   border-radius: 50%;
   background: var(--fill-interactive);
   cursor: grab;
+  touch-action: none;
+  user-select: none;
   transform: translateX(-50%);
   transition: transform 0.1s ease;
 }

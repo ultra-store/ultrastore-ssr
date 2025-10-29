@@ -6,13 +6,9 @@ import Image from 'next/image';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 import icons from '@/shared/icons';
+import type { SortOption } from '@/shared/types';
 
 import styles from './sort-select.module.css';
-
-export interface SortOption {
-  value: string
-  label: string
-}
 
 interface SortSelectProps {
   options: SortOption[]
@@ -61,7 +57,7 @@ export const SortSelect = ({ options, defaultValue, paramName = 'orderby' }: Sor
     // Reset to page 1 when changing sort
     params.delete('page');
 
-    router.push(`${pathname}?${params.toString()}`);
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
   const handleOptionClick = (option: SortOption) => {

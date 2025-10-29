@@ -179,46 +179,86 @@ export const Range = ({ min, max, value, onChange, step, unit, paramName }: Rang
     }
   }, [paramName, updateParam]);
 
+  const handlePointerMoveRef = useRef<(e: PointerEvent) => void>(() => {
+    // Handler will be set via useEffect
+  });
+  const handlePointerUpRef = useRef<() => void>(() => {
+    // Handler will be set via useEffect
+  });
+  const handlePointerCancelRef = useRef<() => void>(() => {
+    // Handler will be set via useEffect
+  });
+
   const handlePointerMove = useCallback((e: PointerEvent) => {
-    if (rafIdRef.current != null) {
-      return;
-    }
+    e.preventDefault();
 
-    rafIdRef.current = window.requestAnimationFrame(() => {
-      rafIdRef.current = null;
-      updateFromPointer(e.clientX);
-    });
-  }, [updateFromPointer]);
-
-  const removeGlobalListeners = useCallback(() => {
-    window.removeEventListener('pointermove', handlePointerMove);
-  }, [handlePointerMove]);
-
-  const handlePointerUp = useCallback(() => {
-    draggingRef.current = null;
-    removeGlobalListeners();
+    // Cancel any pending animation frame and process immediately for smoother touch
     if (rafIdRef.current != null) {
       window.cancelAnimationFrame(rafIdRef.current);
       rafIdRef.current = null;
     }
-  }, [removeGlobalListeners]);
+
+    updateFromPointer(e.clientX);
+
+    // Schedule next frame for potential cleanup, but don't block new events
+    rafIdRef.current = window.requestAnimationFrame(() => {
+      rafIdRef.current = null;
+    });
+  }, [updateFromPointer]);
+
+  const cleanupDrag = useCallback(() => {
+    draggingRef.current = null;
+    window.removeEventListener('pointermove', handlePointerMoveRef.current);
+    window.removeEventListener('pointerup', handlePointerUpRef.current);
+    window.removeEventListener('pointercancel', handlePointerCancelRef.current);
+    if (rafIdRef.current != null) {
+      window.cancelAnimationFrame(rafIdRef.current);
+      rafIdRef.current = null;
+    }
+  }, []);
+
+  const handlePointerCancel = useCallback(() => {
+    cleanupDrag();
+  }, [cleanupDrag]);
+
+  const handlePointerUp = useCallback(() => {
+    cleanupDrag();
+  }, [cleanupDrag]);
+
+  // Update refs when handlers change
+  useEffect(() => {
+    handlePointerMoveRef.current = handlePointerMove;
+  }, [handlePointerMove]);
+
+  useEffect(() => {
+    handlePointerUpRef.current = handlePointerUp;
+  }, [handlePointerUp]);
+
+  useEffect(() => {
+    handlePointerCancelRef.current = handlePointerCancel;
+  }, [handlePointerCancel]);
 
   const handlePointerDown = useCallback((type: 'min' | 'max') => (e: React.PointerEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
     draggingRef.current = type;
     (e.currentTarget as HTMLElement).focus();
-    window.addEventListener('pointermove', handlePointerMove, { passive: true });
-    window.addEventListener('pointerup', handlePointerUp, { once: true });
-  }, [handlePointerMove, handlePointerUp]);
+    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+
+    window.addEventListener('pointermove', handlePointerMoveRef.current, { passive: false });
+    window.addEventListener('pointerup', handlePointerUpRef.current, { once: true });
+    window.addEventListener('pointercancel', handlePointerCancelRef.current, { once: true });
+
+    // Process initial position
+    updateFromPointer(e.clientX);
+  }, [updateFromPointer]);
 
   useEffect(() => {
     return () => {
-      removeGlobalListeners();
-      if (rafIdRef.current != null) {
-        window.cancelAnimationFrame(rafIdRef.current);
-        rafIdRef.current = null;
-      }
+      cleanupDrag();
     };
-  }, [removeGlobalListeners]);
+  }, [cleanupDrag]);
 
   const handleInputChange = useCallback((type: 'min' | 'max', inputValue: string) => {
     setLocalInputValues((prev) => ({

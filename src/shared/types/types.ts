@@ -34,6 +34,7 @@ export interface Category {
   image?: string
   link?: string
   seo_blocks?: SeoContentBlock[]
+  children?: Category[]
 }
 
 export interface PromoBanner {
@@ -228,15 +229,14 @@ export interface FilterData {
   sections: FilterSection[]
 }
 
-export interface SortingOption {
+export interface SortOption {
   value: string
   label: string
-  isDefault: boolean
 }
 
 export interface SortingOptions {
   default: string
-  options: SortingOption[]
+  options: SortOption[]
 }
 
 export interface ProductTag {
