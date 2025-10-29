@@ -83,6 +83,7 @@
 
 .price {
   color: var(--outline-primary);
+  white-space: nowrap;
 }
 
 .salePrice {
@@ -91,8 +92,9 @@
 
 .regularPrice {
   color: var(--outline-initial);
+  font-size: var(--font-size-small);
   text-decoration: line-through;
-  font-size: 0.875em;
+  white-space: nowrap;
 }
 
 .buyButton {

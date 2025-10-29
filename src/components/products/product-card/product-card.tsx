@@ -48,9 +48,9 @@ export const ProductCard = ({
       <div className={styles.info}>
         <div className={`secondary-bold ${styles.title}`}>{name}</div>
         <div className={styles.priceContainer}>
-          <span className={`number ${styles.price} ${on_sale ? styles.salePrice : ''}`}>{formattedPrice}</span>
+          <span className={`number outline-primary ${styles.price} ${on_sale ? styles.salePrice : ''}`}>{formattedPrice}</span>
           {on_sale && formattedRegularPrice && (
-            <span className={`number ${styles.regularPrice}`}>{formattedRegularPrice}</span>
+            <span className={`number outline-initial ${styles.regularPrice}`}>{formattedRegularPrice}</span>
           )}
         </div>
       </div>
