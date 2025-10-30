@@ -11,7 +11,9 @@ export const getCategoryData = async (
   search: CategorySearchParams,
   options: Options = {},
 ): Promise<CategoryData> => {
-  const response = await wpApiClient.GET('/ultra/v1/catalog/category/{slug}/?', {
+  console.log('search', search);
+
+  const response = await wpApiClient.GET('/ultra/v1/catalog/category/{slug}', {
     params: {
       path: { slug },
       query: { ...search },
@@ -20,6 +22,9 @@ export const getCategoryData = async (
   });
 
   const data = parseDataFromFetchResponse(response);
+
+  // Here we get old data
+  console.log('data', data);
 
   return returnOrThrowWhenEmpty(data);
 };

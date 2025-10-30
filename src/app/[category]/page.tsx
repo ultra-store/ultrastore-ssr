@@ -27,6 +27,8 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
       <ProductTags tags={tags} />
       <CategoryContent
         categoryData={categoryData}
+        categorySlug={categorySlug}
+        initialSearch={search}
         contacts={layoutData.contacts}
         social={layoutData.social}
       />

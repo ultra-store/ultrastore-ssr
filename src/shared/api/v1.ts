@@ -453,7 +453,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/ultra/v1/catalog/category/{slug}/?": {
+    "/ultra/v1/catalog/category/{slug}": {
         parameters: {
             query?: never;
             header?: never;
