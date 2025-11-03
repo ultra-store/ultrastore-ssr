@@ -35,7 +35,6 @@ export const ProductCard = ({
   price,
   currency = '₽',
   className,
-  regular_price,
   sale_price,
   on_sale,
   slug,
@@ -49,7 +48,6 @@ export const ProductCard = ({
   const normalizedCurrency = normalizeCurrency(currency);
   const displayPrice = on_sale && sale_price ? sale_price : price;
   const formattedPrice = formatPrice(displayPrice, normalizedCurrency);
-  const formattedRegularPrice = regular_price ? formatPrice(regular_price, normalizedCurrency) : null;
   // Показываем префикс "от..." только если товар имеет вариации
   const pricePrefix = (showPricePrefix && has_variations) ? 'от ' : '';
 
@@ -109,9 +107,6 @@ export const ProductCard = ({
             {pricePrefix}
             {formattedPrice}
           </span>
-          {on_sale && formattedRegularPrice && (
-            <span className={`number outline-initial ${styles.regularPrice}`}>{formattedRegularPrice}</span>
-          )}
         </div>
       </div>
     </div>
