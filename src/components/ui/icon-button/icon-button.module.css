@@ -12,6 +12,26 @@
   transition: opacity 0.2s ease;
 }
 
+.iconButton .badge {
+  position: absolute;
+  top: -9px;
+  right: -4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 20px;
+  min-width: 20px;
+  padding: 0;
+  border-radius: 7px;
+  background-color: var(--fill-interactive);
+  color: var(--surface-primary);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 20px;
+  box-sizing: border-box;
+  z-index: 2;
+}
+
 .iconButton[data-variant='default'] {
   background: transparent;
 }
