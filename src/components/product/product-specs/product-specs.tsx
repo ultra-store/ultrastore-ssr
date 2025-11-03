@@ -23,10 +23,8 @@ export interface ProductSpecsProps {
 
 export const ProductSpecs = ({
   attributes,
-  sku,
   weight,
   dimensions,
-  currentVariationSku,
   className,
   spaceBetween = false,
 }: WithClassName<ProductSpecsProps>) => {
@@ -49,17 +47,6 @@ export const ProductSpecs = ({
       value: string
       group?: string
     }[] = [];
-
-    // Use SKU from variation if available, otherwise use product SKU
-    const displaySku = currentVariationSku || sku;
-
-    if (displaySku) {
-      rows.push({
-        id: `spec-sku-${displaySku}`,
-        label: 'Артикул',
-        value: displaySku,
-      });
-    }
 
     if (weight) {
       rows.push({
@@ -117,7 +104,7 @@ export const ProductSpecs = ({
     }
 
     return rows;
-  }, [attributes, currentVariationSku, sku, weight, dimensions, isAttributeGroup]);
+  }, [attributes, weight, dimensions, isAttributeGroup]);
 
   // Group rows by group name for display
   const groupedSpecsRows = useMemo(() => {
