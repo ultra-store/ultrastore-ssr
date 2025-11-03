@@ -1,4 +1,7 @@
+"use client";
+
 import Link from 'next/link';
+import { useState } from 'react';
 
 import type { Review } from '@/shared/types';
 
@@ -21,8 +24,11 @@ export const ReviewCard = ({
 
   const authorName = author_name?.split(' ').slice(0, 1).join('') || '';
 
+  const [isExpanded, setIsExpanded] = useState(false);
+  const toggleExpanded = () => setIsExpanded((prev) => !prev);
+
   return (
-    <article className={styles.card} aria-label={title}>
+    <article className={`${styles.card} ${isExpanded ? styles.cardExpanded : ''}`} aria-label={title}>
       <h3 className={styles.name}>{authorName || title}</h3>
 
       <div className={styles.meta}>
@@ -48,10 +54,25 @@ export const ReviewCard = ({
         )}
       </div>
 
-      {reviewText && <p className={styles.text}>{reviewText}</p>}
-      <Link href={`#review-${id}`} className={styles.more}>
-        Показать полностью
-      </Link>
+      {reviewText && (
+        <p
+          id={`review-${id}`}
+          className={`${styles.text} ${isExpanded ? styles.textExpanded : ''}`}
+        >
+          {reviewText}
+        </p>
+      )}
+      {reviewText && (
+        <button
+          type="button"
+          className={styles.more}
+          aria-expanded={isExpanded}
+          aria-controls={`review-${id}`}
+          onClick={toggleExpanded}
+        >
+          {isExpanded ? 'Скрыть' : 'Показать полностью'}
+        </button>
+      )}
     </article>
   );
 };

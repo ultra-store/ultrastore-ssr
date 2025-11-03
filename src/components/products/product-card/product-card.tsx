@@ -151,32 +151,60 @@ export const ProductCard = ({
       <div className={styles.cardWrapper}>
         {content}
         <div className={styles.cartControls}>
-          {isInCart
+          {has_variations
             ? (
-                <>
-                  <QuantitySelector
-                    quantity={cartItem.quantity}
-                    onDecrement={handleDecrement}
-                    onIncrement={handleIncrement}
-                    className={styles.quantitySelector}
-                  />
-                  <Link href="/cart" className={styles.cartLink}>
-                    <Button variant="secondary" className={styles.iconButton} icon={icons.cart} aria-label="В корзине">
-                      <span className={styles.srOnly}>В корзине</span>
-                    </Button>
-                  </Link>
-                </>
+                in_stock === false
+                  ? (
+                      <Button
+                        variant="primary"
+                        fullWidth
+                        className={styles.button}
+                        disabled
+                      >
+                        Нет в наличии
+                      </Button>
+                    )
+                  : (
+                      <Link href={productLink} className={styles.cartLink}>
+                        <Button
+                          variant="primary"
+                          fullWidth
+                          className={styles.button}
+                          aria-label={`Перейти к ${name} для выбора конфигурации`}
+                        >
+                          Выбрать
+                        </Button>
+                      </Link>
+                    )
               )
             : (
-                <Button
-                  variant="primary"
-                  fullWidth
-                  className={styles.button}
-                  onClick={handleAddToCart}
-                  disabled={in_stock === false}
-                >
-                  {in_stock === false ? 'Нет в наличии' : 'В корзину'}
-                </Button>
+                isInCart
+                  ? (
+                      <>
+                        <QuantitySelector
+                          quantity={cartItem.quantity}
+                          onDecrement={handleDecrement}
+                          onIncrement={handleIncrement}
+                          className={styles.quantitySelector}
+                        />
+                        <Link href="/cart" className={styles.cartLink}>
+                          <Button variant="secondary" className={styles.iconButton} icon={icons.cart} aria-label="В корзине">
+                            <span className={styles.srOnly}>В корзине</span>
+                          </Button>
+                        </Link>
+                      </>
+                    )
+                  : (
+                      <Button
+                        variant="primary"
+                        fullWidth
+                        className={styles.button}
+                        onClick={handleAddToCart}
+                        disabled={in_stock === false}
+                      >
+                        {in_stock === false ? 'Нет в наличии' : 'В корзину'}
+                      </Button>
+                    )
               )}
         </div>
       </div>

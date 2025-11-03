@@ -4,12 +4,15 @@
   align-items: flex-start;
   gap: var(--spacing-sm);
   width: 100%;
-  height: 300px;
   padding: var(--spacing-lg);
   border: 1px solid var(--outline-faint);
   border-radius: 25px;
   background: var(--surface-primary);
   box-sizing: border-box;
+}
+
+.cardExpanded {
+  height: auto;
 }
 
 .name {
@@ -56,10 +59,19 @@
   box-orient: vertical;
 }
 
+.textExpanded {
+  display: block;
+  overflow: visible;
+}
+
 .more {
   color: var(--outline-placeholder);
   font-size: var(--font-size-medium);
   line-height: var(--line-height-medium);
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
 }
 
 
