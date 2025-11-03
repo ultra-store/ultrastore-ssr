@@ -1,0 +1,126 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-lg);
+  width: 100%;
+  padding: 0;
+}
+
+.methodCard {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+  width: 100%;
+  padding: var(--spacing-lg);
+  border: 1px solid #E7E7E7;
+  border-radius: 15px;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.methodCard:hover:not(.disabled) {
+  border-color: var(--outline-faint-hover);
+}
+
+.methodCard.selected {
+  border-color: #FF3657;
+}
+
+.methodCard.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.radioButton {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--spacing-sm);
+  width: 20px;
+  height: 23px;
+  padding: 3px 0 0;
+  flex-shrink: 0;
+}
+
+.radioCircle {
+  box-sizing: border-box;
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--outline-primary);
+  border-radius: 50%;
+  background: transparent;
+  transition: all 0.2s ease;
+}
+
+.radioCircle.checked {
+  background: #FF3657;
+  border-color: #FF3657;
+}
+
+.methodContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+  padding: 0;
+  flex: 1;
+  min-width: 0;
+}
+
+.methodHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+  width: 100%;
+  height: var(--line-height-large);
+  padding: 0;
+}
+
+.methodTitle {
+  width: auto;
+  height: var(--line-height-large);
+  color: var(--outline-primary);
+  font-size: var(--font-size-medium);
+  font-weight: 400;
+  line-height: var(--line-height-medium);
+  font-family: var(--font-formular);
+  font-style: normal;
+}
+
+.methodCard.selected .methodTitle {
+  font-size: var(--font-size-large);
+  font-weight: 700;
+  line-height: var(--line-height-large);
+}
+
+.totalPrice {
+  width: auto;
+  height: var(--line-height-large);
+  margin: 0 auto;
+  color: var(--outline-primary);
+  font-size: var(--font-size-large);
+  font-weight: 700;
+  line-height: var(--line-height-large);
+  font-family: var(--font-formular);
+  font-style: normal;
+  white-space: nowrap;
+}
+
+.description {
+  width: 100%;
+  height: auto;
+  color: var(--outline-primary);
+  font-size: var(--font-size-medium);
+  font-weight: 400;
+  line-height: var(--line-height-medium);
+  font-family: var(--font-formular);
+  font-style: normal;
+  opacity: 0.5;
+}
+

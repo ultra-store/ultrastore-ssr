@@ -1,5 +1,5 @@
 import type { SeoContentBlock } from '@/shared/types/types';
-import { applyTypograf } from '@/shared/utils/typograf';
+import { applyTypografToHTML } from '@/shared/utils/typograf';
 
 import styles from './seo-paragraph.module.css';
 
@@ -15,7 +15,7 @@ export const SeoParagraph = ({ block }: SeoParagraphProps) => {
   return (
     <div className={styles.paragraph}>
       {paragraphs.map((paragraph, index) => (
-        <p key={index}>{applyTypograf(paragraph)}</p>
+        <p key={index} dangerouslySetInnerHTML={{ __html: applyTypografToHTML(paragraph) }} />
       ))}
     </div>
   );

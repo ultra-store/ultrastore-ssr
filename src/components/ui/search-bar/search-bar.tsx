@@ -22,8 +22,12 @@ export const SearchBar = ({ placeholder = 'Поиск', onSearch, className = ''
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (onSearch) {
-      onSearch(query);
+    const trimmedQuery = query.trim();
+
+    if (trimmedQuery && onSearch) {
+      onSearch(trimmedQuery);
+      setIsExpanded(false);
+      setQuery('');
     }
   };
 
@@ -40,8 +44,13 @@ export const SearchBar = ({ placeholder = 'Поиск', onSearch, className = ''
         inputRef.current?.focus();
       }, 150);
     } else {
-      if (query) {
-        handleSubmit(e);
+      // Trigger form submission when clicking search button
+      const trimmedQuery = query.trim();
+
+      if (trimmedQuery && onSearch) {
+        onSearch(trimmedQuery);
+        setIsExpanded(false);
+        setQuery('');
       }
     }
   };

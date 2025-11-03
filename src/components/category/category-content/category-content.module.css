@@ -82,6 +82,15 @@
   font-size: var(--font-size-base);
 }
 
+.emptyState {
+  margin-bottom: 0;
+}
+
+.relatedProducts {
+  width: 100%;
+  margin-top: var(--spacing-2xl);
+}
+
 @media (max-width: 759px) {
   .content {
     flex-direction: column;
@@ -114,5 +123,9 @@
 
   .seoContent {
     padding: 0 var(--spacing-lg);
-  };
+  }
+
+  .emptyState {
+    padding: var(--spacing-2xl) var(--spacing-lg);
+  }
 }

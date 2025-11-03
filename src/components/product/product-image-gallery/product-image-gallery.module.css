@@ -3,11 +3,14 @@
   flex-direction: column;
   align-items: flex-start;
   gap: var(--spacing-sm);
+  width: 100%;
+  max-width: 450px;
 }
 
 .mainImage {
   position: relative;
   width: 100%;
+  max-width: 450px;
   aspect-ratio: 1;
   border: 1px solid var(--outline-faint);
   border-radius: 15px;
@@ -21,11 +24,45 @@
   object-fit: contain;
 }
 
+.thumbnailsWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.thumbnailsWrapper::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  width: 40px;
+  background: linear-gradient(to left, var(--surface-primary) 0%, transparent 100%);
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.2s;
+}
+
+.thumbnailsWrapperAtEnd::after {
+  opacity: 0;
+}
+
 .thumbnails {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
   gap: var(--spacing-sm);
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.thumbnails::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
 
 .thumbnail {

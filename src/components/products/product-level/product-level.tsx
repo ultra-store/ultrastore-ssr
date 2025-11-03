@@ -11,6 +11,7 @@ export interface ProductLevelProps {
   items?: Product[]
   ctaText?: string
   ctaHref?: string
+  showPricePrefix?: boolean
 }
 
 export const ProductLevel = ({
@@ -18,6 +19,7 @@ export const ProductLevel = ({
   items = [],
   ctaText = 'Смотреть все',
   ctaHref = '#',
+  showPricePrefix = false,
 }: ProductLevelProps) => {
   if (!items.length) {
     return null;
@@ -31,11 +33,15 @@ export const ProductLevel = ({
             key={product.id}
             {...product}
             className={styles.productCard}
+            showPricePrefix={showPricePrefix}
+            has_variations={product.has_variations}
           />
         ))}
       </div>
 
-      <LongButton href={ctaHref} asButton>{`${ctaText} →`}</LongButton>
+      {ctaText && (
+        <LongButton href={ctaHref} asButton>{`${ctaText} →`}</LongButton>
+      )}
     </Section>
   );
 };

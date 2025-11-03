@@ -1,0 +1,21 @@
+.timeInput {
+  width: 100%;
+  padding: 10px 15px;
+  border: 1px solid var(--outline-faint);
+  border-radius: 4px;
+  background-color: var(--surface-primary);
+  color: var(--outline-primary);
+  font-size: var(--font-size-medium);
+  line-height: var(--line-height-medium);
+  font-family: var(--font-formular);
+}
+
+.timeInput:focus {
+  outline: none;
+  border-color: var(--outline-interactive);
+}
+
+.timeInput::placeholder {
+  color: var(--outline-placeholder);
+}
+

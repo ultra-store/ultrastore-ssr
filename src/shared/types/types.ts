@@ -23,6 +23,15 @@ export interface SeoContentBlock {
   alt?: string
   id?: number
   caption?: string
+  width?: number
+  height?: number
+}
+
+export interface DeliveryOption {
+  type: string
+  title: string
+  description?: string
+  price?: string
 }
 
 export interface Category {
@@ -77,6 +86,7 @@ export interface Review {
 
 export interface Product {
   id: number
+  parent_id?: number
   name: string
   slug: string
   category_slug?: string
@@ -87,9 +97,11 @@ export interface Product {
   currency?: string
   image?: string
   link?: string
+  variation_slug?: string
   rating?: number
   rating_count?: number
   in_stock?: boolean
+  has_variations?: boolean
 }
 
 export interface ProductImage {
@@ -108,10 +120,19 @@ export interface ProductAttribute {
   name: string
   slug: string
   values: ProductAttributeValue[]
+  used_for_variations?: boolean
 }
+
+export interface ProductAttributeGroup {
+  group: string
+  attributes: ProductAttribute[]
+}
+
+export type ProductAttributes = ProductAttribute[] | ProductAttributeGroup[];
 
 export interface ProductVariation {
   id: number
+  slug: string
   price: string
   regular_price?: string
   sale_price?: string
@@ -120,7 +141,7 @@ export interface ProductVariation {
   stock_quantity?: number
   in_stock?: boolean
   attributes: Record<string, string>
-  image_id?: number
+  images?: ProductImage[]
 }
 
 export interface ProductDimensions {
@@ -130,19 +151,24 @@ export interface ProductDimensions {
 }
 
 export interface ProductDetails extends Product {
-  description?: string
+  description?: string | SeoContentBlock[]
+  description_title?: string
   short_description?: string
   images: ProductImage[]
-  attributes: ProductAttribute[]
+  attributes: ProductAttributes
   variations?: ProductVariation[]
   categories: Category[]
   related_products: Product[]
+  similar_products: Product[]
   stock_quantity?: number
   sku?: string
   weight?: string
   dimensions?: ProductDimensions
+  reviews?: Review[]
   date_created?: string
   date_modified?: string
+  seo_blocks?: SeoContentBlock[]
+  delivery_options?: DeliveryOption[]
 }
 
 export interface HomepageData {
@@ -254,4 +280,27 @@ export interface CategoryData {
   has_more: boolean
   filters: FilterData
   sorting: SortingOptions
+}
+
+export interface SearchData {
+  query: string
+  products: Product[]
+  page: number
+  per_page: number
+  total: number
+  total_pages: number
+  has_more: boolean
+  filters: FilterData
+  sorting: SortingOptions
+}
+
+export interface SearchSearchParams {
+  q?: string
+  page?: number
+  per_page?: number
+  orderby?: string
+  min_price?: number
+  max_price?: number
+  in_stock?: boolean
+  on_sale?: boolean
 }

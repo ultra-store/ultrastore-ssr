@@ -55,6 +55,9 @@ export interface paths {
                             }[];
                             new_products?: {
                                 id: number;
+                                parent_id?: number;
+                                /** @description SEO-friendly slug identifier for variation */
+                                variation_slug?: string;
                                 name: string;
                                 slug: string;
                                 category_slug?: string;
@@ -64,7 +67,12 @@ export interface paths {
                                 on_sale?: boolean;
                                 currency?: string;
                                 image?: string;
-                                link?: string;
+                                images?: {
+                                    id: number;
+                                    url: string;
+                                    alt?: string;
+                                }[];
+                                path?: string;
                                 rating?: number;
                                 rating_count?: number;
                                 in_stock?: boolean;
@@ -76,7 +84,7 @@ export interface paths {
                                 description?: string;
                                 count?: number;
                                 image?: string;
-                                link?: string;
+                                path?: string;
                                 seo_blocks?: {
                                     type?: string;
                                     content?: string;
@@ -90,6 +98,9 @@ export interface paths {
                             }[];
                             sale_products?: {
                                 id: number;
+                                parent_id?: number;
+                                /** @description SEO-friendly slug identifier for variation */
+                                variation_slug?: string;
                                 name: string;
                                 slug: string;
                                 category_slug?: string;
@@ -99,7 +110,12 @@ export interface paths {
                                 on_sale?: boolean;
                                 currency?: string;
                                 image?: string;
-                                link?: string;
+                                images?: {
+                                    id: number;
+                                    url: string;
+                                    alt?: string;
+                                }[];
+                                path?: string;
                                 rating?: number;
                                 rating_count?: number;
                                 in_stock?: boolean;
@@ -505,7 +521,7 @@ export interface paths {
                                 description?: string;
                                 count?: number;
                                 image?: string;
-                                link?: string;
+                                path?: string;
                                 seo_blocks?: {
                                     type?: string;
                                     content?: string;
@@ -519,6 +535,9 @@ export interface paths {
                             };
                             products: {
                                 id: number;
+                                parent_id?: number;
+                                /** @description SEO-friendly slug identifier for variation */
+                                variation_slug?: string;
                                 name: string;
                                 slug: string;
                                 category_slug?: string;
@@ -528,7 +547,12 @@ export interface paths {
                                 on_sale?: boolean;
                                 currency?: string;
                                 image?: string;
-                                link?: string;
+                                images?: {
+                                    id: number;
+                                    url: string;
+                                    alt?: string;
+                                }[];
+                                path?: string;
                                 rating?: number;
                                 rating_count?: number;
                                 in_stock?: boolean;
@@ -625,7 +649,7 @@ export interface paths {
         };
         /**
          * Данные товара
-         * @description Получение подробной информации о товаре по slug
+         * @description Получение подробной информации о товаре по slug. Для конкретной вариации используйте /catalog/product/{slug}/{variation-slug}
          */
         get: {
             parameters: {
@@ -649,7 +673,18 @@ export interface paths {
                             id: number;
                             name: string;
                             slug: string;
-                            description?: string;
+                            description?: {
+                                type?: string;
+                                content?: string;
+                                text?: string;
+                                level?: string;
+                                paragraphs?: string[];
+                                url?: string;
+                                alt?: string;
+                                id?: number;
+                                caption?: string;
+                            }[];
+                            description_title?: string;
                             short_description?: string;
                             price: string;
                             regular_price?: string;
@@ -669,9 +704,12 @@ export interface paths {
                                     name: string;
                                     slug: string;
                                 }[];
+                                used_for_variations: boolean;
                             }[];
                             variations?: {
                                 id: number;
+                                /** @description SEO-friendly slug identifier for variation */
+                                slug?: string;
                                 price: string;
                                 regular_price?: string;
                                 sale_price?: string;
@@ -681,6 +719,16 @@ export interface paths {
                                 in_stock?: boolean;
                                 attributes?: Record<string, never>;
                                 image_id?: number;
+                                image?: {
+                                    id: number;
+                                    url: string;
+                                    alt?: string;
+                                } | null;
+                                images?: {
+                                    id: number;
+                                    url: string;
+                                    alt?: string;
+                                }[];
                             }[];
                             categories?: {
                                 id: number;
@@ -689,7 +737,7 @@ export interface paths {
                                 description?: string;
                                 count?: number;
                                 image?: string;
-                                link?: string;
+                                path?: string;
                                 seo_blocks?: {
                                     type?: string;
                                     content?: string;
@@ -703,6 +751,9 @@ export interface paths {
                             }[];
                             related_products?: {
                                 id: number;
+                                parent_id?: number;
+                                /** @description SEO-friendly slug identifier for variation */
+                                variation_slug?: string;
                                 name: string;
                                 slug: string;
                                 category_slug?: string;
@@ -712,7 +763,36 @@ export interface paths {
                                 on_sale?: boolean;
                                 currency?: string;
                                 image?: string;
-                                link?: string;
+                                images?: {
+                                    id: number;
+                                    url: string;
+                                    alt?: string;
+                                }[];
+                                path?: string;
+                                rating?: number;
+                                rating_count?: number;
+                                in_stock?: boolean;
+                            }[];
+                            similar_products?: {
+                                id: number;
+                                parent_id?: number;
+                                /** @description SEO-friendly slug identifier for variation */
+                                variation_slug?: string;
+                                name: string;
+                                slug: string;
+                                category_slug?: string;
+                                price: string;
+                                regular_price?: string;
+                                sale_price?: string;
+                                on_sale?: boolean;
+                                currency?: string;
+                                image?: string;
+                                images?: {
+                                    id: number;
+                                    url: string;
+                                    alt?: string;
+                                }[];
+                                path?: string;
                                 rating?: number;
                                 rating_count?: number;
                                 in_stock?: boolean;
@@ -728,9 +808,28 @@ export interface paths {
                                 width?: string;
                                 height?: string;
                             };
-                            link?: string;
+                            path?: string;
                             date_created?: string;
                             date_modified?: string;
+                            delivery_options?: {
+                                type: string;
+                                title: string;
+                                description?: string | null;
+                                price?: string | null;
+                            }[];
+                            reviews?: {
+                                id: number;
+                                title: string;
+                                text?: string;
+                                excerpt?: string;
+                                author_name?: string;
+                                rating?: number;
+                                source?: string;
+                                source_url?: string;
+                                date?: string;
+                                published_at?: string;
+                                order?: number;
+                            }[];
                         };
                     };
                 };
@@ -1140,7 +1239,7 @@ export interface paths {
                                 description?: string;
                                 count?: number;
                                 image?: string;
-                                link?: string;
+                                path?: string;
                                 seo_blocks?: {
                                     type?: string;
                                     content?: string;
@@ -1169,6 +1268,164 @@ export interface paths {
                 };
                 /** @description Not Found */
                 404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: string;
+                            message: string;
+                        };
+                    };
+                };
+                /** @description Internal Server Error */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: string;
+                            message: string;
+                        };
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/ultra/v1/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Поиск товаров
+         * @description Поиск товаров по названию и описанию с поддержкой фильтров и пагинации
+         */
+        get: {
+            parameters: {
+                query: {
+                    /** @description Search query */
+                    q: string;
+                    /** @description Page number */
+                    page?: number;
+                    /** @description Items per page (max 48) */
+                    per_page?: number;
+                    /** @description Sort: date|price|price-desc|rating|popularity */
+                    orderby?: string;
+                    /** @description Minimum price filter */
+                    min_price?: number;
+                    /** @description Maximum price filter */
+                    max_price?: number;
+                    /** @description Only in-stock products */
+                    in_stock?: boolean;
+                    /** @description Only products on sale */
+                    on_sale?: boolean;
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Success */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            category: {
+                                id: number;
+                                name: string;
+                                slug: string;
+                                description?: string;
+                                count?: number;
+                                image?: string;
+                                path?: string;
+                                seo_blocks?: {
+                                    type?: string;
+                                    content?: string;
+                                    text?: string;
+                                    level?: string;
+                                    url?: string;
+                                    alt?: string;
+                                    id?: number;
+                                    caption?: string;
+                                }[];
+                            };
+                            products: {
+                                id: number;
+                                parent_id?: number;
+                                /** @description SEO-friendly slug identifier for variation */
+                                variation_slug?: string;
+                                name: string;
+                                slug: string;
+                                category_slug?: string;
+                                price: string;
+                                regular_price?: string;
+                                sale_price?: string;
+                                on_sale?: boolean;
+                                currency?: string;
+                                image?: string;
+                                images?: {
+                                    id: number;
+                                    url: string;
+                                    alt?: string;
+                                }[];
+                                path?: string;
+                                rating?: number;
+                                rating_count?: number;
+                                in_stock?: boolean;
+                            }[];
+                            page: number;
+                            per_page: number;
+                            total: number;
+                            total_pages: number;
+                            has_more: boolean;
+                            filters: {
+                                priceRange: {
+                                    min: number;
+                                    max: number;
+                                    currentMin: number;
+                                    currentMax: number;
+                                };
+                                sections: {
+                                    id: string;
+                                    title: string;
+                                    /** @enum {string} */
+                                    type: "checkbox" | "color" | "price" | "toggle";
+                                    options: {
+                                        value: string;
+                                        label: string;
+                                        count: number;
+                                        color?: string;
+                                    }[];
+                                    isExpanded?: boolean;
+                                }[];
+                            };
+                            sorting: {
+                                default: string;
+                                options: {
+                                    value: string;
+                                    label: string;
+                                    isDefault: boolean;
+                                }[];
+                            };
+                        };
+                    };
+                };
+                /** @description Bad Request */
+                400: {
                     headers: {
                         [name: string]: unknown;
                     };

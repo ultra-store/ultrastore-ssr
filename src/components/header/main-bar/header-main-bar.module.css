@@ -50,6 +50,11 @@
   flex-grow: 1;
 }
 
+.headerActions a {
+  text-decoration: none;
+  color: inherit;
+}
+
 @media (max-width: 1279px) {
   .burgerButton {
     display: block;

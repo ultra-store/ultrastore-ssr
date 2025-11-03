@@ -1,5 +1,8 @@
+import { notFound } from 'next/navigation';
+
 import { CategoryContent } from '@/components/category/category-content';
 import { ProductTags } from '@/components/product-tags';
+import { SeoContent } from '@/components/seo-content/seo-content';
 import { Section } from '@/components/ui/section';
 import { getCategoryData } from '@/shared/api/getCategoryData';
 import { getLayoutData } from '@/shared/api/getLayoutData';
@@ -15,10 +18,17 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
   const { category: categorySlug } = await params;
   const search = await searchParams;
 
-  const [categoryData, layoutData] = await Promise.all([
-    getCategoryData(categorySlug, search),
-    getLayoutData(categorySlug),
-  ]);
+  let categoryData;
+  let layoutData;
+
+  try {
+    [categoryData, layoutData] = await Promise.all([
+      getCategoryData(categorySlug, search),
+      getLayoutData(categorySlug),
+    ]);
+  } catch {
+    notFound();
+  }
 
   const tags = categoriesToTags(categoryData.category?.children || []);
 
@@ -32,6 +42,9 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
         contacts={layoutData.contacts}
         social={layoutData.social}
       />
+      {categoryData.category?.seo_blocks && categoryData.category.seo_blocks.length > 0 && (
+        <SeoContent blocks={categoryData.category.seo_blocks} />
+      )}
     </Section>
   );
 }

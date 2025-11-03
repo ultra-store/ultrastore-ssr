@@ -1,0 +1,13 @@
+.productView {
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacing-2xl);
+  flex-grow: 1;
+  width: 100%;
+}
+
+@media (max-width: 1023px) {
+  .productView {
+    flex-direction: column;
+  }
+}

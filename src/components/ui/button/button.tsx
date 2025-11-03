@@ -7,9 +7,10 @@ import styles from './button.module.css';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode
-  variant?: 'primary' | 'secondary' | 'compact'
+  variant?: 'primary' | 'secondary' | 'compact' | 'outline' | 'outline-secondary'
   fullWidth?: boolean
   icon?: string
+  active?: boolean
 }
 
 export const Button = ({
@@ -17,6 +18,7 @@ export const Button = ({
   variant = 'primary',
   fullWidth = false,
   icon,
+  active = false,
   className = '',
   ...props
 }: ButtonProps) => {
@@ -25,6 +27,7 @@ export const Button = ({
       className={`${styles.button} ${className}`}
       data-variant={variant}
       data-full-width={fullWidth || undefined}
+      data-active={active || undefined}
       {...props}
     >
       {icon && <Image src={icon} alt="Icon" width={25} height={25} />}

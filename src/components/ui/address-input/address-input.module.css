@@ -1,0 +1,60 @@
+.addressInputWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.addressInput {
+  width: 100%;
+  padding: 10px 15px;
+  border: 1px solid var(--outline-faint);
+  border-radius: 4px;
+  background-color: var(--surface-primary);
+  color: var(--outline-primary);
+  font-size: var(--font-size-medium);
+  line-height: var(--line-height-medium);
+  font-family: var(--font-formular);
+}
+
+.addressInput:focus {
+  outline: none;
+  border-color: var(--outline-interactive);
+}
+
+.addressInput::placeholder {
+  color: var(--outline-placeholder);
+}
+
+.suggestions {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  left: 0;
+  z-index: 1000;
+  border: 1px solid var(--outline-faint);
+  border-radius: 4px;
+  background-color: var(--surface-primary);
+  margin-top: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.suggestion {
+  padding: 12px 15px;
+  color: var(--outline-primary);
+  font-size: var(--font-size-medium);
+  line-height: var(--line-height-medium);
+  cursor: pointer;
+  font-family: var(--font-formular);
+  transition: background-color 0.2s;
+}
+
+.suggestion:hover,
+.suggestion.selected {
+  background-color: var(--surface-interactive);
+}
+
+.suggestion:not(:last-child) {
+  border-bottom: 1px solid var(--outline-faint);
+}
+

@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
+import { useCart } from '@/shared/context/cart-context';
 import icons from '@/shared/icons';
 
 import { TabButton } from './tab-button';
@@ -16,26 +17,28 @@ interface TabItem {
   badge?: number
 }
 
-const tabs: TabItem[] = [
-  {
-    href: '/',
-    icon: 'home',
-    label: 'Главная',
-  },
-  {
-    href: '/catalog',
-    icon: 'catalog',
-    label: 'Каталог',
-  },
-  {
-    href: '/cart',
-    icon: 'cart',
-    label: 'Корзина',
-  },
-];
-
 export const MobileTabBar = () => {
   const pathname = usePathname();
+  const { getTotalItems, isHydrated } = useCart();
+
+  const tabs: TabItem[] = [
+    {
+      href: '/',
+      icon: 'home',
+      label: 'Главная',
+    },
+    {
+      href: '/catalog',
+      icon: 'catalog',
+      label: 'Каталог',
+    },
+    {
+      href: '/cart',
+      icon: 'cart',
+      label: 'Корзина',
+      badge: isHydrated && getTotalItems() > 0 ? getTotalItems() : undefined,
+    },
+  ];
 
   return (
     <nav className={styles.mobileTabBar}>

@@ -30,9 +30,9 @@ export default async function HomePage() {
     <>
       <PromoBanners items={promo_banners} />
       <PopularCategories items={popular_categories} />
-      <ProductLevel title="Новинки" items={new_products} />
+      <ProductLevel title="Новинки" items={new_products} showPricePrefix />
       <InfoBlock {...firstInfoBlock} />
-      <ProductLevel title="Скидки" items={sale_products} />
+      <ProductLevel title="Скидки" items={sale_products} showPricePrefix />
       <InfoBlock {...secondInfoBlock} />
       <Reviews items={reviews} />
       <HowToFindUs contacts={contacts} socials={social} />

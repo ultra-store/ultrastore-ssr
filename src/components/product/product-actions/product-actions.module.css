@@ -1,0 +1,176 @@
+/* Main container */
+.priceSection {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-md);
+  padding: 0;
+  flex: none;
+}
+
+.price {
+  display: block;
+  width: auto;
+  height: 45px;
+  color: var(--outline-primary);
+  font-size: var(--font-size-heading-1);
+  font-weight: 700;
+  line-height: 45px;
+  flex: none;
+  font-family: var(--font-formular);
+  font-style: normal;
+}
+
+.salePrice {
+  color: var(--fill-interactive);
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+  width: 100%;
+  padding: 0;
+  flex: none;
+  align-self: stretch;
+  max-width: 350px;
+}
+
+.mainActions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--spacing-sm);
+  height: 45px;
+  padding: 0;
+  flex: none;
+  align-self: stretch;
+  transition: all 0.3s ease;
+}
+
+.addToCartButton {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-sm);
+  height: 45px;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  min-width: 200px;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.iconButtons {
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacing-sm);
+  flex-shrink: 0;
+}
+
+.iconButton {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--spacing-sm);
+  width: 45px;
+  height: 45px;
+  padding: var(--spacing-sm);
+  border-radius: 15px;
+  background: var(--surface-primary);
+  box-sizing: border-box;
+  flex: none;
+  flex-grow: 0;
+}
+
+.iconButton img {
+  width: 25px;
+  height: 25px;
+  flex: none;
+  flex-grow: 0;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.cartState {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--spacing-sm);
+  width: 100%;
+  height: 45px;
+  animation: fade-in 0.3s ease;
+}
+
+.quantitySelector {
+  width: 100%;
+  height: 45px;
+  max-height: 45px;
+  opacity: 0;
+  transform: scale(0.9);
+  animation: fade-in-scale 0.3s ease 0.1s forwards;
+}
+
+.cartLink {
+  height: 45px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.cartState .iconButton {
+  opacity: 0;
+  transform: scale(0.9);
+  animation: fade-in-scale 0.3s ease 0.15s forwards;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in-scale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.buyOneClickButton {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacing-sm);
+  width: 100%;
+  height: 45px;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border: 1px solid var(--outline-interactive);
+  border-radius: 15px;
+  box-sizing: border-box;
+  min-width: 200px;
+  flex: none;
+  align-self: stretch;
+}

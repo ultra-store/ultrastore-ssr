@@ -1,0 +1,138 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.specsTable {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-lg);
+  width: 100%;
+  padding: 0;
+  flex: none;
+  order: 1;
+}
+
+.specGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+  width: 100%;
+  padding: 0;
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
+.specGroupTitle {
+  width: auto;
+  height: var(--line-height-medium);
+  color: var(--outline-placeholder);
+  font-family: var(--font-formular);
+  font-style: normal;
+  font-size: var(--font-size-medium);
+  font-weight: 700;
+  line-height: var(--line-height-medium);
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+.specGroupTitle:first-child {
+  margin-top: 0;
+}
+
+.specRowContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-xs);
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  flex: none;
+  order: 1;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
+.specListItem {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-xs);
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.specRow {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+  width: 100%;
+  min-height: var(--line-height-medium);
+  padding: 0;
+  flex: none;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
+.specRowSpaceBetween {
+  justify-content: space-between;
+}
+
+.specLabel {
+  width: 200px;
+  min-height: var(--line-height-medium);
+  color: var(--outline-primary);
+  font-family: var(--font-formular);
+  font-style: normal;
+  font-size: var(--font-size-medium);
+  font-weight: 400;
+  line-height: var(--line-height-medium);
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+.specLabelAuto {
+  width: auto;
+}
+
+.specValue {
+  min-height: var(--line-height-medium);
+  color: var(--outline-primary);
+  font-family: var(--font-formular);
+  font-style: normal;
+  font-size: var(--font-size-medium);
+  font-weight: 700;
+  line-height: var(--line-height-medium);
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+}
+
+.specDivider {
+  width: 100%;
+  height: 0;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--outline-faint);
+  flex: none;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
+.empty {
+  color: var(--outline-placeholder);
+}
+

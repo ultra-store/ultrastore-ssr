@@ -11,9 +11,12 @@
   font-size: var(--font-size-large);
   font-weight: 400;
   line-height: var(--line-height-large);
+  overflow: hidden;
   cursor: pointer;
   transition: all 200ms ease-in-out;
   outline: none;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .button[data-variant='primary'] {
@@ -53,6 +56,57 @@
   background: var(--fill-interactive-active);
 }
 
+.button[data-variant='outline'] {
+  border: 1px solid var(--outline-interactive);
+  border-radius: 15px;
+  background: transparent;
+  color: var(--outline-primary);
+  box-sizing: border-box;
+  transition: border-color 200ms ease-in-out;
+}
+
+.button[data-variant='outline']:hover:not(:disabled) {
+  border-color: #E5193B;
+  color: var(--outline-hover);
+}
+
+.button[data-variant='outline']:active:not(:disabled) {
+  border-color: #E5193B;
+  color: var(--outline-hover);
+}
+
+.button[data-variant='outline-secondary'] {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+  background: transparent;
+  color: var(--outline-primary);
+  box-sizing: border-box;
+  transition: border-color 200ms ease-in-out, background-color 200ms ease-in-out;
+}
+
+.button[data-variant='outline-secondary'][data-active='true'] {
+  border: 1px solid var(--outline-interactive);
+  background: var(--surface-interactive);
+}
+
+.button[data-variant='outline-secondary']:hover:not(:disabled) {
+  border-color: var(--outline-interactive);
+  color: var(--outline-hover);
+}
+
+.button[data-variant='outline-secondary'][data-active='true']:hover:not(:disabled) {
+  background: var(--surface-interactive-hover);
+}
+
+.button[data-variant='outline-secondary']:active:not(:disabled) {
+  border-color: var(--outline-interactive);
+  color: var(--outline-hover);
+}
+
+.button[data-variant='outline-secondary'][data-active='true']:active:not(:disabled) {
+  background: var(--surface-interactive-hover);
+}
+
 .button[data-full-width] {
   width: 100%;
 }
@@ -64,6 +118,14 @@
 
 @media (max-width: 759px) {
   .button[data-variant='primary'] {
+    border-radius: 20px;
+  }
+
+  .button[data-variant='outline'] {
+    border-radius: 20px;
+  }
+
+  .button[data-variant='outline-secondary'] {
     border-radius: 20px;
   }
 }

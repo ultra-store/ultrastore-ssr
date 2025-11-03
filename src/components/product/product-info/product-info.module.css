@@ -3,6 +3,8 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 15px;
+  width: 100%;
+  flex-grow: 1;
 }
 
 .header {
@@ -13,10 +15,11 @@
 }
 
 .content {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  gap: 30px;
+  display: grid;
+  grid-template-columns: 1fr minmax(320px, 350px);
+  gap: var(--spacing-2xl);
+  width: 100%;
+
 }
 
 .leftColumn {
@@ -27,17 +30,9 @@
   flex: none;
   order: 0;
   flex-grow: 1;
+  min-width: 275px;
 }
 
-.rightColumn {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding-top: 20px;
-  gap: 30px;
-  flex: none;
-  order: 1;
-}
 
 .title {
   margin-bottom: 0;
@@ -46,6 +41,7 @@
 .sku {
   display: flex;
   gap: var(--spacing-xs);
+  min-height: var(--line-height-medium);
 }
 
 .priceSection {
@@ -128,6 +124,17 @@
   color: var(--outline-light-static);
 }
 
+.attributeValueDisabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.attributeValueDisabled:hover {
+  border: 1px solid var(--outline-initial);
+  color: var(--outline-primary);
+}
+
 .actions {
   display: flex;
   flex-direction: column;
@@ -142,6 +149,139 @@
   border-radius: 15px;
 }
 
+.specsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+  max-width: 300px;
+}
+
+.rightColumn {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  width: 100%;
+  max-width: 350px;
+}
+
+.productActions {
+  width: 100%;
+}
+
+.productDelivery {
+  width: 100%;
+}
+
+.specsTitle {
+  color: var(--outline-placeholder);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 20px;
+}
+
+.specsList {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+  width: 100%;
+}
+
+.specItem {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 15px;
+  width: 100%;
+  min-height: 20px;
+}
+
+.specItemSeparator {
+  width: 100%;
+  height: 0;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--outline-faint);
+}
+
+.specLabel {
+  color: var(--outline-primary);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.specValue {
+  color: var(--outline-primary);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 20px;
+}
+
+/* Styles for ProductSpecs component inside specsContainer */
+.specsList :global(.specRow) {
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.specsList :global(.specLabel) {
+  width: auto;
+  min-width: 0;
+  flex: 0 0 auto;
+  text-align: left;
+}
+
+.specsList :global(.specValue),
+.specsList :global(.specRowContainer) :global(.specValue),
+.specsList :global(.specGroup) :global(.specRowContainer) :global(.specValue) {
+  width: auto !important;
+  text-align: right !important;
+  flex: 0 0 auto !important;
+  margin-left: auto !important;
+  max-width: none !important;
+}
+
+.allSpecsLink {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--outline-placeholder);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 20px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.allSpecsLinkText {
+  color: var(--outline-placeholder);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.allSpecsIcon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
+
+.allSpecsIcon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
 @media (max-width: 1279px) {
   .content {
     flex-direction: column;
@@ -151,6 +291,10 @@
   .rightColumn {
     padding-top: 0;
   }
+
+  .specsContainer {
+    max-width: 100%;
+  }
 }
 
 @media (max-width: 759px) {
@@ -159,9 +303,30 @@
     line-height: var(--line-height-heading-1-mobile);
   }
 
+  .specsContainer {
+    max-width: 100%;
+  }
+
+  /* Ensure values are right-aligned on mobile */
+  .specsList :global(.specRow) {
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .specsList :global(.specValue),
+  .specsList :global(.specRowContainer) :global(.specValue),
+  .specsList :global(.specGroup) :global(.specRowContainer) :global(.specValue) {
+    width: auto !important;
+    text-align: right !important;
+    flex: 0 0 auto !important;
+    margin-left: auto !important;
+    max-width: none !important;
+  }
+
   .sku {
     font-size: var(--font-size-medium-mobile);
     line-height: var(--line-height-medium-mobile);
+    min-height: var(--line-height-medium-mobile);
   }
 
   .price {

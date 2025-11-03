@@ -13,7 +13,8 @@
   line-height: var(--line-height-heading-1);
 }
 
-.content {
+/* Use :where() to reduce specificity, allowing override classes to win */
+:where(.content) {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-lg);
@@ -55,4 +56,8 @@
   .content {
     padding: 0;
   }
+}
+
+.noPadding {
+  padding: 0;
 }

@@ -1,5 +1,4 @@
-import { ProductGrid } from '@/components/products/product-grid/product-grid';
-import { Section } from '@/components/ui/section';
+import { ProductLevel } from '@/components/products/product-level/product-level';
 
 import type { Product } from '@/shared/types/types';
 
@@ -14,7 +13,7 @@ export interface RelatedProductsProps {
 
 export const RelatedProducts = ({
   products,
-  title = 'Похожие товары',
+  title = 'С этим товаром часто берут',
   className,
 }: WithClassName<RelatedProductsProps>) => {
   if (products.length === 0) {
@@ -23,9 +22,12 @@ export const RelatedProducts = ({
 
   return (
     <div className={`${styles.container} ${className || ''}`}>
-      <Section title={title} ariaLabel={title}>
-        <ProductGrid products={products} />
-      </Section>
+      <ProductLevel
+        title={title}
+        items={products}
+        showPricePrefix
+        ctaText=""
+      />
     </div>
   );
 };

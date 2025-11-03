@@ -1,12 +1,13 @@
-import { ProductInfo, ProductImageGallery, ProductDescription, RelatedProducts } from '@/components/product';
+import { notFound } from 'next/navigation';
+
+import { ProductDescription, RelatedProducts, SimilarProducts, ProductView } from '@/components/product';
+import { SeoContent } from '@/components/seo-content/seo-content';
 import { Breadcrumbs } from '@/components/ui/breadcrumbs';
 
 import type { BreadcrumbItem } from '@/components/ui/breadcrumbs/breadcrumbs';
 
 import { Section } from '@/components/ui/section';
 import { getProductData } from '@/shared/api/getProductData';
-
-import styles from './page.module.css';
 
 interface CategoryProductPageProps {
   params: Promise<{
@@ -17,7 +18,14 @@ interface CategoryProductPageProps {
 
 export default async function CategoryProductPage({ params }: CategoryProductPageProps) {
   const { product } = await params;
-  const productData = await getProductData(product);
+
+  let productData;
+
+  try {
+    productData = await getProductData(product);
+  } catch {
+    notFound();
+  }
 
   const categoryItem = productData.categories.length > 0
     ? {
@@ -31,35 +39,40 @@ export default async function CategoryProductPage({ params }: CategoryProductPag
     <Section>
       <Breadcrumbs
         items={breadcrumbs}
-        className={styles.breadcrumbs}
       />
 
-      <div className={styles.productLayout}>
-        <ProductImageGallery
-          images={productData.images}
-          productName={productData.name}
-          className={styles.gallery}
-        />
+      <ProductView
+        images={productData.images}
+        name={productData.name}
+        product={productData}
+      />
 
-        <ProductInfo
-          product={productData}
-          className={styles.info}
-        />
-      </div>
-
-      <div className={styles.descriptionSection}>
+      <div>
         <ProductDescription
           shortDescription={productData.short_description}
-          description={productData.description}
           attributes={productData.attributes}
+          variations={productData.variations}
           sku={productData.sku}
           weight={productData.weight}
           dimensions={productData.dimensions}
+          reviews={productData.reviews}
         />
       </div>
 
       {productData.related_products.length > 0 && (
         <RelatedProducts products={productData.related_products} />
+      )}
+
+      {productData.similar_products.length > 0 && (
+        <SimilarProducts products={productData.similar_products} />
+      )}
+
+      {Array.isArray(productData.description) && productData.description.length > 0 && (
+        <SeoContent blocks={productData.description} title={productData.description_title} />
+      )}
+
+      {productData.seo_blocks && productData.seo_blocks.length > 0 && (
+        <SeoContent blocks={productData.seo_blocks} />
       )}
     </Section>
   );

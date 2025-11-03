@@ -1,0 +1,118 @@
+/* Main container */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-md);
+  width: 350px;
+  padding: 0;
+  flex: none;
+  order: 1;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
+/* Individual delivery option */
+.option {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 350px;
+  height: 40px;
+  padding: 0;
+  flex: none;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
+/* Option title */
+.title {
+  width: auto;
+  height: var(--line-height-medium);
+  color: var(--outline-primary);
+  font-size: var(--font-size-medium);
+  font-weight: 700;
+  line-height: var(--line-height-medium);
+  font-family: var(--font-formular);
+  font-style: normal;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+/* Details row (description and price) */
+.details {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--spacing-md);
+  width: 350px;
+  height: var(--line-height-medium);
+  padding: 0;
+  flex: none;
+  order: 1;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
+/* Description text */
+.description {
+  width: auto;
+  height: var(--line-height-medium);
+  color: var(--outline-primary);
+  font-size: var(--font-size-medium);
+  font-weight: 400;
+  line-height: var(--line-height-medium);
+  font-family: var(--font-formular);
+  font-style: normal;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+/* Price text */
+.price {
+  width: auto;
+  height: var(--line-height-medium);
+  color: var(--outline-primary);
+  font-size: var(--font-size-medium);
+  font-weight: 400;
+  line-height: var(--line-height-medium);
+  font-family: var(--font-formular);
+  font-style: normal;
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+}
+
+@media (max-width: 1279px) {
+  .container {
+    width: 100%;
+    max-width: 350px;
+  }
+
+  .option {
+    width: 100%;
+  }
+
+  .details {
+    width: 100%;
+  }
+}
+
+@media (max-width: 759px) {
+  .container {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .option {
+    width: 100%;
+  }
+
+  .details {
+    width: 100%;
+  }
+}
+

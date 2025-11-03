@@ -10,7 +10,7 @@ export const ProductGrid = ({ products }: ProductGridProps) => {
     <ul className={styles.grid}>
       {products.map((product) => (
         <li key={product.id}>
-          <ProductCard {...product} />
+          <ProductCard {...product} has_variations={product.has_variations} />
         </li>
       ))}
     </ul>

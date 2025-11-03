@@ -3,12 +3,14 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { ProductGrid } from '@/components/products/product-grid/product-grid';
+import { ProductLevel } from '@/components/products/product-level/product-level';
 import { ContactCard } from '@/components/ui/contact-card';
 import { FilterButton } from '@/components/ui/filter/filter-button';
 import { useFilterPopup } from '@/components/ui/filter/filter-popup-context';
 import { SortSelect, type SortOption } from '@/components/ui/sort-select';
 
 import { getCategoryData } from '@/shared/api/getCategoryData';
+import { getHomepageData } from '@/shared/api/getHomepageData';
 import type { CategoryData, Contacts, Social, CategorySearchParams, Product } from '@/shared/types';
 
 import { CategoryFilters } from './category-filters';
@@ -35,6 +37,7 @@ export const CategoryContent = ({
   const [items, setItems] = useState<Product[]>(categoryData.products || []);
   const [hasMore, setHasMore] = useState<boolean>(categoryData.has_more);
   const [isLoadingMore, setIsLoadingMore] = useState<boolean>(false);
+  const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
   const sentinelRef = useRef<HTMLDivElement | null>(null);
   const abortRef = useRef<AbortController | null>(null);
   const pageRef = useRef<number>(categoryData.page || 1);
@@ -83,6 +86,33 @@ export const CategoryContent = ({
     setHasMore(categoryData.has_more);
   }, [categoryData]);
 
+  // Load related products when category is empty
+  useEffect(() => {
+    const hasProducts = (categoryData.total ?? 0) > 0;
+
+    if (!hasProducts) {
+      const loadRelatedProducts = async () => {
+        try {
+          const homepageData = await getHomepageData();
+
+          // Используем новинки, если есть, иначе скидки
+          if (homepageData.new_products && homepageData.new_products.length > 0) {
+            setRelatedProducts(homepageData.new_products.slice(0, 4));
+          } else if (homepageData.sale_products && homepageData.sale_products.length > 0) {
+            setRelatedProducts(homepageData.sale_products.slice(0, 4));
+          }
+        } catch {
+          // Если не удалось загрузить товары, просто не показываем их
+          setRelatedProducts([]);
+        }
+      };
+
+      loadRelatedProducts();
+    } else {
+      setRelatedProducts([]);
+    }
+  }, [categoryData.total]);
+
   useEffect(() => {
     if (!sentinelRef.current) {
       return;
@@ -128,18 +158,22 @@ export const CategoryContent = ({
 
   const sortOptions = sorting?.options || defaultSortOptions;
 
+  const hasProducts = (categoryData.total ?? 0) > 0;
+
   const handleFilterButtonClick = () => {
     setFilterOpen(true);
   };
 
   return (
     <section className={styles.content}>
-      <aside className={styles.filters} aria-label="Фильтры">
-        <CategoryFilters filters={filters} />
-      </aside>
+      {hasProducts && (
+        <aside className={styles.filters} aria-label="Фильтры">
+          <CategoryFilters filters={filters} products={items} />
+        </aside>
+      )}
       <section className={styles.productsSection} aria-label="Товары">
         <div className={styles.productsSectionContent}>
-          {sortOptions.length > 0 && (
+          {hasProducts && sortOptions.length > 0 && (
             <div className={styles.controls}>
               <span className={`large text-placeholder ${styles.controlsCount}`}>
                 {categoryData.total}
@@ -158,11 +192,21 @@ export const CategoryContent = ({
               />
             </div>
           )}
-          <ProductGrid products={items} />
-          <div ref={sentinelRef} aria-hidden />
-          {isLoadingMore && (
-            <div className={styles.controls} aria-live="polite">Загрузка…</div>
-          )}
+          {!hasProducts
+            ? (
+                <p className={`large text-placeholder ${styles.emptyState}`}>
+                  В этой категории пока нет товаров
+                </p>
+              )
+            : (
+                <>
+                  <ProductGrid products={items} />
+                  <div ref={sentinelRef} aria-hidden />
+                  {isLoadingMore && (
+                    <div className={styles.controls} aria-live="polite">Загрузка…</div>
+                  )}
+                </>
+              )}
         </div>
         <ContactCard
           title="Не нашли нужный товар?"
@@ -179,6 +223,17 @@ export const CategoryContent = ({
           }}
           social={social}
         />
+        {!hasProducts && relatedProducts.length > 0 && (
+          <div className={styles.relatedProducts}>
+            <ProductLevel
+              title="Возможно, вам будет интересно"
+              items={relatedProducts}
+              showPricePrefix
+              ctaText="Смотреть все товары"
+              ctaHref="/catalog"
+            />
+          </div>
+        )}
       </section>
     </section>
   );
