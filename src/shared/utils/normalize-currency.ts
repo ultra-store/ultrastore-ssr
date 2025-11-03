@@ -16,4 +16,3 @@ export const normalizeCurrency = (currency?: string): string => {
 
   return currencyMap[currency.toUpperCase()] || currency;
 };
-
