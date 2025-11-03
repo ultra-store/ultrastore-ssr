@@ -14,6 +14,7 @@ export interface RangeFilterProps {
   step?: number
   unit?: string
   paramName?: string
+  disabled?: boolean
 }
 
 // Helpers
@@ -53,7 +54,7 @@ const snapToStep = (rawValue: number, step: number, min: number, max: number) =>
   return Math.round(rawValue / step) * step;
 };
 
-export const Range = ({ min, max, value, onChange, step, unit, paramName }: RangeFilterProps) => {
+export const Range = ({ min, max, value, onChange, step, unit, paramName, disabled = false }: RangeFilterProps) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -141,7 +142,7 @@ export const Range = ({ min, max, value, onChange, step, unit, paramName }: Rang
     const type = draggingRef.current;
     const track = trackRef.current;
 
-    if (!type || !track) {
+    if (!type || !track || disabled) {
       return;
     }
 
@@ -177,7 +178,7 @@ export const Range = ({ min, max, value, onChange, step, unit, paramName }: Rang
         updateParam(paramName, next);
       }
     }
-  }, [paramName, updateParam]);
+  }, [paramName, updateParam, disabled]);
 
   const handlePointerMoveRef = useRef<(e: PointerEvent) => void>(() => {
     // Handler will be set via useEffect
@@ -239,6 +240,10 @@ export const Range = ({ min, max, value, onChange, step, unit, paramName }: Rang
   }, [handlePointerCancel]);
 
   const handlePointerDown = useCallback((type: 'min' | 'max') => (e: React.PointerEvent) => {
+    if (disabled) {
+      return;
+    }
+
     e.preventDefault();
     e.stopPropagation();
 
@@ -252,7 +257,7 @@ export const Range = ({ min, max, value, onChange, step, unit, paramName }: Rang
 
     // Process initial position
     updateFromPointer(e.clientX);
-  }, [updateFromPointer]);
+  }, [updateFromPointer, disabled]);
 
   useEffect(() => {
     return () => {
@@ -268,6 +273,10 @@ export const Range = ({ min, max, value, onChange, step, unit, paramName }: Rang
   }, []);
 
   const applyInputValue = useCallback((type: 'min' | 'max', numericValue: number) => {
+    if (disabled) {
+      return;
+    }
+
     const stepVal = effectiveStepRef.current;
     const clamped = clamp(numericValue, minRef.current, maxRef.current);
     const stepped = snapToStep(clamped, stepVal, minRef.current, maxRef.current);
@@ -302,7 +311,7 @@ export const Range = ({ min, max, value, onChange, step, unit, paramName }: Rang
         max: formatValueWithUnit(nextMax),
       }));
     }
-  }, [formatValueWithUnit, paramName, updateParam]);
+  }, [formatValueWithUnit, paramName, updateParam, disabled]);
 
   const handleInputBlur = useCallback((type: 'min' | 'max') => {
     const raw = localInputValues[type].trim();
@@ -421,6 +430,7 @@ export const Range = ({ min, max, value, onChange, step, unit, paramName }: Rang
           onBlur={() => handleInputBlur('min')}
           onKeyDown={(e) => handleInputKeyDown(e, 'min')}
           aria-label="Minimum value"
+          disabled={disabled}
         />
 
         <span className={`large text-primary ${styles.rangeSeparator}`}>—</span>
@@ -434,6 +444,7 @@ export const Range = ({ min, max, value, onChange, step, unit, paramName }: Rang
           onBlur={() => handleInputBlur('max')}
           onKeyDown={(e) => handleInputKeyDown(e, 'max')}
           aria-label="Maximum value"
+          disabled={disabled}
         />
       </div>
 
@@ -454,6 +465,7 @@ export const Range = ({ min, max, value, onChange, step, unit, paramName }: Rang
           style={{ left: `${minPos}%` }}
           onPointerDown={handlePointerDown('min')}
           aria-label="Minimum value"
+          disabled={disabled}
         />
 
         <button
@@ -462,6 +474,7 @@ export const Range = ({ min, max, value, onChange, step, unit, paramName }: Rang
           style={{ left: `${maxPos}%` }}
           onPointerDown={handlePointerDown('max')}
           aria-label="Maximum value"
+          disabled={disabled}
         />
       </div>
     </div>

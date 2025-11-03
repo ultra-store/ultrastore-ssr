@@ -50,6 +50,8 @@
   color: var(--fill-interactive);
 }
 
+/* status removed */
+
 @keyframes checkmark-pop {
   0% {
     transform: scale(0);

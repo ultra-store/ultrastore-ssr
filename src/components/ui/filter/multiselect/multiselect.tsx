@@ -15,9 +15,10 @@ export interface MultiselectProps {
   onSelectionChange: (selectedValues: string[]) => void
   type?: 'checkbox' | 'color'
   paramName?: string
+  disabled?: boolean
 }
 
-export const Multiselect = ({ options, selectedValues, onSelectionChange, type = 'checkbox', paramName }: MultiselectProps) => {
+export const Multiselect = ({ options, selectedValues, onSelectionChange, type = 'checkbox', paramName, disabled = false }: MultiselectProps) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -34,18 +35,26 @@ export const Multiselect = ({ options, selectedValues, onSelectionChange, type =
   };
 
   const handleOptionToggle = (optionValue: string) => {
+    if (disabled) {
+      return;
+    }
+
     if (selectedValues.includes(optionValue)) {
       const next = selectedValues.filter((value) => value !== optionValue);
 
       onSelectionChange(next);
-      if (paramName) {
+      // Don't update URL here - let parent component handle debouncing
+      // Only update if onSelectionChange is not provided (fallback)
+      if (paramName && !onSelectionChange) {
         updateQueryParam(paramName, next);
       }
     } else {
       const next = [...selectedValues, optionValue];
 
       onSelectionChange(next);
-      if (paramName) {
+      // Don't update URL here - let parent component handle debouncing
+      // Only update if onSelectionChange is not provided (fallback)
+      if (paramName && !onSelectionChange) {
         updateQueryParam(paramName, next);
       }
     }
@@ -59,8 +68,14 @@ export const Multiselect = ({ options, selectedValues, onSelectionChange, type =
         return (
           <div
             key={option.value}
-            className={`${styles.option} ${isSelected ? styles.optionSelected : ''} ${type === 'color' ? styles.optionColor : ''}`}
+            className={`${styles.option} ${isSelected ? styles.optionSelected : ''} ${type === 'color' ? styles.optionColor : ''} ${disabled ? styles.optionDisabled : ''}`}
             onClick={() => handleOptionToggle(option.value)}
+            style={disabled
+              ? {
+                  pointerEvents: 'none',
+                  opacity: 0.5,
+                }
+              : undefined}
           >
             {type === 'color' && option.color && (
               <div
@@ -75,6 +90,7 @@ export const Multiselect = ({ options, selectedValues, onSelectionChange, type =
                   checked={isSelected}
                   onChange={() => handleOptionToggle(option.value)}
                   className={styles.checkboxInput}
+                  disabled={disabled}
                 />
               </div>
             )}

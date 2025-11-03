@@ -6,6 +6,7 @@ import { ProductGrid } from '@/components/products/product-grid/product-grid';
 import { ProductLevel } from '@/components/products/product-level/product-level';
 import { ContactCard } from '@/components/ui/contact-card';
 import { FilterButton } from '@/components/ui/filter/filter-button';
+// import { FilterPopup } from '@/components/ui/filter/filter-popup';
 import { useFilterPopup } from '@/components/ui/filter/filter-popup-context';
 import { SortSelect, type SortOption } from '@/components/ui/sort-select';
 
@@ -13,7 +14,7 @@ import { getCategoryData } from '@/shared/api/getCategoryData';
 import { getHomepageData } from '@/shared/api/getHomepageData';
 import type { CategoryData, Contacts, Social, CategorySearchParams, Product } from '@/shared/types';
 
-import { CategoryFilters } from './category-filters';
+import { CategoryFilters, CategoryFiltersPopup } from './category-filters';
 
 import styles from './category-content.module.css';
 
@@ -38,6 +39,7 @@ export const CategoryContent = ({
   const [hasMore, setHasMore] = useState<boolean>(categoryData.has_more);
   const [isLoadingMore, setIsLoadingMore] = useState<boolean>(false);
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
+  const [isApplyingFilters, setIsApplyingFilters] = useState(false);
   const sentinelRef = useRef<HTMLDivElement | null>(null);
   const abortRef = useRef<AbortController | null>(null);
   const pageRef = useRef<number>(categoryData.page || 1);
@@ -165,76 +167,93 @@ export const CategoryContent = ({
   };
 
   return (
-    <section className={styles.content}>
-      {hasProducts && (
-        <aside className={styles.filters} aria-label="Фильтры">
-          <CategoryFilters filters={filters} products={items} />
-        </aside>
-      )}
-      <section className={styles.productsSection} aria-label="Товары">
-        <div className={styles.productsSectionContent}>
-          {hasProducts && sortOptions.length > 0 && (
-            <div className={styles.controls}>
-              <span className={`large text-placeholder ${styles.controlsCount}`}>
-                {categoryData.total}
-                {' '}
-                {categoryData.total === 1 ? 'товар' : categoryData.total > 1 && categoryData.total < 5 ? 'товара' : 'товаров'}
-              </span>
-              <div className={styles.controlsSort}>
-                <SortSelect
-                  options={sortOptions}
-                  defaultValue={sorting?.default || 'price'}
+    <>
+      <section className={styles.content}>
+        {hasProducts && (
+          <aside className={styles.filters} aria-label="Фильтры">
+            <CategoryFilters
+              filters={filters}
+              products={items}
+              onApplyingChange={setIsApplyingFilters}
+            />
+          </aside>
+        )}
+        <section className={styles.productsSection} aria-label="Товары">
+          <div
+            className={`${styles.productsSectionContent} ${styles.productsOverlayWrap}`}
+            data-active={String(isApplyingFilters)}
+          >
+            {hasProducts && sortOptions.length > 0 && (
+              <div className={styles.controls}>
+                <span className={`large text-placeholder ${styles.controlsCount}`}>
+                  {categoryData.total}
+                  {' '}
+                  {categoryData.total === 1 ? 'товар' : categoryData.total > 1 && categoryData.total < 5 ? 'товара' : 'товаров'}
+                </span>
+                <div className={styles.controlsSort}>
+                  <SortSelect
+                    options={sortOptions}
+                    defaultValue={sorting?.default || 'price'}
+                  />
+                </div>
+                <FilterButton
+                  className={styles.filterButton}
+                  onClick={handleFilterButtonClick}
                 />
               </div>
-              <FilterButton
-                className={styles.filterButton}
-                onClick={handleFilterButtonClick}
+            )}
+            {!hasProducts
+              ? (
+                  <p className={`large text-placeholder ${styles.emptyState}`}>
+                    В этой категории пока нет товаров
+                  </p>
+                )
+              : (
+                  <>
+                    <ProductGrid products={items} />
+                    <div ref={sentinelRef} aria-hidden />
+                    {isLoadingMore && (
+                      <div className={styles.controls} aria-live="polite">Загрузка…</div>
+                    )}
+                  </>
+                )}
+            <div className={styles.productsOverlay} aria-hidden />
+          </div>
+          <ContactCard
+            title="Не нашли нужный товар?"
+            subtitle="Свяжитесь с нами, возможно, мы сможем помочь"
+            phone={{
+              label: 'Телефон',
+              value: phoneText,
+              href: `tel:${phoneText.replace(/[^+\d]/g, '')}`,
+            }}
+            email={{
+              label: 'Почта',
+              value: emailText,
+              href: `mailto:${emailText}`,
+            }}
+            social={social}
+          />
+          {!hasProducts && relatedProducts.length > 0 && (
+            <div className={styles.relatedProducts}>
+              <ProductLevel
+                title="Возможно, вам будет интересно"
+                items={relatedProducts}
+                showPricePrefix
+                ctaText="Смотреть все товары"
+                ctaHref="/catalog"
               />
             </div>
           )}
-          {!hasProducts
-            ? (
-                <p className={`large text-placeholder ${styles.emptyState}`}>
-                  В этой категории пока нет товаров
-                </p>
-              )
-            : (
-                <>
-                  <ProductGrid products={items} />
-                  <div ref={sentinelRef} aria-hidden />
-                  {isLoadingMore && (
-                    <div className={styles.controls} aria-live="polite">Загрузка…</div>
-                  )}
-                </>
-              )}
-        </div>
-        <ContactCard
-          title="Не нашли нужный товар?"
-          subtitle="Свяжитесь с нами, возможно, мы сможем помочь"
-          phone={{
-            label: 'Телефон',
-            value: phoneText,
-            href: `tel:${phoneText.replace(/[^+\d]/g, '')}`,
-          }}
-          email={{
-            label: 'Почта',
-            value: emailText,
-            href: `mailto:${emailText}`,
-          }}
-          social={social}
-        />
-        {!hasProducts && relatedProducts.length > 0 && (
-          <div className={styles.relatedProducts}>
-            <ProductLevel
-              title="Возможно, вам будет интересно"
-              items={relatedProducts}
-              showPricePrefix
-              ctaText="Смотреть все товары"
-              ctaHref="/catalog"
-            />
-          </div>
-        )}
+        </section>
       </section>
-    </section>
+      {hasProducts && (
+        <CategoryFiltersPopup
+          filters={filters}
+          products={items}
+          onApplyingChange={setIsApplyingFilters}
+        />
+      )}
+    </>
   );
 };

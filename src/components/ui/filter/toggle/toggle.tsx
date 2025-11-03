@@ -39,21 +39,33 @@ export const Toggle = ({
   };
 
   const handleToggle = () => {
-    if (!disabled && onToggle) {
+    if (!disabled) {
       const next = !isEnabled;
 
-      onToggle(next);
-      syncParam(next);
+      if (onToggle) {
+        // Let parent component handle debouncing via onToggle callback
+        onToggle(next);
+      } else if (paramName) {
+        // Fallback: update URL directly if no onToggle handler provided
+        syncParam(next);
+      }
     }
   };
 
   return (
     <div
-      className={`${styles.toggleContainer} ${isEnabled ? styles.toggleContainerActive : ''} ${className}`}
+      className={`${styles.toggleContainer} ${isEnabled ? styles.toggleContainerActive : ''} ${disabled ? styles.toggleContainerDisabled : ''} ${className}`}
       onClick={handleToggle}
       role="switch"
       aria-checked={isEnabled}
       aria-disabled={disabled}
+      style={disabled
+        ? {
+            pointerEvents: 'none',
+            opacity: 0.5,
+            cursor: 'not-allowed',
+          }
+        : undefined}
     >
       <div className={`${styles.toggleHandle} ${isEnabled ? styles.toggleHandleActive : ''}`} />
     </div>

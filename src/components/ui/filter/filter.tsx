@@ -8,11 +8,12 @@ export interface FilterProps {
   label: string
   collapsible?: boolean
   oneline?: boolean
+  defaultOpen?: boolean
   children?: React.ReactNode
 }
 
-export const Filter = ({ label, collapsible = true, oneline = false, children }: FilterProps) => {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+export const Filter = ({ label, collapsible = true, oneline = false, defaultOpen = false, children }: FilterProps) => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(defaultOpen);
 
   const handleDropdownClick = () => {
     setIsDropdownOpen(!isDropdownOpen);

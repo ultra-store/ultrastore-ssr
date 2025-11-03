@@ -253,6 +253,10 @@ export interface FilterData {
     currentMax: number
   }
   sections: FilterSection[]
+  settings?: {
+    stockFilterEnabled?: boolean
+    saleFilterEnabled?: boolean
+  }
 }
 
 export interface SortOption {

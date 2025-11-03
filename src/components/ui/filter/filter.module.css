@@ -66,6 +66,7 @@
   padding-bottom: var(--spacing-lg);
   max-height: 500px;
   opacity: 1;
+  overflow-y: auto;
 }
 
 .filterContentWrapper[data-collapsible="false"] {
