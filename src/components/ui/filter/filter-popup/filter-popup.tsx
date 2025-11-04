@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 
+import { Button } from '@/components/ui/button/button';
 import type { WithClassName } from '@/shared/types/utils';
 
 import styles from './filter-popup.module.css';
@@ -50,9 +51,9 @@ export const FilterPopup = ({ isOpen, onClose, onApply, children, className }: W
           {children}
         </div>
         <div className={styles.footer}>
-          <button className={styles.applyButton} onClick={onApply || onClose}>
+          <Button fullWidth onClick={onApply || onClose}>
             Применить фильтры
-          </button>
+          </Button>
         </div>
       </div>
     </div>

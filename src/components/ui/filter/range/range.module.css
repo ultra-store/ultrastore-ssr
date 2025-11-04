@@ -49,10 +49,11 @@
   align-items: center;
   width: 100%;
   height: 15px;
-  cursor: pointer;
-  touch-action: none;
+
   /* Prevent handles from overflowing container: half of handle size + 0.5px for rounding */
   padding: 0 8px;
+  cursor: pointer;
+  touch-action: none;
 }
 
 .rangeTrack {

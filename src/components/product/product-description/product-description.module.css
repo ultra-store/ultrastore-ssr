@@ -364,6 +364,15 @@
   .tabs {
     gap: var(--spacing-md);
     width: 100%;
+    overflow-x: auto; /* enable horizontal scroll on mobile */
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch; /* smooth iOS scrolling */
+    scrollbar-width: none; /* Firefox hide scrollbar */
+  }
+
+  /* Hide scrollbar in WebKit */
+  .tabs::-webkit-scrollbar {
+    display: none;
   }
 
   .tabPanel {

@@ -13,6 +13,7 @@ import { normalizeCurrency } from '@/shared/utils/normalize-currency';
 
 import { ProductActions } from '../product-actions';
 import { ProductDelivery } from '../product-delivery';
+import { ProductHeader } from '../product-header/product-header';
 import { ProductSpecs } from '../product-specs';
 
 import styles from './product-info.module.css';
@@ -436,17 +437,7 @@ export const ProductInfo = ({
 
   return (
     <div className={`${styles.container} ${className || ''}`}>
-      <div className={styles.header}>
-        <h1 className={`heading-1 text-primary ${styles.title}`}>{name}</h1>
-        <div className={`medium text-primary ${styles.sku}`}>
-          {currentSku && (
-            <>
-              <span className={styles.skuLabel}>Артикул</span>
-              <span className={styles.skuValue}>{currentSku}</span>
-            </>
-          )}
-        </div>
-      </div>
+      <ProductHeader name={name} sku={currentSku} variant="desktop" />
 
       <div className={styles.content}>
         {(variationAttrs.length > 0 || specAttrs.length > 0) && (

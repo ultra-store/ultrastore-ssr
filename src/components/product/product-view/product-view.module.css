@@ -10,4 +10,10 @@
   .productView {
     flex-direction: column;
   }
+
+  .mobileHeader {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+  }
 }

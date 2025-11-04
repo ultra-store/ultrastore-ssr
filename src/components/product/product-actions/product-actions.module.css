@@ -136,6 +136,16 @@
   animation: fade-in-scale 0.3s ease 0.15s forwards;
 }
 
+@media (max-width: 759px) {
+  .priceSection {
+    display: none;
+  }
+
+  .actions {
+    max-width: none;
+  }
+}
+
 @keyframes fade-in {
   from {
     opacity: 0;

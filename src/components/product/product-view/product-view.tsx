@@ -5,9 +5,13 @@ import { useCallback, useMemo, useState } from 'react';
 import { Section } from '@/components/ui/section';
 
 import type { ProductDetails, ProductImage, ProductVariation } from '@/shared/types/types';
+import { formatPrice } from '@/shared/utils/format-price';
+import { normalizeCurrency } from '@/shared/utils/normalize-currency';
 
+import { ProductHeader } from '../product-header/product-header';
 import { ProductImageGallery } from '../product-image-gallery';
 import { ProductInfo } from '../product-info';
+import { ProductPrice } from '../product-price/product-price';
 
 import styles from './product-view.module.css';
 
@@ -38,6 +42,14 @@ export const ProductView = ({
   initialVariationSlug,
 }: ProductViewProps) => {
   const [variationImages, setVariationImages] = useState<ProductImage[] | null>(null);
+  const [currentVariationSku, setCurrentVariationSku] = useState<string | null | undefined>(product?.sku);
+  const [currentPrice, setCurrentPrice] = useState<string>(() => {
+    const currency = normalizeCurrency(product.currency || '₽');
+    const displayPrice = product.on_sale && product.sale_price ? product.sale_price : product.price;
+
+    return formatPrice(displayPrice, currency);
+  });
+  const [currentOnSale, setCurrentOnSale] = useState<boolean>(!!product.on_sale);
 
   // Use variation images if available, otherwise fall back to parent product images
   // Parent images are used when:
@@ -88,15 +100,30 @@ export const ProductView = ({
       // Images are the same, return current state to prevent re-render
       return currentVariationImages;
     });
-  }, [images]);
+
+    // Update current SKU for header
+    setCurrentVariationSku(variation?.sku || product?.sku);
+
+    // Update current price for mobile header
+    const currency = normalizeCurrency(product.currency || '₽');
+    const displayPrice = variation
+      ? (variation.on_sale && variation.sale_price ? variation.sale_price : variation.price)
+      : (product.on_sale && product.sale_price ? product.sale_price : product.price);
+
+    setCurrentPrice(formatPrice(displayPrice, currency));
+    setCurrentOnSale(variation ? !!variation.on_sale : !!product.on_sale);
+  }, [images, product]);
 
   return (
     <Section noPadding className={styles.productView}>
-      <ProductImageGallery
-        images={displayImages}
-        productName={name}
-      />
-
+      <div className={styles.mobileHeader}>
+        <ProductHeader name={name} sku={currentVariationSku} variant="mobile" />
+        <ProductImageGallery
+          images={displayImages}
+          productName={name}
+        />
+        <ProductPrice price={currentPrice} onSale={currentOnSale} variant="mobile" />
+      </div>
       <ProductInfo
         product={product}
         initialVariationSlug={initialVariationSlug}

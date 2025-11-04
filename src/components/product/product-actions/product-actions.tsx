@@ -13,6 +13,8 @@ import icons from '@/shared/icons';
 import type { ProductDetails, ProductVariation } from '@/shared/types/types';
 import type { WithClassName } from '@/shared/types/utils';
 
+import { ProductPrice } from '../product-price/product-price';
+
 import styles from './product-actions.module.css';
 
 export interface ProductActionsProps {
@@ -44,11 +46,7 @@ export const ProductActions = ({
 
   return (
     <Section noPadding className={className}>
-      <div className={styles.priceSection}>
-        <span className={`number ${styles.price} ${onSale ? styles.salePrice : ''}`}>
-          {price}
-        </span>
-      </div>
+      <ProductPrice price={price} onSale={onSale} variant="desktop" />
 
       <div className={styles.actions}>
         <div className={styles.mainActions}>
