@@ -48,6 +48,9 @@
   transform: rotate(180deg);
 }
 
+.filterContent {
+  max-height: inherit;
+}
 
 .filterContentWrapper {
   width: 100%;
@@ -63,7 +66,6 @@
 
 .filterContentWrapper[data-open="true"] {
   padding-bottom: var(--spacing-lg);
-  overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   max-height: 500px;
   opacity: 1;

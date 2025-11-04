@@ -4,6 +4,8 @@
   gap: var(--spacing-xs);
   width: 100%;
   padding: 0;
+  overflow-y: scroll;
+  max-height: inherit;
 }
 
 .option {
