@@ -15,20 +15,27 @@ export const FilterPopup = ({ isOpen, onClose, onApply, children, className }: W
   const overlayRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (!isOpen) {
+      return;
+    }
+
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         onClose();
       }
     };
 
-    if (isOpen) {
-      document.addEventListener('keydown', handleEscape);
-      document.body.style.overflow = 'hidden';
-    }
+    document.addEventListener('keydown', handleEscape);
+
+    const previousOverflow = document.body.style.overflow;
+
+    document.body.style.overflow = 'hidden';
 
     return () => {
       document.removeEventListener('keydown', handleEscape);
-      document.body.style.overflow = '';
+      if (document.body) {
+        document.body.style.overflow = previousOverflow;
+      }
     };
   }, [isOpen, onClose]);
 

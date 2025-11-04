@@ -95,7 +95,7 @@
   }
 
   .body {
-    padding-top: var(--spacing-lg);
+    padding-top: 0;
     padding-bottom: var(--spacing-lg);
     min-height: 0;
     flex: 1 1 auto;

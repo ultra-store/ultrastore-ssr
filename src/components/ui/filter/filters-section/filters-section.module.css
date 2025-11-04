@@ -94,3 +94,13 @@
   gap: var(--spacing-sm);
 }
 
+@media (max-width: 759px) {
+  .body {
+    gap: 0;
+  }
+  
+  .clearButton {
+    display: none;
+  }
+}
+

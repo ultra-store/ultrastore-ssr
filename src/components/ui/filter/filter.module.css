@@ -53,7 +53,6 @@
   width: 100%;
   padding: 0 var(--spacing-lg);
   transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out, margin-top 0.3s ease-in-out, padding-bottom 0.3s ease-in-out;
-  overflow: hidden;
 }
 
 .filterContentWrapper[data-collapsible="true"] {
@@ -64,18 +63,15 @@
 
 .filterContentWrapper[data-open="true"] {
   padding-bottom: var(--spacing-lg);
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
   max-height: 500px;
   opacity: 1;
-  overflow-y: auto;
 }
 
 .filterContentWrapper[data-collapsible="false"] {
   max-height: none;
   opacity: 1;
-}
-
-.filterContent {
-  width: 100%;
 }
 
 .filterHeader[data-open="true"] {
@@ -114,5 +110,9 @@
 
   .filterContentWrapper {
     padding: 0 0 var(--spacing-md) 0;
+  }
+  
+  .filter[data-oneline="true"] {
+    padding-right: 0;
   }
 }

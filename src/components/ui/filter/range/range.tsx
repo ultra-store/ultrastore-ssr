@@ -448,8 +448,8 @@ export const Range = ({ min, max, value, onChange, step, unit, paramName, disabl
         />
       </div>
 
-      <div className={styles.rangeSlider} ref={trackRef}>
-        <div className={styles.rangeTrack} />
+      <div className={styles.rangeSlider}>
+        <div className={styles.rangeTrack} ref={trackRef} />
 
         <div
           className={styles.rangeSelected}

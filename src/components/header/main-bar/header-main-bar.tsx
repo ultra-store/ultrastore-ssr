@@ -67,7 +67,10 @@ export const HeaderMainBar = () => {
             aria-label="Корзина"
             badge={isHydrated && getTotalItems() > 0 ? getTotalItems() : undefined}
             as="span"
-          />
+            layout="column"
+          >
+            Корзина
+          </IconButton>
         </Link>
       </div>
     </section>

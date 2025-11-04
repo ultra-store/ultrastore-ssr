@@ -51,8 +51,8 @@
 
 .tabButton .badge {
   position: absolute;
-  top: -9px;
-  left: 35px;
+  top: 4px;
+  right: 8px;
   display: flex;
   justify-content: center;
   align-items: center;

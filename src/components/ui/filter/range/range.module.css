@@ -10,7 +10,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
-  gap: var(--spacing-sm);
+  gap: var(--spacing-md);
 }
 
 .rangeInput {
@@ -51,6 +51,8 @@
   height: 15px;
   cursor: pointer;
   touch-action: none;
+  /* Prevent handles from overflowing container: half of handle size + 0.5px for rounding */
+  padding: 0 8px;
 }
 
 .rangeTrack {
