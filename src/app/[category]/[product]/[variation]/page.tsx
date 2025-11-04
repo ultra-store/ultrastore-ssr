@@ -39,8 +39,8 @@ export default async function CategoryProductVariationPage({ params }: CategoryP
   const breadcrumbs: BreadcrumbItem[] = [...(categoryItem ? [categoryItem] : []), { label: productData.name }];
 
   return (
-    <Section>
-      <div className={styles.productPage}>
+    <>
+      <Section className={styles.productSection}>
         <Breadcrumbs
           items={breadcrumbs}
         />
@@ -52,28 +52,28 @@ export default async function CategoryProductVariationPage({ params }: CategoryP
           initialVariationSlug={variation}
         />
 
-        <div>
-          <ProductDescription
-            shortDescription={productData.short_description}
-            attributes={productData.attributes}
-            variations={productData.variations}
-            sku={productData.sku}
-            weight={productData.weight}
-            dimensions={productData.dimensions}
-            reviews={productData.reviews}
-          />
-        </div>
-      </div>
+        <ProductDescription
+          shortDescription={productData.short_description}
+          attributes={productData.attributes}
+          variations={productData.variations}
+          sku={productData.sku}
+          weight={productData.weight}
+          dimensions={productData.dimensions}
+          reviews={productData.reviews}
+        />
+      </Section>
 
-      {productData.related_products.length > 0 && (
-        <RelatedProducts products={productData.related_products} />
-      )}
+      <Section noPadding>
+        {productData.related_products.length > 0 && (
+          <RelatedProducts products={productData.related_products} />
+        )}
 
-      {productData.similar_products.length > 0 && (
-        <SimilarProducts products={productData.similar_products} />
-      )}
+        {productData.similar_products.length > 0 && (
+          <SimilarProducts products={productData.similar_products} />
+        )}
+      </Section>
 
-      <div className={styles.productPage}>
+      <Section className={styles.seoSection}>
         {Array.isArray(productData.description) && productData.description.length > 0 && (
           <SeoContent blocks={productData.description} title={productData.description_title} />
         )}
@@ -81,7 +81,7 @@ export default async function CategoryProductVariationPage({ params }: CategoryP
         {productData.seo_blocks && productData.seo_blocks.length > 0 && (
           <SeoContent blocks={productData.seo_blocks} />
         )}
-      </div>
-    </Section>
+      </Section>
+    </>
   );
 }

@@ -1,6 +1,9 @@
-.productPage {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-2xl);
-  padding: 0 var(--spacing-lg);
+@media (max-width: 729px) {
+  .productSection {
+    padding: 0 var(--spacing-lg);
+  }
+
+  .seoSection {
+    padding: 0 var(--spacing-lg);
+  }
 }

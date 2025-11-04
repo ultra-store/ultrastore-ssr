@@ -6,6 +6,11 @@
   width: 100%;
 }
 
+.mobileHeader {
+  width: 100%;
+  max-width: 450px;
+}
+
 @media (max-width: 1023px) {
   .productView {
     flex-direction: column;
