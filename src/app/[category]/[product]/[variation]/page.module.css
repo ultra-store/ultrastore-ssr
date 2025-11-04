@@ -1,9 +1,9 @@
 @media (max-width: 759px) {
-  .productSection {
+  .productSection.productSection {
     padding: 0 var(--spacing-lg);
   }
 
-  .seoSection {
+  .seoSection.seoSection {
     padding: 0 var(--spacing-lg);
   }
 }
