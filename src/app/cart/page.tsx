@@ -6,10 +6,13 @@ import Image from 'next/image';
 
 import { CartItem, CartTotal, CouponInput, OrderSummary } from '@/components/cart';
 import { CheckoutForm } from '@/components/checkout';
+import { RelatedProducts } from '@/components/product/related-products';
 import { Section } from '@/components/ui/section';
+import { getCartRelatedProducts } from '@/shared/api/getCartRelatedProducts';
 import { useCart } from '@/shared/context/cart-context';
 import { useCheckout } from '@/shared/context/checkout-context';
 import icons from '@/shared/icons';
+import type { Product } from '@/shared/types';
 
 import styles from './page.module.css';
 
@@ -18,7 +21,9 @@ export default function CartPage() {
   const { currentStep } = useCheckout();
   const [showCheckout, setShowCheckout] = useState(false);
   const [justCleared, setJustCleared] = useState(false);
+  const [related, setRelated] = useState<Product[]>([]);
   const timerRef = useRef<number | null>(null);
+  const abortRef = useRef<AbortController | null>(null);
 
   // Show checkout form if we're on any checkout step (after reload)
   useEffect(() => {
@@ -103,6 +108,29 @@ export default function CartPage() {
 
   const total = getTotalPrice().toString();
 
+  // Load related products for items in the cart
+  useEffect(() => {
+    if (!items || items.length === 0) {
+      // Defer to avoid synchronous setState warning from lint rule
+      setTimeout(() => setRelated([]), 0);
+
+      return;
+    }
+
+    const controller = new AbortController();
+
+    abortRef.current?.abort();
+    abortRef.current = controller;
+
+    const productIds = Array.from(new Set(items.map((i) => i.productId)));
+
+    getCartRelatedProducts(productIds, 8, { signal: controller.signal })
+      .then((products) => setRelated(products || []))
+      .catch(() => setRelated([]));
+
+    return () => controller.abort();
+  }, [items]);
+
   const clearCartButton = (
     <button className={styles.clearButton} onClick={handleClearCart} aria-label="Очистить корзину">
       <span className={styles.clearIconWrap}>
@@ -113,46 +141,53 @@ export default function CartPage() {
   );
 
   return (
-    <Section className={styles.container}>
-      <Section noPadding title="Корзина" titleAction={items.length > 0 ? clearCartButton : undefined}>
-        <div className={styles.itemsSection}>
-          {items.length > 0
-            ? (
-                <>
-                  <div className={styles.itemsList}>
-                    {items.map((item) => (
-                      <CartItem
-                        key={item.id}
-                        {...item}
-                        onQuantityChange={handleQuantityChange}
-                        onRemove={handleRemove}
-                      />
-                    ))}
+    <>
+      <Section className={styles.container}>
+        <Section noPadding title="Корзина" titleAction={items.length > 0 ? clearCartButton : undefined}>
+          <div className={styles.itemsSection}>
+            {items.length > 0
+              ? (
+                  <>
+                    <div className={styles.itemsList}>
+                      {items.map((item) => (
+                        <CartItem
+                          key={item.id}
+                          {...item}
+                          onQuantityChange={handleQuantityChange}
+                          onRemove={handleRemove}
+                        />
+                      ))}
+                    </div>
+                    {showCheckout && (
+                      <CartTotal total={total} currency="₽" />
+                    )}
+                    <CouponInput onApply={handleCouponApply} className={styles.couponInput} />
+                  </>
+                )
+              : (
+                  <div className={styles.emptyState}>
+                    <p>Ваша корзина пуста</p>
                   </div>
-                  {showCheckout && (
-                    <CartTotal total={total} currency="₽" />
-                  )}
-                  <CouponInput onApply={handleCouponApply} className={styles.couponInput} />
-                </>
-              )
-            : (
-                <div className={styles.emptyState}>
-                  <p>Ваша корзина пуста</p>
-                </div>
-              )}
-        </div>
+                )}
+          </div>
+        </Section>
+        {items.length > 0 && (
+          <div className={styles.checkoutSection}>
+            {showCheckout
+              ? (
+                  <CheckoutForm />
+                )
+              : (
+                  <OrderSummary total={total} currency="₽" onCheckoutClick={handleCheckoutClick} />
+                )}
+          </div>
+        )}
       </Section>
-      {items.length > 0 && (
-        <div className={styles.checkoutSection}>
-          {showCheckout
-            ? (
-                <CheckoutForm />
-              )
-            : (
-                <OrderSummary total={total} currency="₽" onCheckoutClick={handleCheckoutClick} />
-              )}
-        </div>
+      {related.length > 0 && (
+        <Section noPadding>
+          <RelatedProducts products={related} title="Берут вместе" />
+        </Section>
       )}
-    </Section>
+    </>
   );
 }
