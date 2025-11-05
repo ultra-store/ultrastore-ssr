@@ -8,7 +8,7 @@ import type { WithClassName } from '@/shared/types/utils';
 import styles from './social-buttons.module.css';
 
 interface SocialButtonsProps {
-  size?: 'xs' | 's' | 'm'
+  size?: 'xs' | 'sm' | 's' | 'm'
   socials?: Social[]
 }
 
@@ -21,6 +21,10 @@ export const SocialButtons = ({
     xs: {
       iconSize: 20,
       gap: '10px',
+    },
+    sm: {
+      iconSize: 25,
+      gap: '15px',
     },
     s: {
       iconSize: 30,

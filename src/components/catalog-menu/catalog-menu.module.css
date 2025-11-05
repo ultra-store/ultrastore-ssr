@@ -1,0 +1,71 @@
+.menuGrid {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 32px;
+}
+
+.left {
+  border-right: 1px solid #eee;
+}
+
+.leftList {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+}
+
+.leftItem {
+  padding: 10px 12px;
+  cursor: pointer;
+}
+
+.leftItemActive {
+  background: #ffe9ef;
+}
+
+.right {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.groupTitle {
+  color: #111;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.children {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 8px 0 0 0;
+  list-style: none;
+}
+
+.children a {
+  color: var(--text-placeholder);
+  text-decoration: none;
+}
+
+.loading, .error {
+  padding: 24px;
+}
+
+.showMore {
+  margin-top: 8px;
+  color: #9ca3af;
+  cursor: pointer;
+}
+
+

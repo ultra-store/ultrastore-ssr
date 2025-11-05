@@ -19,7 +19,7 @@ export const Header = ({ topMenu, categoriesMenu, contacts, socials }: HeaderPro
       <MobileStickyController targetId="site-header" />
       <section className={styles.container}>
         <HeaderTopBar menu={topMenu} contacts={contacts} socials={socials} />
-        <HeaderMainBar />
+        <HeaderMainBar topMenu={topMenu} contacts={contacts} socials={socials} />
       </section>
       <CategoriesNav items={categoriesMenu} />
     </header>

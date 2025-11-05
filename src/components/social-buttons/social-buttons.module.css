@@ -12,6 +12,10 @@
   gap: 15px;
 }
 
+.socialButtons[data-size="sm"] {
+  gap: 15px;
+}
+
 .socialButtons[data-size="m"] {
   gap: 15px;
 }
