@@ -51,7 +51,7 @@ export const CheckoutProgress = ({ className = '' }: CheckoutProgressProps) => {
             </button>
             {index < steps.length - 1 && (
               <div className={styles.separator}>
-                <Image src={icons.chevronRight} alt="" width={25} height={25} className={styles.separatorIcon} />
+                <Image src={icons.dash} alt="" width={25} height={25} className={styles.separatorIcon} />
               </div>
             )}
           </div>

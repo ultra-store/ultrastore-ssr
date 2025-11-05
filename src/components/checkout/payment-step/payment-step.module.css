@@ -83,6 +83,8 @@
 }
 
 .methodTitle {
+  display: flex;
+  align-items: center;
   width: auto;
   height: var(--line-height-large);
   color: var(--outline-primary);
@@ -102,7 +104,6 @@
 .totalPrice {
   width: auto;
   height: var(--line-height-large);
-  margin: 0 auto;
   color: var(--outline-primary);
   font-size: var(--font-size-large);
   font-weight: 700;

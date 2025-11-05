@@ -148,7 +148,7 @@ export const DeliveryStep = () => {
               </div>
               <div className={styles.fieldRow}>
                 <div className={styles.field}>
-                  <label htmlFor="checkout-date" className={styles.label}>Желаемая дата</label>
+                  <label htmlFor="checkout-date" className={styles.label}>Желаемые дата</label>
                   <DateSelect
                     id="checkout-date"
                     name="desired-date"
@@ -160,7 +160,7 @@ export const DeliveryStep = () => {
                   />
                 </div>
                 <div className={styles.field}>
-                  <label htmlFor="checkout-time" className={styles.label}>Желаемое время</label>
+                  <label htmlFor="checkout-time" className={styles.label}>И время</label>
                   <TimeSelect
                     id="checkout-time"
                     name="desired-time"
@@ -187,7 +187,7 @@ export const DeliveryStep = () => {
           )}
           {method === 'courier' && (
             <div className={styles.note}>
-              Менеджер свяжется для уточнения деталей
+              После оформления заказа менеджер свяжется для уточнения деталей
             </div>
           )}
         </div>

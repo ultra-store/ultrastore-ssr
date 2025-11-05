@@ -112,7 +112,7 @@
 .label {
   width: auto;
   height: var(--line-height-medium);
-  color: var(--outline-primary);
+  color: var(--outline-placeholder);
   font-size: var(--font-size-medium);
   font-weight: 400;
   line-height: var(--line-height-medium);
@@ -166,8 +166,5 @@
 }
 
 @media (max-width: 759px) {
-  .fieldRow {
-    flex-direction: column;
-  }
 }
 
