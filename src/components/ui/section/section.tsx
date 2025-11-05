@@ -10,6 +10,7 @@ export interface SectionProps {
   ariaLabel?: string
   id?: string
   noPadding?: boolean
+  titleAction?: ReactNode
 }
 
 export const Section = ({
@@ -19,6 +20,7 @@ export const Section = ({
   id,
   className,
   noPadding,
+  titleAction,
 }: WithClassName<SectionProps>) => {
   return (
     <section
@@ -26,10 +28,19 @@ export const Section = ({
       aria-label={ariaLabel || title}
       id={id}
     >
-      {title && (
-        <h2 className={`heading-1 ${styles.title} ${noPadding ? styles.noPadding : ''}`}>
-          {title}
-        </h2>
+      {(title || titleAction) && (
+        <div className={`${styles.titleRow} ${noPadding ? styles.noPadding : ''}`}>
+          {title && (
+            <h2 className={`heading-1 ${styles.title}`}>
+              {title}
+            </h2>
+          )}
+          {titleAction && (
+            <div className={styles.titleAction}>
+              {titleAction}
+            </div>
+          )}
+        </div>
       )}
       <div className={`${styles.content} ${noPadding ? styles.noPadding : ''} ${className || ''}`}>
         {children}

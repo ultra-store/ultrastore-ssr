@@ -6,7 +6,7 @@
   width: 100%;
   margin: 0 auto;
   padding: 0;
-  max-width: 374px;
+  max-width: 500px;
 }
 
 .header {
@@ -20,22 +20,14 @@
 
 .title {
   width: auto;
-  height: 35px;
+  height: var(--line-height-heading-2);
   margin: 0;
   color: var(--outline-primary);
-  font-size: 28px;
+  font-size: var(--font-size-heading-2);
   font-weight: 700;
-  line-height: 35px;
+  line-height: var(--line-height-heading-2);
   font-family: var(--font-formular);
   font-style: normal;
-}
-
-@media (max-width: 759px) {
-  .title {
-    height: auto;
-    font-size: var(--font-size-heading-2);
-    line-height: var(--line-height-heading-2);
-  }
 }
 
 .content {
@@ -75,11 +67,16 @@
   }
 }
 
+@media (max-width: 1023px) {
+  .container {
+    max-width: 100%;
+    width: 100%;
+  }
+}
+
 @media (max-width: 759px) {
   .title {
     height: auto;
-    font-size: var(--font-size-heading-2);
-    line-height: var(--line-height-heading-2);
   }
 }
 

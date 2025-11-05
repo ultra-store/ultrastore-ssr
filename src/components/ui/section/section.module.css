@@ -13,18 +13,29 @@
   gap: var(--spacing-xl);
 }
 
-.title {
+.titleRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   width: 100%;
   margin: 0 auto;
   padding: 0 var(--spacing-3xl);
+}
+
+.title {
+  margin: 0;
   font-size: var(--font-size-heading-1);
   font-weight: 700;
   line-height: var(--line-height-heading-1);
 }
 
+.titleAction {
+  display: flex;
+  align-items: center;
+}
 
 @media (min-width: 1500px) {
-  .title {
+  .titleRow {
     max-width: var(--container-max);
     padding: 0;
   }
@@ -37,8 +48,11 @@
 }
 
 @media (max-width: 1279px) {
-  .title {
+  .titleRow {
     padding: 0 var(--spacing-2xl);
+  }
+
+  .title {
     font-size: var(--font-size-heading-1-mobile);
     line-height: var(--line-height-heading-1-mobile);
   }
@@ -49,7 +63,7 @@
 }
 
 @media (max-width: 759px) {
-  .title {
+  .titleRow {
     padding: 0 var(--spacing-lg);
   }
 

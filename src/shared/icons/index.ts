@@ -3,6 +3,7 @@ import ArrowLeft from './arrow-left.svg';
 import ArrowRight from './arrow-right.svg';
 import ArrowUp from './arrow-up.svg';
 import Burger from './burger.svg';
+import Calendar from './calendar.svg';
 import Cart from './cart.svg';
 import Catalog from './catalog.svg';
 import Checkmark from './checkmark.svg';
@@ -10,6 +11,7 @@ import ChevronRight from './chevron-right.svg';
 import Clock from './clock.svg';
 import Close from './close.svg';
 import Comparison from './comparison.svg';
+import Dash from './dash.svg';
 import Favorite from './favorite.svg';
 import Home from './home.svg';
 import Mail from './mail.svg';
@@ -19,6 +21,7 @@ import Profile from './profile.svg';
 import Search from './search.svg';
 import Sliders from './sliders.svg';
 import Telegram from './telegram.png';
+import Trash from './trash.svg';
 import Vk from './vk.png';
 import WhatsApp from './whatsapp.png';
 
@@ -28,6 +31,7 @@ const icons = {
   arrowRight: ArrowRight,
   arrowUp: ArrowUp,
   burger: Burger,
+  calendar: Calendar,
   cart: Cart,
   catalog: Catalog,
   checkmark: Checkmark,
@@ -35,6 +39,7 @@ const icons = {
   clock: Clock,
   close: Close,
   comparison: Comparison,
+  dash: Dash,
   favorite: Favorite,
   home: Home,
   mail: Mail,
@@ -44,6 +49,7 @@ const icons = {
   search: Search,
   sliders: Sliders,
   telegram: Telegram,
+  trash: Trash,
   vk: Vk,
   whatsapp: WhatsApp,
 };

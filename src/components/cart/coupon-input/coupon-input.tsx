@@ -41,7 +41,7 @@ export const CouponInput = ({ onApply, className = '' }: CouponInputProps) => {
           onKeyPress={handleKeyPress}
         />
         <Button
-          variant="primary"
+          variant="outline"
           onClick={handleApply}
           disabled={!code.trim()}
           className={styles.button}

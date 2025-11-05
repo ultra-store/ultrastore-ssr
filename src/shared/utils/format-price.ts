@@ -1,5 +1,7 @@
 import { useMemo } from 'react';
 
+import { normalizeCurrency } from './normalize-currency';
+
 export const formatPriceNumber = (price: string | number): string => {
   const numPrice = typeof price === 'string' ? parseFloat(price) : price;
 
@@ -11,7 +13,7 @@ export const formatPriceNumber = (price: string | number): string => {
 };
 
 export const formatPrice = (price: string | number, currency = '₽'): string => {
-  return `${formatPriceNumber(price)} ${currency}`;
+  return `${formatPriceNumber(price)} ${normalizeCurrency(currency)}`;
 };
 
 export const useFormattedPrice = (

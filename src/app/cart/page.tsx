@@ -1,20 +1,24 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-import { CartItem, CouponInput, OrderSummary } from '@/components/cart';
+import Image from 'next/image';
+
+import { CartItem, CartTotal, CouponInput, OrderSummary } from '@/components/cart';
 import { CheckoutForm } from '@/components/checkout';
 import { Section } from '@/components/ui/section';
 import { useCart } from '@/shared/context/cart-context';
 import { useCheckout } from '@/shared/context/checkout-context';
-import { formatPrice } from '@/shared/utils/format-price';
+import icons from '@/shared/icons';
 
 import styles from './page.module.css';
 
 export default function CartPage() {
-  const { items, updateQuantity, removeItem, getTotalPrice } = useCart();
+  const { items, updateQuantity, removeItem, getTotalPrice, clearCart } = useCart();
   const { currentStep } = useCheckout();
   const [showCheckout, setShowCheckout] = useState(false);
+  const [justCleared, setJustCleared] = useState(false);
+  const timerRef = useRef<number | null>(null);
 
   // Show checkout form if we're on any checkout step (after reload)
   useEffect(() => {
@@ -73,59 +77,82 @@ export default function CartPage() {
     setShowCheckout(true);
   };
 
+  const handleClearCart = () => {
+    clearCart();
+
+    // trigger success animation briefly
+    setJustCleared(true);
+    if (timerRef.current != null) {
+      window.clearTimeout(timerRef.current);
+      timerRef.current = null;
+    }
+    timerRef.current = window.setTimeout(() => {
+      setJustCleared(false);
+      timerRef.current = null;
+    }, 700);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (timerRef.current != null) {
+        window.clearTimeout(timerRef.current);
+        timerRef.current = null;
+      }
+    };
+  }, []);
+
   const total = getTotalPrice().toString();
 
+  const clearCartButton = (
+    <button className={styles.clearButton} onClick={handleClearCart} aria-label="Очистить корзину">
+      <span className={styles.clearIconWrap}>
+        <Image src={justCleared ? icons.checkmark : icons.close} alt={justCleared ? 'Готово' : 'Очистить'} width={25} height={25} className={justCleared ? styles.checkmarkIcon : ''} />
+      </span>
+      <span className={`large text-primary ${styles.clearLabel}`} data-success={justCleared}>Очистить корзину</span>
+    </button>
+  );
+
   return (
-    <Section noPadding className={styles.container}>
-      <div className={styles.wrapper}>
-        <h1 className={styles.title}>Корзина</h1>
-        <div className={styles.content}>
-          <div className={styles.itemsSection}>
-            {items.length > 0
-              ? (
-                  <>
-                    <div className={styles.itemsList}>
-                      {items.map((item) => (
-                        <CartItem
-                          key={item.id}
-                          {...item}
-                          onQuantityChange={handleQuantityChange}
-                          onRemove={handleRemove}
-                        />
-                      ))}
-                    </div>
-                    {showCheckout && (
-                      <div className={styles.totalSection}>
-                        <div className={styles.totalRow}>
-                          <span className={styles.totalLabel}>Общая стоимость</span>
-                          <span className={`large-bold ${styles.totalAmount}`}>
-                            {formatPrice(total, '₽')}
-                          </span>
-                        </div>
-                      </div>
-                    )}
-                    <CouponInput onApply={handleCouponApply} className={styles.couponInput} />
-                  </>
-                )
-              : (
-                  <div className={styles.emptyState}>
-                    <p>Ваша корзина пуста</p>
+    <Section className={styles.container}>
+      <Section noPadding title="Корзина" titleAction={items.length > 0 ? clearCartButton : undefined}>
+        <div className={styles.itemsSection}>
+          {items.length > 0
+            ? (
+                <>
+                  <div className={styles.itemsList}>
+                    {items.map((item) => (
+                      <CartItem
+                        key={item.id}
+                        {...item}
+                        onQuantityChange={handleQuantityChange}
+                        onRemove={handleRemove}
+                      />
+                    ))}
                   </div>
-                )}
-          </div>
-          {items.length > 0 && (
-            <div className={styles.checkoutSection}>
-              {showCheckout
-                ? (
-                    <CheckoutForm />
-                  )
-                : (
-                    <OrderSummary total={total} currency="₽" onCheckoutClick={handleCheckoutClick} />
+                  {showCheckout && (
+                    <CartTotal total={total} currency="₽" />
                   )}
-            </div>
-          )}
+                  <CouponInput onApply={handleCouponApply} className={styles.couponInput} />
+                </>
+              )
+            : (
+                <div className={styles.emptyState}>
+                  <p>Ваша корзина пуста</p>
+                </div>
+              )}
         </div>
-      </div>
+      </Section>
+      {items.length > 0 && (
+        <div className={styles.checkoutSection}>
+          {showCheckout
+            ? (
+                <CheckoutForm />
+              )
+            : (
+                <OrderSummary total={total} currency="₽" onCheckoutClick={handleCheckoutClick} />
+              )}
+        </div>
+      )}
     </Section>
   );
 }

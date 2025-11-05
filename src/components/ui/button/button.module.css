@@ -19,6 +19,20 @@
   text-overflow: ellipsis;
 }
 
+.buttonContent {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.buttonValue {
+  display: flex;
+  align-items: center;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
 .button[data-variant='primary'] {
   border-radius: 15px;
   background: var(--fill-interactive);
@@ -117,6 +131,10 @@
 }
 
 @media (max-width: 759px) {
+  .button[data-has-value] {
+    justify-content: space-between;
+  }
+
   .button[data-variant='primary'] {
     border-radius: 20px;
   }

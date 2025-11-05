@@ -22,3 +22,9 @@
     gap: var(--spacing-lg);
   }
 }
+
+@media (max-width: 759px) {
+  .productView {
+    gap: var(--spacing-lg);
+  }
+}

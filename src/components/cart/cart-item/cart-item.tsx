@@ -53,24 +53,24 @@ export const CartItem = ({
         <Image
           src={image || '/placeholder-product.png'}
           alt={name}
-          width={100}
-          height={100}
+          width={110}
+          height={110}
           className={styles.image}
         />
       </div>
       <div className={styles.content}>
         <div className={styles.info}>
           <h3 className={styles.name}>{name}</h3>
-          <div className={`number ${styles.price}`}>{formattedPrice}</div>
-        </div>
-        <div className={styles.actions}>
           <IconButton
-            icon={icons.close}
+            icon={icons.trash}
             alt="Удалить товар"
             onClick={handleRemove}
             className={styles.deleteButton}
             aria-label="Удалить товар из корзины"
           />
+        </div>
+        <div className={styles.actions}>
+          <div className={`number ${styles.price}`}>{formattedPrice}</div>
           <QuantitySelector
             quantity={quantity}
             onDecrement={handleDecrement}

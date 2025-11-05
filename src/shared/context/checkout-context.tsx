@@ -1,7 +1,7 @@
 'use client';
 
 import type { ReactNode } from 'react';
-import { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import { createContext, useCallback, useContext, useState } from 'react';
 
 import { getUserData } from '../utils/user-data-storage';
 
@@ -47,8 +47,6 @@ interface CheckoutContextType {
 
 const CheckoutContext = createContext<CheckoutContextType | undefined>(undefined);
 
-const CHECKOUT_STORAGE_KEY = 'ultrastore_checkout';
-
 const defaultCheckoutData: CheckoutData = {
   personal: {
     name: '',
@@ -65,99 +63,37 @@ const defaultCheckoutData: CheckoutData = {
   payment: { method: 'cash' },
 };
 
+const getInitialCheckoutData = (): CheckoutData => {
+  try {
+    // Load saved user data for pre-filling
+    const savedUserData = getUserData();
+
+    // Prepare initial data with saved user data
+    return {
+      personal: {
+        name: savedUserData.name || '',
+        phone: savedUserData.phone || '',
+        email: savedUserData.email || '',
+      },
+      delivery: {
+        method: 'courier',
+        address: savedUserData.address || '',
+        desiredDate: '',
+        desiredTime: '',
+        phone: savedUserData.deliveryPhone || '',
+      },
+      payment: { method: undefined },
+    };
+  } catch (error) {
+    console.error('Failed to load user data:', error);
+
+    return defaultCheckoutData;
+  }
+};
+
 export const CheckoutProvider = ({ children }: { children: ReactNode }) => {
   const [currentStep, setCurrentStep] = useState<CheckoutStep>('personal');
-  const [checkoutData, setCheckoutData] = useState<CheckoutData>(defaultCheckoutData);
-  const [isHydrated, setIsHydrated] = useState(false);
-
-  // Load checkout data from localStorage on mount
-  useEffect(() => {
-    try {
-      // First, load saved user data for pre-filling
-      const savedUserData = getUserData();
-
-      // Prepare initial data with saved user data
-      let initialData: CheckoutData = {
-        personal: {
-          name: savedUserData.name || '',
-          phone: savedUserData.phone || '',
-          email: savedUserData.email || '',
-        },
-        delivery: {
-          method: 'courier',
-          address: savedUserData.address || '',
-          desiredDate: '',
-          desiredTime: '',
-          phone: savedUserData.deliveryPhone || '',
-        },
-        payment: { method: undefined },
-      };
-
-      let initialStep: CheckoutStep = 'personal';
-
-      // Load saved checkout session data if exists
-      const savedCheckout = localStorage.getItem(CHECKOUT_STORAGE_KEY);
-
-      if (savedCheckout) {
-        const parsed = JSON.parse(savedCheckout) as {
-          step?: CheckoutStep
-          data: CheckoutData
-        };
-
-        // Restore the step we were on
-        if (parsed.step) {
-          initialStep = parsed.step;
-        } else {
-          // Determine step based on filled data if step wasn't saved
-          if (parsed.data.personal.name && parsed.data.personal.phone) {
-            if (parsed.data.payment.method) {
-              initialStep = 'payment';
-            } else if (parsed.data.delivery.method) {
-              initialStep = 'delivery';
-            }
-          }
-        }
-
-        // Merge saved checkout data with user data (user data as fallback)
-        initialData = {
-          personal: {
-            name: parsed.data.personal.name || savedUserData.name || '',
-            phone: parsed.data.personal.phone || savedUserData.phone || '',
-            email: parsed.data.personal.email || savedUserData.email || '',
-          },
-          delivery: {
-            method: parsed.data.delivery.method || 'courier',
-            address: parsed.data.delivery.address || savedUserData.address || '',
-            desiredDate: parsed.data.delivery.desiredDate || '',
-            desiredTime: parsed.data.delivery.desiredTime || '',
-            phone: parsed.data.delivery.phone || savedUserData.deliveryPhone || '',
-          },
-          payment: parsed.data.payment || initialData.payment,
-        };
-      }
-
-      setCurrentStep(initialStep);
-      setCheckoutData(initialData);
-    } catch (error) {
-      console.error('Failed to load checkout data from localStorage:', error);
-    } finally {
-      setIsHydrated(true);
-    }
-  }, []);
-
-  // Save checkout data to localStorage whenever it changes
-  useEffect(() => {
-    if (isHydrated) {
-      try {
-        localStorage.setItem(CHECKOUT_STORAGE_KEY, JSON.stringify({
-          step: currentStep,
-          data: checkoutData,
-        }));
-      } catch (error) {
-        console.error('Failed to save checkout data to localStorage:', error);
-      }
-    }
-  }, [currentStep, checkoutData, isHydrated]);
+  const [checkoutData, setCheckoutData] = useState<CheckoutData>(getInitialCheckoutData);
 
   const setStep = useCallback((step: CheckoutStep) => {
     setCurrentStep(step);
@@ -242,13 +178,6 @@ export const CheckoutProvider = ({ children }: { children: ReactNode }) => {
     };
 
     setCheckoutData(resetData);
-
-    try {
-      localStorage.removeItem(CHECKOUT_STORAGE_KEY);
-      // Note: We don't clear user data, only checkout session data
-    } catch (error) {
-      console.error('Failed to clear checkout data from localStorage:', error);
-    }
   }, []);
 
   const value: CheckoutContextType = {

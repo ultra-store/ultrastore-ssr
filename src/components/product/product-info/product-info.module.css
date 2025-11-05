@@ -308,7 +308,7 @@
 
   .content {
     grid-template-columns: 1fr;
-    gap: var(--spacing-xl);
+    gap: var(--spacing-2xl);
   }
 
   .rightColumn {

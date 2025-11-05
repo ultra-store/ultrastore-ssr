@@ -1,17 +1,26 @@
 .dateInput {
   width: 100%;
-  padding: 10px 15px;
+  min-height: 45px;
+  padding: var(--spacing-sm) var(--spacing-md);
   border: 1px solid var(--outline-faint);
-  border-radius: 4px;
-  background-color: var(--surface-primary);
+  border-radius: var(--spacing-md);
+  background: var(--surface-primary);
   color: var(--outline-primary);
-  font-size: var(--font-size-medium);
-  line-height: var(--line-height-medium);
+  font-size: var(--font-size-large);
+  font-weight: 400;
+  line-height: var(--line-height-large);
   font-family: var(--font-formular);
+  font-style: normal;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.dateInput:hover {
+  border-color: var(--outline-faint-hover);
 }
 
 .dateInput:focus {
-  outline: none;
   border-color: var(--outline-interactive);
 }
 

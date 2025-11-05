@@ -11,6 +11,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   fullWidth?: boolean
   icon?: string
   active?: boolean
+  value?: ReactNode
 }
 
 export const Button = ({
@@ -19,6 +20,7 @@ export const Button = ({
   fullWidth = false,
   icon,
   active = false,
+  value,
   className = '',
   ...props
 }: ButtonProps) => {
@@ -28,10 +30,14 @@ export const Button = ({
       data-variant={variant}
       data-full-width={fullWidth || undefined}
       data-active={active || undefined}
+      data-has-value={value ? true : undefined}
       {...props}
     >
-      {icon && <Image src={icon} alt="Icon" width={25} height={25} />}
-      {children}
+      <span className={styles.buttonContent}>
+        {icon && <Image src={icon} alt="Icon" width={25} height={25} />}
+        {children}
+      </span>
+      {value && <span className={styles.buttonValue}>{value}</span>}
     </button>
   );
 };

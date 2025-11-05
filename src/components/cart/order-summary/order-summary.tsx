@@ -3,6 +3,8 @@
 import { Button } from '@/components/ui/button';
 import { formatPrice } from '@/shared/utils/format-price';
 
+import { CartTotal } from '../cart-total/cart-total';
+
 import styles from './order-summary.module.css';
 
 interface OrderSummaryProps {
@@ -22,15 +24,13 @@ export const OrderSummary = ({
 
   return (
     <div className={`${styles.container} ${className}`}>
-      <div className={styles.totalRow}>
-        <span className={styles.label}>Общая стоимость</span>
-        <span className={`large-bold ${styles.total}`}>{formattedTotal}</span>
-      </div>
+      <CartTotal total={total} currency={currency} label="Всего" className={styles.totalDesktop} />
       <Button
         variant="primary"
         fullWidth
         className={styles.checkoutButton}
         onClick={onCheckoutClick}
+        value={<span className={styles.totalMobile}>{formattedTotal}</span>}
       >
         К оформлению
       </Button>
