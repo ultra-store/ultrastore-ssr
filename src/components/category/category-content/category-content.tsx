@@ -65,12 +65,18 @@ export const CategoryContent = ({
       const data = mode === 'compilation'
         ? await getCompilationData(
             categorySlug as 'new' | 'sale',
-            { ...stableSearch, page: nextPage },
+            {
+              ...stableSearch,
+              page: nextPage,
+            },
             { signal: controller.signal },
           )
         : await getCategoryData(
             categorySlug,
-            { ...stableSearch, page: nextPage },
+            {
+              ...stableSearch,
+              page: nextPage,
+            },
             { signal: controller.signal },
           );
 
