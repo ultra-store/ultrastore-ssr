@@ -5,7 +5,7 @@ import Image from 'next/image';
 
 import styles from './button.module.css';
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'value'> {
   children: ReactNode
   variant?: 'primary' | 'secondary' | 'compact' | 'outline' | 'outline-secondary'
   fullWidth?: boolean

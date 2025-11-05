@@ -169,7 +169,7 @@ export const ProductCard = ({
                         <Button
                           variant="primary"
                           fullWidth
-                          className={styles.button}
+                          className={styles.selectButton}
                           aria-label={`Перейти к ${name} для выбора конфигурации`}
                         >
                           Выбрать
