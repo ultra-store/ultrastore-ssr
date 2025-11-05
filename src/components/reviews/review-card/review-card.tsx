@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import Link from 'next/link';
 
@@ -26,7 +26,34 @@ export const ReviewCard = ({
   const authorName = author_name?.split(' ').slice(0, 1).join('') || '';
 
   const [isExpanded, setIsExpanded] = useState(false);
+  const [hasOverflow, setHasOverflow] = useState(false);
+  const textRef = useRef<HTMLParagraphElement | null>(null);
   const toggleExpanded = () => setIsExpanded((prev) => !prev);
+
+  // Measure overflow for collapsed state
+  useEffect(() => {
+    const measureOverflow = () => {
+      if (!textRef.current) {
+        return;
+      }
+
+      const el = textRef.current;
+
+      setHasOverflow(el.scrollHeight > el.clientHeight);
+    };
+
+    // Measure on mount/text change
+    measureOverflow();
+
+    // Re-measure on resize only when collapsed to avoid false negatives
+    if (!isExpanded) {
+      window.addEventListener('resize', measureOverflow);
+
+      return () => window.removeEventListener('resize', measureOverflow);
+    }
+
+    return undefined;
+  }, [reviewText, isExpanded]);
 
   return (
     <article className={`${styles.card} ${isExpanded ? styles.cardExpanded : ''}`} aria-label={title}>
@@ -59,11 +86,12 @@ export const ReviewCard = ({
         <p
           id={`review-${id}`}
           className={`${styles.text} ${isExpanded ? styles.textExpanded : ''}`}
+          ref={textRef}
         >
           {reviewText}
         </p>
       )}
-      {reviewText && (
+      {reviewText && hasOverflow && (
         <button
           type="button"
           className={styles.more}
