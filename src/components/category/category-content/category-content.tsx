@@ -11,6 +11,7 @@ import { useFilterPopup } from '@/components/ui/filter/filter-popup-context';
 import { SortSelect, type SortOption } from '@/components/ui/sort-select';
 
 import { getCategoryData } from '@/shared/api/getCategoryData';
+import { getCompilationData } from '@/shared/api/getCompilationData';
 import { getHomepageData } from '@/shared/api/getHomepageData';
 import type { CategoryData, Contacts, Social, CategorySearchParams, Product } from '@/shared/types';
 
@@ -24,6 +25,7 @@ interface CategoryContentProps {
   initialSearch: CategorySearchParams
   contacts?: Contacts
   social?: Social[]
+  mode?: 'category' | 'compilation'
 }
 
 export const CategoryContent = ({
@@ -32,6 +34,7 @@ export const CategoryContent = ({
   initialSearch,
   contacts,
   social,
+  mode = 'category',
 }: CategoryContentProps) => {
   const { sorting, filters } = categoryData;
 
@@ -59,15 +62,17 @@ export const CategoryContent = ({
 
     try {
       const nextPage = pageRef.current + 1;
-
-      const data = await getCategoryData(
-        categorySlug,
-        {
-          ...stableSearch,
-          page: nextPage,
-        },
-        { signal: controller.signal },
-      );
+      const data = mode === 'compilation'
+        ? await getCompilationData(
+            categorySlug as 'new' | 'sale',
+            { ...stableSearch, page: nextPage },
+            { signal: controller.signal },
+          )
+        : await getCategoryData(
+            categorySlug,
+            { ...stableSearch, page: nextPage },
+            { signal: controller.signal },
+          );
 
       setItems((prev) => [...prev, ...(data.products || [])]);
       pageRef.current = data.page || nextPage;
@@ -79,7 +84,7 @@ export const CategoryContent = ({
         setIsLoadingMore(false);
       }
     }
-  }, [categorySlug, stableSearch, hasMore, isLoadingMore]);
+  }, [categorySlug, stableSearch, hasMore, isLoadingMore, mode]);
 
   useEffect(() => {
     // Reset when inputs change (category or search via navigation)

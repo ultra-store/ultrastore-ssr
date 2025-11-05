@@ -18,6 +18,9 @@ const USER_DATA_STORAGE_KEY = 'ultrastore_user_data';
  */
 export const saveUserData = (data: Partial<SavedUserData>): void => {
   try {
+    if (typeof window === 'undefined' || typeof localStorage === 'undefined') {
+      return;
+    }
     const existingData = getUserData();
     const updatedData: SavedUserData = {
       ...existingData,
@@ -35,6 +38,15 @@ export const saveUserData = (data: Partial<SavedUserData>): void => {
  */
 export const getUserData = (): SavedUserData => {
   try {
+    if (typeof window === 'undefined' || typeof localStorage === 'undefined') {
+      return {
+        name: '',
+        phone: '',
+        email: '',
+        address: '',
+        deliveryPhone: '',
+      };
+    }
     const savedData = localStorage.getItem(USER_DATA_STORAGE_KEY);
 
     if (savedData) {
@@ -58,6 +70,9 @@ export const getUserData = (): SavedUserData => {
  */
 export const clearUserData = (): void => {
   try {
+    if (typeof window === 'undefined' || typeof localStorage === 'undefined') {
+      return;
+    }
     localStorage.removeItem(USER_DATA_STORAGE_KEY);
   } catch (error) {
     console.error('Failed to clear user data from localStorage:', error);

@@ -40,7 +40,7 @@ export const ProductLevel = ({
       </div>
 
       {ctaText && (
-        <LongButton href={ctaHref} asButton>{`${ctaText} →`}</LongButton>
+        <LongButton href={ctaHref} asButton={!ctaHref}>{`${ctaText} →`}</LongButton>
       )}
     </Section>
   );
