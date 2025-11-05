@@ -42,6 +42,10 @@ export const HeaderMainBar = ({ topMenu, contacts, socials }: {
     if (query && query.trim()) {
       const searchQuery = encodeURIComponent(query.trim());
 
+      // Ensure any open overlays/menus are closed when starting a search
+      setMobileMenuOpen(false);
+      setCatalogOpen(false);
+      setFilterOpen(false);
       router.push(`/search?q=${searchQuery}`);
     }
   };

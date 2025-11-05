@@ -25,6 +25,8 @@ export const SearchBar = ({ placeholder = 'Поиск', onSearch, className = ''
     const trimmedQuery = query.trim();
 
     if (trimmedQuery && onSearch) {
+      // Ensure mobile keyboards close by blurring before collapsing
+      inputRef.current?.blur();
       onSearch(trimmedQuery);
       setIsExpanded(false);
       setQuery('');
@@ -48,6 +50,8 @@ export const SearchBar = ({ placeholder = 'Поиск', onSearch, className = ''
       const trimmedQuery = query.trim();
 
       if (trimmedQuery && onSearch) {
+П        // Ensure mobile keyboards close by blurring before collapsing
+        inputRef.current?.blur();
         onSearch(trimmedQuery);
         setIsExpanded(false);
         setQuery('');
