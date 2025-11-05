@@ -296,7 +296,6 @@
   font-size: var(--font-size-medium);
   font-weight: 700;
   line-height: var(--line-height-medium);
-  flex: none;
   order: 1;
   flex-grow: 0;
 }
