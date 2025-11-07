@@ -927,6 +927,175 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/ultra/v1/catalog/compilation/{type}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Подборки товаров (новинки, скидки) с пагинацией
+         * @description Возвращает товары для заданной подборки (new|sale) с пагинацией и базовыми фильтрами
+         */
+        get: {
+            parameters: {
+                query?: {
+                    /** @description Page number */
+                    page?: number;
+                    /** @description Items per page (max 48) */
+                    per_page?: number;
+                    /** @description Sort: date|price|price-desc|rating */
+                    orderby?: string;
+                    /** @description Minimum price filter */
+                    min_price?: number;
+                    /** @description Maximum price filter */
+                    max_price?: number;
+                    /** @description Only in-stock products */
+                    in_stock?: boolean;
+                };
+                header?: never;
+                path: {
+                    /** @description Тип подборки: new | sale */
+                    type: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            category: {
+                                id: number;
+                                name: string;
+                                slug: string;
+                                description?: string;
+                                count?: number;
+                                image?: string;
+                                path?: string;
+                                seo_blocks?: {
+                                    type?: string;
+                                    content?: string;
+                                    text?: string;
+                                    level?: string;
+                                    url?: string;
+                                    alt?: string;
+                                    id?: number;
+                                    caption?: string;
+                                }[];
+                            };
+                            products: {
+                                id: number;
+                                parent_id?: number;
+                                /** @description SEO-friendly slug identifier for variation */
+                                variation_slug?: string;
+                                name: string;
+                                slug: string;
+                                category_slug?: string;
+                                price: string;
+                                regular_price?: string;
+                                sale_price?: string;
+                                on_sale?: boolean;
+                                currency?: string;
+                                image?: string;
+                                images?: {
+                                    id: number;
+                                    url: string;
+                                    alt?: string;
+                                }[];
+                                path?: string;
+                                rating?: number;
+                                rating_count?: number;
+                                in_stock?: boolean;
+                            }[];
+                            page: number;
+                            per_page: number;
+                            total: number;
+                            total_pages: number;
+                            has_more: boolean;
+                            filters: {
+                                priceRange: {
+                                    min: number;
+                                    max: number;
+                                    currentMin: number;
+                                    currentMax: number;
+                                };
+                                sections: {
+                                    id: string;
+                                    title: string;
+                                    /** @enum {string} */
+                                    type: "checkbox" | "color" | "price" | "toggle";
+                                    options: {
+                                        value: string;
+                                        label: string;
+                                        count: number;
+                                        color?: string;
+                                    }[];
+                                    isExpanded?: boolean;
+                                }[];
+                            };
+                            sorting: {
+                                default: string;
+                                options: {
+                                    value: string;
+                                    label: string;
+                                    isDefault: boolean;
+                                }[];
+                            };
+                        };
+                    };
+                };
+                /** @description Bad Request */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: string;
+                            message: string;
+                        };
+                    };
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: string;
+                            message: string;
+                        };
+                    };
+                };
+                /** @description Internal Server Error */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: string;
+                            message: string;
+                        };
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/ultra/v1/info-blocks": {
         parameters: {
             query?: never;
@@ -1447,6 +1616,59 @@ export interface paths {
                             message: string;
                         };
                     };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/ultra/v1/cart/related": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get ultra v1 cart related */
+        get: {
+            parameters: {
+                query: {
+                    /** @description Comma-separated product IDs or array of IDs */
+                    product_ids: string;
+                    /** @description Max number of products to return */
+                    limit?: number;
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Bad Request */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
                 };
             };
         };
