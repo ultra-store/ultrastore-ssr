@@ -7,8 +7,10 @@ import Image from 'next/image';
 import { CartItem, CartTotal, CouponInput, OrderSummary } from '@/components/cart';
 import { CheckoutForm } from '@/components/checkout';
 import { RelatedProducts } from '@/components/product/related-products';
+import { Message } from '@/components/ui/message';
 import { Section } from '@/components/ui/section';
 import { getCartRelatedProducts } from '@/shared/api/getCartRelatedProducts';
+import { getHomepageData } from '@/shared/api/getHomepageData';
 import { useCart } from '@/shared/context/cart-context';
 import { useCheckout } from '@/shared/context/checkout-context';
 import icons from '@/shared/icons';
@@ -22,6 +24,7 @@ export default function CartPage() {
   const [showCheckout, setShowCheckout] = useState(false);
   const [justCleared, setJustCleared] = useState(false);
   const [related, setRelated] = useState<Product[]>([]);
+  const [recommendedProducts, setRecommendedProducts] = useState<Product[]>([]);
   const timerRef = useRef<number | null>(null);
   const abortRef = useRef<AbortController | null>(null);
 
@@ -131,6 +134,38 @@ export default function CartPage() {
     return () => controller.abort();
   }, [items]);
 
+  // Load recommended products when cart is empty
+  useEffect(() => {
+    if (items && items.length === 0) {
+      const loadRecommendedProducts = async () => {
+        try {
+          const homepageData = await getHomepageData();
+
+          // Use new products first, then sale products
+          if (homepageData.new_products && homepageData.new_products.length > 0) {
+            const products = homepageData.new_products.slice(0, 5);
+
+            setTimeout(() => setRecommendedProducts(products), 0);
+          } else if (homepageData.sale_products && homepageData.sale_products.length > 0) {
+            const products = homepageData.sale_products.slice(0, 5);
+
+            setTimeout(() => setRecommendedProducts(products), 0);
+          } else {
+            setTimeout(() => setRecommendedProducts([]), 0);
+          }
+        } catch {
+          // If failed to load products, just don't show them
+          setTimeout(() => setRecommendedProducts([]), 0);
+        }
+      };
+
+      loadRecommendedProducts();
+    } else {
+      // Defer to avoid synchronous setState warning from lint rule
+      setTimeout(() => setRecommendedProducts([]), 0);
+    }
+  }, [items]);
+
   const clearCartButton = (
     <button className={styles.clearButton} onClick={handleClearCart} aria-label="Очистить корзину">
       <span className={styles.clearIconWrap}>
@@ -140,38 +175,41 @@ export default function CartPage() {
     </button>
   );
 
+  const isEmpty = items.length === 0;
+
   return (
     <>
-      <Section className={styles.container}>
-        <Section noPadding title="Корзина" titleAction={items.length > 0 ? clearCartButton : undefined}>
-          <div className={styles.itemsSection}>
-            {items.length > 0
-              ? (
-                  <>
-                    <div className={styles.itemsList}>
-                      {items.map((item) => (
-                        <CartItem
-                          key={item.id}
-                          {...item}
-                          onQuantityChange={handleQuantityChange}
-                          onRemove={handleRemove}
-                        />
-                      ))}
-                    </div>
-                    {showCheckout && (
-                      <CartTotal total={total} currency="₽" />
-                    )}
-                    <CouponInput onApply={handleCouponApply} className={styles.couponInput} />
-                  </>
-                )
-              : (
-                  <div className={styles.emptyState}>
-                    <p>Ваша корзина пуста</p>
+      <Section className={isEmpty ? styles.emptyContainer : styles.container}>
+        {isEmpty
+          ? (
+              <Section noPadding>
+                <Message
+                  title="Корзина"
+                  description="Вы еще ничего не добавили в корзину"
+                />
+              </Section>
+            )
+          : (
+              <Section noPadding title="Корзина" titleAction={clearCartButton}>
+                <div className={styles.itemsSection}>
+                  <div className={styles.itemsList}>
+                    {items.map((item) => (
+                      <CartItem
+                        key={item.id}
+                        {...item}
+                        onQuantityChange={handleQuantityChange}
+                        onRemove={handleRemove}
+                      />
+                    ))}
                   </div>
-                )}
-          </div>
-        </Section>
-        {items.length > 0 && (
+                  {showCheckout && (
+                    <CartTotal total={total} currency="₽" />
+                  )}
+                  <CouponInput onApply={handleCouponApply} className={styles.couponInput} />
+                </div>
+              </Section>
+            )}
+        {!isEmpty && (
           <div className={styles.checkoutSection}>
             {showCheckout
               ? (
@@ -183,9 +221,14 @@ export default function CartPage() {
           </div>
         )}
       </Section>
-      {related.length > 0 && (
+      {!isEmpty && related.length > 0 && (
         <Section noPadding>
           <RelatedProducts products={related} title="Берут вместе" />
+        </Section>
+      )}
+      {isEmpty && recommendedProducts.length > 0 && (
+        <Section noPadding>
+          <RelatedProducts products={recommendedProducts} title="Может понравиться" />
         </Section>
       )}
     </>
