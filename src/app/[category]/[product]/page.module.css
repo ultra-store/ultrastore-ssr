@@ -1,0 +1,10 @@
+@media (max-width: 759px) {
+  .productSection.productSection {
+    padding: 0 var(--spacing-lg);
+  }
+
+  .seoSection.seoSection {
+    padding: 0 var(--spacing-lg);
+  }
+}
+

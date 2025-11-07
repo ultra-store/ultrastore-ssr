@@ -9,6 +9,8 @@ import type { BreadcrumbItem } from '@/components/ui/breadcrumbs/breadcrumbs';
 import { Section } from '@/components/ui/section';
 import { getProductData } from '@/shared/api/getProductData';
 
+import styles from './page.module.css';
+
 interface CategoryProductPageProps {
   params: Promise<{
     category: string
@@ -36,44 +38,50 @@ export default async function CategoryProductPage({ params }: CategoryProductPag
   const breadcrumbs: BreadcrumbItem[] = [...(categoryItem ? [categoryItem] : []), { label: productData.name }];
 
   return (
-    <Section>
-      <Breadcrumbs
-        items={breadcrumbs}
-      />
-
-      <ProductView
-        images={productData.images}
-        name={productData.name}
-        product={productData}
-      />
-
-      <div>
-        <ProductDescription
-          shortDescription={productData.short_description}
-          attributes={productData.attributes}
-          variations={productData.variations}
-          sku={productData.sku}
-          weight={productData.weight}
-          dimensions={productData.dimensions}
-          reviews={productData.reviews}
+    <>
+      <Section className={styles.productSection}>
+        <Breadcrumbs
+          items={breadcrumbs}
         />
-      </div>
 
-      {productData.related_products.length > 0 && (
-        <RelatedProducts products={productData.related_products} />
-      )}
+        <ProductView
+          images={productData.images}
+          name={productData.name}
+          product={productData}
+        />
 
-      {productData.similar_products.length > 0 && (
-        <SimilarProducts products={productData.similar_products} />
-      )}
+        <div>
+          <ProductDescription
+            shortDescription={productData.short_description}
+            attributes={productData.attributes}
+            variations={productData.variations}
+            sku={productData.sku}
+            weight={productData.weight}
+            dimensions={productData.dimensions}
+            reviews={productData.reviews}
+          />
+        </div>
+      </Section>
 
-      {Array.isArray(productData.description) && productData.description.length > 0 && (
-        <SeoContent blocks={productData.description} title={productData.description_title} />
-      )}
+      <Section noPadding>
+        {productData.related_products.length > 0 && (
+          <RelatedProducts products={productData.related_products} />
+        )}
 
-      {productData.seo_blocks && productData.seo_blocks.length > 0 && (
-        <SeoContent blocks={productData.seo_blocks} />
-      )}
-    </Section>
+        {productData.similar_products.length > 0 && (
+          <SimilarProducts products={productData.similar_products} />
+        )}
+      </Section>
+
+      <Section className={styles.seoSection}>
+        {Array.isArray(productData.description) && productData.description.length > 0 && (
+          <SeoContent blocks={productData.description} title={productData.description_title} />
+        )}
+
+        {productData.seo_blocks && productData.seo_blocks.length > 0 && (
+          <SeoContent blocks={productData.seo_blocks} />
+        )}
+      </Section>
+    </>
   );
 }
