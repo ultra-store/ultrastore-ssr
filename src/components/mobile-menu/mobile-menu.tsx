@@ -102,6 +102,13 @@ export const MobileMenu = ({ isOpen, onClose, menu, contacts, socials, className
             onClick={() => setCatalogOpen((v) => !v)}
           >
             <span className={styles.groupTitle}>Каталог</span>
+            <Image
+              src={isCatalogOpen ? icons.arrowUp : icons.arrowDown}
+              alt=""
+              width={15}
+              height={15}
+              aria-hidden
+            />
           </button>
           <div className={styles.groupBody} data-open={isCatalogOpen}>
             {list.map((cat) => (
