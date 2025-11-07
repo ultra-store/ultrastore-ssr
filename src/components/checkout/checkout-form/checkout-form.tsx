@@ -69,6 +69,9 @@ export const CheckoutForm = () => {
       clearCart();
       resetCheckout();
 
+      // Set cookie to allow access to order-success page
+      document.cookie = 'ultrastore_order_success=true; path=/; max-age=60';
+
       // Redirect to success page with order ID
       router.push(`/order-success?orderId=${order.id}`);
     } catch (err) {
