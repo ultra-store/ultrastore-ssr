@@ -53,9 +53,38 @@
   flex-shrink: 0;
 }
 
+.emptyContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.emptyContainer>section {
+  max-width: 100%;
+  margin: 0;
+}
+
+.emptyItemsSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 0;
+}
+
 .emptyState {
   width: 100%;
   padding: var(--spacing-4xl);
+  color: var(--outline-initial);
+  font-size: var(--font-size-large);
+  text-align: center;
+}
+
+.emptyStateMessage {
+  margin: 0;
   color: var(--outline-initial);
   font-size: var(--font-size-large);
   text-align: center;
