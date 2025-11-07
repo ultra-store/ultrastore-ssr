@@ -96,4 +96,9 @@
   opacity: 0.7;
 }
 
+@media (max-width: 759px) {
+  .cartItem {
+    gap: var(--spacing-sm);
+  }
+}
 
