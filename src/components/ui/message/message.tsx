@@ -15,4 +15,3 @@ export const Message = ({ title, description, className }: WithClassName<Message
     </div>
   );
 };
-
