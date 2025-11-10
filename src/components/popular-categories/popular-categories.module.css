@@ -55,7 +55,7 @@
   object-fit: contain;
 }
 
-.card .secondary {
+.secondary {
   color: var(--outline-primary);
   transition: all 0.3s ease;
   margin-top: auto;
@@ -93,7 +93,6 @@
 @media (hover: hover) {
   .card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   }
 
   .card:hover::before {
@@ -101,7 +100,7 @@
   }
 
   .card:hover .secondary {
-    color: var(--fill-interactive);
+    color: var(--outline-hover);
   }
 
   .card:hover .image {
