@@ -22,7 +22,7 @@ export const PopularCategories = ({ items }: PopularCategoriesProps) => {
               <div className={styles.image}>
                 <Image src={c.image || '/placeholder-product.png'} alt={c.name} width={180} height={100} />
               </div>
-              <div className="secondary">{c.name}</div>
+              <div className={styles.secondary}>{c.name}</div>
             </div>
           </Link>
         ))}
