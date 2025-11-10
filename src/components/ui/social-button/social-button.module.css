@@ -2,6 +2,8 @@
   display: inline-flex;
   justify-content: center;
   align-items: center;
+  border-radius: 50%;
+  overflow: hidden;
   transition: opacity 0.3s ease, filter 0.3s ease;
   opacity: 0.7;
 }
