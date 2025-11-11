@@ -25,11 +25,18 @@ export const TabButton = ({
 }: TabButtonProps) => {
   const isImageSource = typeof icon === 'string' || (icon && typeof icon === 'object' && 'src' in icon);
 
+  const iconSrc = isImageSource ? (icon as StaticImageData).src : '';
+
   return (
     <span className={`${styles.tabButton} ${isActive ? styles.active : ''} ${className}`}>
       {isImageSource
         ? (
-            <Image src={icon as string | StaticImageData} alt={alt} width={24} height={24} />
+            <span
+              className={styles.iconWrapper}
+              style={{ '--icon-src': `url(${iconSrc})` } as React.CSSProperties}
+            >
+              <Image src={icon as string | StaticImageData} alt={alt} width={24} height={24} />
+            </span>
           )
         : (
             (icon as React.ReactNode)

@@ -68,9 +68,33 @@
   box-sizing: border-box;
 }
 
-.tabButton img {
+.iconWrapper {
+  position: relative;
+  display: inline-block;
   width: 24px;
   height: 24px;
+}
+
+.iconWrapper img {
+  width: 24px;
+  height: 24px;
+  opacity: 0.5;
+  transition: opacity 0.2s ease;
+}
+
+.tabButton.active .iconWrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 24px;
+  height: 24px;
+  background-color: var(--fill-interactive-active);
+  mask: var(--icon-src) no-repeat center / contain;
+}
+
+.tabButton.active .iconWrapper img {
+  opacity: 0;
 }
 
 
