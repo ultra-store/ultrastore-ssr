@@ -18,11 +18,17 @@
 }
 
 .leftItem {
-  padding: 10px 12px;
   cursor: pointer;
 }
 
-.leftItemActive {
+.leftLink {
+  display: block;
+  padding: 10px 12px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.leftItemActive .leftLink {
   background: #ffe9ef;
 }
 
