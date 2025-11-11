@@ -26,7 +26,7 @@ export const ProductLevel = ({
   }
 
   return (
-    <Section title={title} ariaLabel={title}>
+    <Section title={title} ariaLabel={title} className={styles.section}>
       <div className={styles.row}>
         {items.map((product) => (
           <ProductCard
