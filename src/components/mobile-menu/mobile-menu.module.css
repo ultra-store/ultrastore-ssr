@@ -201,8 +201,6 @@
 
 .childLink {
   display: block;
-  margin-left: 20px;
-  padding-right: 20px;
   color: inherit;
   text-decoration: none;
   font-size: var(--font-size-medium-mobile);
@@ -252,7 +250,7 @@
 
 .grandChildLink {
   display: flex;
-  margin-left: 40px;
+  margin-left: 20px;
   color: inherit;
   text-decoration: none;
 }

@@ -2,6 +2,10 @@
 
 import { useEffect, useMemo, useState } from 'react';
 
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+
+import { useCatalogPopup } from '@/components/ui/catalog-popup';
 import { getCatalogMenu, type CatalogCategory } from '@/shared/api/getCatalogMenu';
 
 import styles from './catalog-menu.module.css';
@@ -11,12 +15,28 @@ export const CatalogMenu = () => {
   const [error, setError] = useState<string | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [expandedGroups, setExpandedGroups] = useState<Record<number, boolean>>({});
+  const [isNavigating, setIsNavigating] = useState(false);
+  const pathname = usePathname();
+  const { setIsOpen } = useCatalogPopup();
 
   useEffect(() => {
     getCatalogMenu()
       .then((d) => setCategories(d.categories || []))
       .catch(() => setError('Не удалось загрузить каталог'));
   }, []);
+
+  // Close menu after route actually changes (prevents blink) only if navigation was initiated
+  useEffect(() => {
+    if (!isNavigating) {
+      return;
+    }
+    const raf = requestAnimationFrame(() => {
+      setIsOpen(false);
+      setIsNavigating(false);
+    });
+
+    return () => cancelAnimationFrame(raf);
+  }, [pathname, isNavigating, setIsOpen]);
 
   const catList = useMemo(() => categories || [], [categories]);
 
@@ -58,9 +78,17 @@ export const CatalogMenu = () => {
                   key={c.id}
                   className={`${styles.leftItem} ${i === activeIndex ? styles.leftItemActive : ''}`}
                   onMouseEnter={() => setActiveIndex(i)}
-                  onClick={() => setActiveIndex(i)}
                 >
-                  {c.name}
+                  <Link
+                    href={`/${c.slug}`}
+                    className={styles.leftLink}
+                    onClick={() => {
+                      setActiveIndex(i);
+                      setIsNavigating(true);
+                    }}
+                  >
+                    {c.name}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -75,12 +103,23 @@ export const CatalogMenu = () => {
 
                   return (
                     <div key={lvl2.id}>
-                      <a className={styles.groupTitle} href={`/${lvl2.slug}`}>{lvl2.name}</a>
+                      <Link
+                        href={`/${lvl2.slug}`}
+                        className={styles.groupTitle}
+                        onClick={() => setIsNavigating(true)}
+                      >
+                        {lvl2.name}
+                      </Link>
                       {visible.length > 0 && (
                         <ul className={styles.children}>
                           {visible.map((c3) => (
                             <li key={c3.id}>
-                              <a href={`/${c3.slug}`}>{c3.name}</a>
+                              <Link
+                                href={`/${c3.slug}`}
+                                onClick={() => setIsNavigating(true)}
+                              >
+                                {c3.name}
+                              </Link>
                             </li>
                           ))}
                         </ul>
