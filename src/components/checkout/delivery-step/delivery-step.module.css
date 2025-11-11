@@ -71,10 +71,11 @@
   height: var(--line-height-large);
   color: var(--outline-primary);
   font-size: var(--font-size-large);
-  font-weight: 700;
   line-height: var(--line-height-large);
-  font-family: var(--font-formular);
-  font-style: normal;
+}
+
+.methodCard.selected .methodTitle {
+  font-weight: 700;
 }
 
 .methodFields {
