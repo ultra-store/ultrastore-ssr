@@ -4,8 +4,9 @@
   align-items: flex-start;
   width: 100%;
   border: 1px solid var(--outline-faint);
-  transition: border-color 0.2s ease;
   border-radius: 20px;
+  background: var(--surface-primary);
+  transition: border-color 0.2s ease;
 }
 
 .filter:hover {
