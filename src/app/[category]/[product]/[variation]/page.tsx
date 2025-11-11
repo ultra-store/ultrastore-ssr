@@ -63,15 +63,13 @@ export default async function CategoryProductVariationPage({ params }: CategoryP
         />
       </Section>
 
-      <Section noPadding>
-        {productData.related_products.length > 0 && (
-          <RelatedProducts products={productData.related_products} />
-        )}
+      {productData.related_products.length > 0 && (
+        <RelatedProducts products={productData.related_products} />
+      )}
 
-        {productData.similar_products.length > 0 && (
-          <SimilarProducts products={productData.similar_products} />
-        )}
-      </Section>
+      {productData.similar_products.length > 0 && (
+        <SimilarProducts products={productData.similar_products} />
+      )}
 
       <Section className={styles.seoSection}>
         {Array.isArray(productData.description) && productData.description.length > 0 && (
