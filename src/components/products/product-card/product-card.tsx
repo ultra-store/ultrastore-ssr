@@ -1,12 +1,13 @@
 'use client';
 
+import type { MouseEvent } from 'react';
+
 import Image from 'next/image';
 import Link from 'next/link';
 
 import { QuantitySelector } from '@/components/cart/quantity-selector';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/shared/context/cart-context';
-import icons from '@/shared/icons';
 import type { Product } from '@/shared/types/types';
 import type { WithClassName } from '@/shared/types/utils';
 import { formatPrice } from '@/shared/utils/format-price';
@@ -55,7 +56,7 @@ export const ProductCard = ({
   const cartItem = getCartItem(id);
   const isInCart = !!cartItem;
 
-  const handleAddToCart = (e: React.MouseEvent) => {
+  const handleAddToCart = (e: MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
 
@@ -74,7 +75,7 @@ export const ProductCard = ({
     }
   };
 
-  const handleDecrement = (e?: React.MouseEvent) => {
+  const handleDecrement = (e?: MouseEvent) => {
     if (e) {
       e.preventDefault();
       e.stopPropagation();
@@ -84,7 +85,7 @@ export const ProductCard = ({
     }
   };
 
-  const handleIncrement = (e?: React.MouseEvent) => {
+  const handleIncrement = (e?: MouseEvent) => {
     if (e) {
       e.preventDefault();
       e.stopPropagation();
@@ -165,7 +166,7 @@ export const ProductCard = ({
                       </Button>
                     )
                   : (
-                      <Link href={productLink} className={styles.cartLink}>
+                      <Link href={productLink} className={styles.productLink}>
                         <Button
                           variant="primary"
                           fullWidth
@@ -180,19 +181,12 @@ export const ProductCard = ({
             : (
                 isInCart
                   ? (
-                      <>
-                        <QuantitySelector
-                          quantity={cartItem.quantity}
-                          onDecrement={handleDecrement}
-                          onIncrement={handleIncrement}
-                          className={styles.quantitySelector}
-                        />
-                        <Link href="/cart" className={styles.cartLink}>
-                          <Button variant="secondary" className={styles.iconButton} icon={icons.cart} aria-label="В корзине">
-                            <span className={styles.srOnly}>В корзине</span>
-                          </Button>
-                        </Link>
-                      </>
+                      <QuantitySelector
+                        quantity={cartItem.quantity}
+                        onDecrement={handleDecrement}
+                        onIncrement={handleIncrement}
+                        className={styles.quantitySelector}
+                      />
                     )
                   : (
                       <Button
