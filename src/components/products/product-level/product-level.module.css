@@ -1,3 +1,7 @@
+.section {
+  gap: var(--spacing-md);
+}
+
 .row {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -25,10 +29,13 @@
 }
 
 @media (max-width: 759px) {
+  .section {
+    gap: var(--spacing-sm);
+  }
+  
   .row {
     grid-template-columns: repeat(3, 1fr);
   }
-  
 
   .productCard:nth-child(n+3) {
     display: flex;
