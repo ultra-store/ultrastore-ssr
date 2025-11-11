@@ -187,7 +187,6 @@ button {
   font-size: var(--font-size-number);
   font-weight: 700;
   line-height: var(--line-height-number);
-  font-variant-numeric: tabular-nums;
 }
 
 .heading-2 {
