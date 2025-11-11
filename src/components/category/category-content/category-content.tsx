@@ -196,11 +196,6 @@ export const CategoryContent = ({
           >
             {hasProducts && sortOptions.length > 0 && (
               <div className={styles.controls}>
-                <span className={`large text-placeholder ${styles.controlsCount}`}>
-                  {categoryData.total}
-                  {' '}
-                  {categoryData.total === 1 ? 'товар' : categoryData.total > 1 && categoryData.total < 5 ? 'товара' : 'товаров'}
-                </span>
                 <div className={styles.controlsSort}>
                   <SortSelect
                     options={sortOptions}

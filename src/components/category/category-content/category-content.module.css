@@ -46,7 +46,7 @@
   position: relative;
   z-index: 11;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   width: 100%;
 }
@@ -126,6 +126,7 @@
   }
 
   .controls {
+    justify-content: space-between;
     padding: 0 var(--spacing-lg);
   }
 

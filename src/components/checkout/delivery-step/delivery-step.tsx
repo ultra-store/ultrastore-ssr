@@ -21,12 +21,42 @@ export const DeliveryStep = () => {
   // Use delivery phone if set, otherwise fall back to personal phone
   const displayPhone = phone || personalPhone || '';
 
+  // Function to convert full day names to short ones in labels
+  const convertDayNamesToShort = (label: string): string => {
+    const dayNameMap: Record<string, string> = {
+      воскресенье: 'вс',
+      понедельник: 'пн',
+      вторник: 'вт',
+      среда: 'ср',
+      четверг: 'чт',
+      пятница: 'пт',
+      суббота: 'сб',
+    };
+
+    let convertedLabel = label;
+
+    for (const [full, short] of Object.entries(dayNameMap)) {
+      convertedLabel = convertedLabel.replace(full, short);
+    }
+
+    return convertedLabel;
+  };
+
   // Load delivery settings on mount
   useEffect(() => {
     getSiteSettings()
       .then((settings) => {
         if (settings.delivery) {
-          setDeliverySettings(settings.delivery);
+          // Convert day names in labels to short format
+          const convertedDates = settings.delivery.available_dates.map((date) => ({
+            ...date,
+            label: convertDayNamesToShort(date.label),
+          }));
+
+          setDeliverySettings({
+            ...settings.delivery,
+            available_dates: convertedDates,
+          });
 
           // Auto-select nearest available date if no date is selected
           if (!desiredDate && settings.delivery.available_dates && settings.delivery.available_dates.length > 0) {
@@ -53,7 +83,7 @@ export const DeliveryStep = () => {
         }[] = [];
         const today = new Date();
         const monthNames = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
-        const dayNames = ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота'];
+        const dayNames = ['вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб'];
 
         for (let i = 1; i <= 14; i++) {
           const date = new Date(today);
