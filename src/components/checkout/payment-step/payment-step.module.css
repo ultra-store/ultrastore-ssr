@@ -86,19 +86,13 @@
   display: flex;
   align-items: center;
   width: auto;
-  height: var(--line-height-large);
   color: var(--outline-primary);
-  font-size: var(--font-size-medium);
-  font-weight: 400;
-  line-height: var(--line-height-medium);
-  font-family: var(--font-formular);
-  font-style: normal;
+  font-size: var(--font-size-large);
+  line-height: var(--line-height-large);
 }
 
 .methodCard.selected .methodTitle {
-  font-size: var(--font-size-large);
   font-weight: 700;
-  line-height: var(--line-height-large);
 }
 
 .totalPrice {
