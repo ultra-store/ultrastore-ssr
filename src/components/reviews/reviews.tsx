@@ -19,7 +19,7 @@ export const Reviews = ({ title = 'Отзывы', items }: ReviewsProps) => {
   const firstFour = items.slice(0, 4);
 
   return (
-    <Section title={title} ariaLabel={title}>
+    <Section title={title} ariaLabel={title} className={styles.section}>
       <div className={styles.row}>
         {firstFour.map((r) => (
           <ReviewCard key={r.id} {...r} />

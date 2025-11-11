@@ -1,3 +1,7 @@
+.section {
+  gap: var(--spacing-lg);
+}
+
 .title {
   margin-bottom: 0;
 }
@@ -5,7 +9,7 @@
 .row {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: var(--spacing-lg);
+  gap: var(--spacing-sm);
   isolation: isolate;
 }
 
@@ -28,6 +32,10 @@
 }
 
 @media (max-width: 1023px) {
+  .section {
+    gap: var(--spacing-sm);
+  }
+
   .row {
     grid-template-columns: repeat(2, 1fr);
   }
