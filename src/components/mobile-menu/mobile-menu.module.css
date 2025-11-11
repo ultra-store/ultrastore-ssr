@@ -325,8 +325,7 @@
 
 .contactRow {
   display: flex;
-  align-items: center;
-  gap: 10px;
+  gap: var(--spacing-sm);
   padding: var(--spacing-sm) 0;
   color: inherit;
   text-decoration: none;
