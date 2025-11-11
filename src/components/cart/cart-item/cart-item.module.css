@@ -68,15 +68,13 @@
   font-size: var(--font-size-heading-2);
   font-weight: 700;
   line-height: var(--line-height-heading-2);
-  font-family: var(--font-formular);
   font-style: normal;
   white-space: nowrap;
 }
 
 .actions {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr minmax(0, 120px);
   align-items: center;
   gap: var(--spacing-lg);
   padding: 0;
