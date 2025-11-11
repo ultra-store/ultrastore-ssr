@@ -79,17 +79,17 @@ export const PaymentStep = () => {
         </div>
       </div>
 
-      {paymentMethods.slice(1).map((paymentMethod) => {
-        const isDisabled = isCourierDelivery;
-
-        return (
+      {paymentMethods
+        .slice(1)
+        .filter(() => !isCourierDelivery)
+        .map((paymentMethod) => (
           <div
             key={paymentMethod.key}
-            className={`${styles.methodCard} ${method === paymentMethod.key ? styles.selected : ''} ${isDisabled ? styles.disabled : ''}`}
-            onClick={() => !isDisabled && handleMethodChange(paymentMethod.key)}
+            className={`${styles.methodCard} ${method === paymentMethod.key ? styles.selected : ''}`}
+            onClick={() => handleMethodChange(paymentMethod.key)}
           >
             <div className={styles.radioButton}>
-              <div className={`${styles.radioCircle} ${method === paymentMethod.key ? styles.checked : ''} ${isDisabled ? styles.disabled : ''}`} />
+              <div className={`${styles.radioCircle} ${method === paymentMethod.key ? styles.checked : ''}`} />
             </div>
             <div className={styles.methodContent}>
               <div className={styles.methodTitle}>{paymentMethod.label}</div>
@@ -98,8 +98,7 @@ export const PaymentStep = () => {
               )}
             </div>
           </div>
-        );
-      })}
+        ))}
     </div>
   );
 };
