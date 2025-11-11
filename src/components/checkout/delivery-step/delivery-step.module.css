@@ -166,5 +166,9 @@
 }
 
 @media (max-width: 759px) {
+  .fieldRow {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
 }
 
