@@ -135,6 +135,49 @@
   color: var(--outline-primary);
 }
 
+/* Color swatch styles */
+.attributeValueColor {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 0.5px solid #A6A3A3;
+  border-radius: 5px;
+  background: #F3F2EE;
+  box-sizing: border-box;
+}
+
+.attributeValueColor:hover {
+  border: 0.5px solid #4D4D4D;
+}
+
+.attributeValueColor.attributeValueSelected {
+  border: 2px solid #FF1C42;
+}
+
+.attributeValueColor.attributeValueSelected:hover {
+  border: 2px solid #E5193B;
+}
+
+.attributeValueColor.attributeValueDisabled {
+  opacity: 0.5;
+  border: 0.5px solid #A6A3A3;
+}
+
+.attributeValueColor.attributeValueDisabled:hover {
+  border: 0.5px solid #A6A3A3;
+}
+
+.colorSwatch {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 3px;
+}
+
 .actions {
   display: flex;
   flex-direction: column;

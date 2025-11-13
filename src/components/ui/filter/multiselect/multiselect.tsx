@@ -64,11 +64,12 @@ export const Multiselect = ({ options, selectedValues, onSelectionChange, type =
     <div className={`${styles.multiselect} ${type === 'color' ? styles.multiselectColor : ''}`}>
       {options.map((option) => {
         const isSelected = selectedValues.includes(option.value);
+        const isColorOption = type === 'color' && option.color;
 
         return (
           <div
             key={option.value}
-            className={`${styles.option} ${isSelected ? styles.optionSelected : ''} ${type === 'color' ? styles.optionColor : ''} ${disabled ? styles.optionDisabled : ''}`}
+            className={`${styles.option} ${isSelected ? styles.optionSelected : ''} ${isColorOption ? styles.optionColor : ''} ${disabled ? styles.optionDisabled : ''}`}
             onClick={() => handleOptionToggle(option.value)}
             style={disabled
               ? {
@@ -77,13 +78,13 @@ export const Multiselect = ({ options, selectedValues, onSelectionChange, type =
                 }
               : undefined}
           >
-            {type === 'color' && option.color && (
+            {isColorOption && (
               <div
                 className={styles.colorSwatch}
                 style={{ backgroundColor: option.color }}
               />
             )}
-            {type === 'checkbox' && (
+            {!isColorOption && (
               <div className={styles.checkbox}>
                 <input
                   type="checkbox"
@@ -95,37 +96,23 @@ export const Multiselect = ({ options, selectedValues, onSelectionChange, type =
               </div>
             )}
             <span className={`medium ${styles.optionLabel}`}>{option.label}</span>
-            {type === 'color'
-              ? (
-                  <div className={styles.optionCountContainer}>
-                    <Image
-                      src={icons.close}
-                      alt="Close"
-                      width={15}
-                      height={15}
-                      className={styles.closeIcon}
-                    />
-                  </div>
-                )
-              : (
-                  option.count !== undefined && (
-                    <div className={styles.optionCountContainer}>
-                      {isSelected
-                        ? (
-                            <Image
-                              src={icons.close}
-                              alt="Close"
-                              width={15}
-                              height={15}
-                              className={styles.closeIcon}
-                            />
-                          )
-                        : (
-                            <span className={`medium text-placeholder ${styles.optionCount}`}>{option.count}</span>
-                          )}
-                    </div>
-                  )
-                )}
+            {option.count !== undefined && (
+              <div className={styles.optionCountContainer}>
+                {isSelected
+                  ? (
+                      <Image
+                        src={icons.close}
+                        alt="Close"
+                        width={15}
+                        height={15}
+                        className={styles.closeIcon}
+                      />
+                    )
+                  : (
+                      <span className={`medium text-placeholder ${styles.optionCount}`}>{option.count}</span>
+                    )}
+              </div>
+            )}
           </div>
         );
       })}

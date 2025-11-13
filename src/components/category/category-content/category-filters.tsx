@@ -298,6 +298,11 @@ export const CategoryFilters = ({ filters, onApplyingChange }: CategoryFiltersPr
         const paramName = section.id.startsWith('pa_') ? section.id : `pa_${section.id}`;
         const selectedValues = getSelectedValues(paramName);
 
+        // Determine if this section should use color type
+        // Only use color if section type is 'color' AND all options have color
+        const allOptionsHaveColor = section.options?.every((option) => option.color !== undefined && option.color !== null && option.color !== '') ?? false;
+        const shouldUseColor = section.type === 'color' && allOptionsHaveColor;
+
         // Show all filters immediately, regardless of available options
         // API now returns all possible filters from all products in category
         // Options with count = 0 are still shown to maintain filter visibility
@@ -313,7 +318,7 @@ export const CategoryFilters = ({ filters, onApplyingChange }: CategoryFiltersPr
               options={section.options || []}
               selectedValues={selectedValues}
               onSelectionChange={(values) => handleAttributeChange(paramName, values)}
-              type={section.type === 'color' ? 'color' : 'checkbox'}
+              type={shouldUseColor ? 'color' : 'checkbox'}
               paramName={paramName}
               disabled={isLoading}
             />

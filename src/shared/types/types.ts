@@ -121,6 +121,7 @@ export interface ProductAttribute {
   slug: string
   values: ProductAttributeValue[]
   used_for_variations?: boolean
+  is_color?: boolean
 }
 
 export interface ProductAttributeGroup {
@@ -142,6 +143,7 @@ export interface ProductVariation {
   in_stock?: boolean
   attributes: Record<string, string>
   images?: ProductImage[]
+  color_code?: string
 }
 
 export interface ProductDimensions {
