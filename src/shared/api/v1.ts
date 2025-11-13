@@ -76,6 +76,8 @@ export interface paths {
                                 rating?: number;
                                 rating_count?: number;
                                 in_stock?: boolean;
+                                /** @description Color code in hex format (e.g., #ff0000) from Variation Swatches plugin */
+                                color_code?: string;
                             }[];
                             popular_categories?: {
                                 id: number;
@@ -119,6 +121,8 @@ export interface paths {
                                 rating?: number;
                                 rating_count?: number;
                                 in_stock?: boolean;
+                                /** @description Color code in hex format (e.g., #ff0000) from Variation Swatches plugin */
+                                color_code?: string;
                             }[];
                             reviews?: {
                                 id: number;
@@ -556,6 +560,8 @@ export interface paths {
                                 rating?: number;
                                 rating_count?: number;
                                 in_stock?: boolean;
+                                /** @description Color code in hex format (e.g., #ff0000) from Variation Swatches plugin */
+                                color_code?: string;
                             }[];
                             page: number;
                             per_page: number;
@@ -705,6 +711,8 @@ export interface paths {
                                     slug: string;
                                 }[];
                                 used_for_variations: boolean;
+                                /** @description Flag indicating if this attribute is a color attribute (from Variation Swatches plugin) */
+                                is_color: boolean;
                             }[];
                             variations?: {
                                 id: number;
@@ -729,6 +737,8 @@ export interface paths {
                                     url: string;
                                     alt?: string;
                                 }[];
+                                /** @description Color code in hex format (e.g., #ff0000) from Variation Swatches plugin */
+                                color_code?: string;
                             }[];
                             categories?: {
                                 id: number;
@@ -772,6 +782,8 @@ export interface paths {
                                 rating?: number;
                                 rating_count?: number;
                                 in_stock?: boolean;
+                                /** @description Color code in hex format (e.g., #ff0000) from Variation Swatches plugin */
+                                color_code?: string;
                             }[];
                             similar_products?: {
                                 id: number;
@@ -796,6 +808,8 @@ export interface paths {
                                 rating?: number;
                                 rating_count?: number;
                                 in_stock?: boolean;
+                                /** @description Color code in hex format (e.g., #ff0000) from Variation Swatches plugin */
+                                color_code?: string;
                             }[];
                             rating?: number;
                             rating_count?: number;
@@ -1012,6 +1026,8 @@ export interface paths {
                                 rating?: number;
                                 rating_count?: number;
                                 in_stock?: boolean;
+                                /** @description Color code in hex format (e.g., #ff0000) from Variation Swatches plugin */
+                                color_code?: string;
                             }[];
                             page: number;
                             per_page: number;
@@ -1555,6 +1571,8 @@ export interface paths {
                                 rating?: number;
                                 rating_count?: number;
                                 in_stock?: boolean;
+                                /** @description Color code in hex format (e.g., #ff0000) from Variation Swatches plugin */
+                                color_code?: string;
                             }[];
                             page: number;
                             per_page: number;

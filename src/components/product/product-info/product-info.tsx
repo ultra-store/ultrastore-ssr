@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 
 import icons from '@/shared/icons';
-import type { ProductAttribute, ProductAttributeGroup, ProductDetails, ProductVariation } from '@/shared/types/types';
+import type { ProductAttribute, ProductAttributeGroup, ProductAttributeValue, ProductDetails, ProductVariation } from '@/shared/types/types';
 import type { WithClassName } from '@/shared/types/utils';
 import { formatPrice } from '@/shared/utils/format-price';
 import { normalizeCurrency } from '@/shared/utils/normalize-currency';
@@ -435,6 +435,63 @@ export const ProductInfo = ({
     }));
   };
 
+  // Check if attribute is a color attribute using is_color flag
+  const isColorAttribute = useCallback((attribute: ProductAttribute): boolean => {
+    return attribute.is_color === true;
+  }, []);
+
+  // Find variation for a specific attribute value to get color_code
+  const getVariationForValue = useMemo(() => {
+    return (attribute: ProductAttribute, value: ProductAttributeValue): ProductVariation | null => {
+      if (!variations || variations.length === 0) {
+        return null;
+      }
+
+      const variationKey = getVariationAttrKey(attribute.slug);
+
+      // Find a variation that matches this specific value
+      return variations.find((variation) => {
+        if (!variation.attributes || typeof variation.attributes !== 'object') {
+          return false;
+        }
+
+        const variationValue = variation.attributes[variationKey];
+
+        return variationValue !== undefined
+          && variationValue !== null
+          && String(variationValue).trim().toLowerCase() === String(value.slug).trim().toLowerCase();
+      }) || null;
+    };
+  }, [variations, getVariationAttrKey]);
+
+  // Check if all variations for an attribute have color_code
+  const allVariationsHaveColorCode = useMemo(() => {
+    return (attribute: ProductAttribute): boolean => {
+      if (!variations || variations.length === 0) {
+        return false;
+      }
+
+      const variationKey = getVariationAttrKey(attribute.slug);
+
+      // Check all values of this attribute
+      return attribute.values.every((value) => {
+        const variation = variations.find((v) => {
+          if (!v.attributes || typeof v.attributes !== 'object') {
+            return false;
+          }
+
+          const variationValue = v.attributes[variationKey];
+
+          return variationValue !== undefined
+            && variationValue !== null
+            && String(variationValue).trim().toLowerCase() === String(value.slug).trim().toLowerCase();
+        });
+
+        return variation?.color_code !== undefined && variation.color_code !== null && variation.color_code !== '';
+      });
+    };
+  }, [variations, getVariationAttrKey]);
+
   return (
     <div className={`${styles.container} ${className || ''}`}>
       <ProductHeader name={name} sku={currentSku} variant="desktop" />
@@ -453,6 +510,11 @@ export const ProductInfo = ({
                   {attribute.values.map((value, valueIndex) => {
                     const isSelected = isValueSelected(attribute.name, value.id);
                     const isAvailable = isValueAvailable(attribute.name, value.id, selectedValues);
+                    const isColor = isColorAttribute(attribute);
+                    const allHaveColorCode = allVariationsHaveColorCode(attribute);
+                    const shouldShowColor = isColor && allHaveColorCode;
+                    const variationForValue = shouldShowColor ? getVariationForValue(attribute, value) : null;
+                    const colorCode = shouldShowColor ? variationForValue?.color_code : undefined;
 
                     return (
                       <button
@@ -460,13 +522,21 @@ export const ProductInfo = ({
                         type="button"
                         className={`
                           ${styles.attributeValue} 
+                          ${colorCode ? styles.attributeValueColor : ''}
                           ${isSelected ? styles.attributeValueSelected : ''}
                           ${!isAvailable ? styles.attributeValueDisabled : ''}
                         `}
                         onClick={() => handleAttributeSelect(attribute.name, value.id)}
                         disabled={!isAvailable}
+                        style={colorCode ? { '--color-code': colorCode } as React.CSSProperties : undefined}
                       >
-                        {value.name}
+                        {colorCode
+                          ? (
+                              <span className={styles.colorSwatch} style={{ backgroundColor: colorCode }} />
+                            )
+                          : (
+                              value.name
+                            )}
                       </button>
                     );
                   })}

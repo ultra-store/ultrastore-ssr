@@ -90,61 +90,20 @@
 
 /* Color variant styles */
 .multiselectColor {
-  gap: 5px;
+  gap: var(--spacing-xs);
 }
 
 .optionColor {
-  display: flex;
-  align-items: center;
-  gap: 5px;
   width: fit-content;
-  height: 26px;
-  padding: 3px 5px 3px 3px;
-  border-radius: 5px;
-  transition: padding 0.3s ease;
+  padding: var(--spacing-xs);
 }
 
 .colorSwatch {
+  box-sizing: border-box;
   width: 20px;
   height: 20px;
   border: 0.5px solid var(--outline-faint);
   border-radius: 3px;
+  flex: none;
   flex-shrink: 0;
-}
-
-.optionColor .optionLabel {
-  font-size: 15px;
-  line-height: 20px;
-}
-
-.optionColor .optionCountContainer {
-  width: 0;
-  min-width: 0;
-  height: 16px;
-  transition: all 0.3s ease;
-  overflow: hidden;
-}
-
-.optionColor.optionSelected .optionCountContainer {
-  width: 15px;
-  min-width: 15px;
-}
-
-.optionColor .closeIcon {
-  width: 15px;
-  height: 15px;
-  transition: all 0.3s ease;
-  opacity: 0;
-  transform: scale(0.8);
-}
-
-.optionColor.optionSelected .closeIcon {
-  opacity: 1;
-  transform: scale(1);
-}
-
-@media (hover: hover) {
-  .optionColor.optionSelected:hover .closeIcon {
-    transform: scale(1.2);
-  }
 }
