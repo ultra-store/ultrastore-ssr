@@ -316,6 +316,139 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/ultra/v1/page/{slug}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Данные страницы WordPress
+         * @description Данные страницы WordPress для отображения в Next.js, включая заголовок, контент, изображение и метаданные
+         */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /** @description Slug страницы */
+                    slug: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Success */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            id: number;
+                            title: string;
+                            slug: string;
+                            content: Array<{
+                                type: string;
+                                blockName?: string;
+                                content?: string;
+                                level?: string;
+                                url?: string;
+                                alt?: string;
+                                id?: number;
+                                caption?: string;
+                                ordered?: boolean;
+                                items?: string[];
+                                citation?: string;
+                                attrs?: Record<string, unknown>;
+                                blocks?: Array<{
+                                    type: string;
+                                    blockName?: string;
+                                    content?: string;
+                                    level?: string;
+                                    url?: string;
+                                    alt?: string;
+                                    id?: number;
+                                    caption?: string;
+                                    ordered?: boolean;
+                                    items?: string[];
+                                    citation?: string;
+                                    attrs?: Record<string, unknown>;
+                                    blocks?: unknown[];
+                                }>;
+                            }>;
+                            excerpt?: string;
+                            featured_image?: {
+                                id: number;
+                                url: string;
+                                alt: string;
+                                thumbnail?: string;
+                                medium?: string;
+                                large?: string;
+                            };
+                            date: string;
+                            date_gmt: string;
+                            modified: string;
+                            modified_gmt: string;
+                            author: {
+                                id: number;
+                                name: string;
+                            };
+                            url: string;
+                            meta: {
+                                description?: string;
+                                keywords?: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Bad Request */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: string;
+                            message: string;
+                        };
+                    };
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: string;
+                            message: string;
+                        };
+                    };
+                };
+                /** @description Internal Server Error */
+                500: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: string;
+                            message: string;
+                        };
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/ultra/v1/menus": {
         parameters: {
             query?: never;
