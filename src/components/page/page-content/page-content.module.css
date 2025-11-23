@@ -48,14 +48,6 @@
   flex: none;
 }
 
-.blockHeading {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: var(--spacing-lg);
-  width: 100%;
-  flex: none;
-}
 
 .blockImage {
   max-width: 60%;

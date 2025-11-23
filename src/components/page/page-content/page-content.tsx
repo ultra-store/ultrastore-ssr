@@ -72,9 +72,22 @@ const PageBlockComponent = ({ block }: PageBlockComponentProps) => {
 
       const HeadingTag = (block.level || 'h2') as ElementType;
 
+      // Определяем класс в зависимости от уровня заголовка
+      let headingClass = '';
+      const level = block.level || 'h2';
+
+      if (level === 'h1') {
+        headingClass = 'heading-1';
+      } else if (level === 'h2') {
+        headingClass = 'heading-2';
+      } else if (level === 'h3' || level === 'h4' || level === 'h5' || level === 'h6') {
+        // Для h3-h6 используем стили h3 из глобальных стилей
+        headingClass = '';
+      }
+
       return (
         <HeadingTag
-          className={`heading-1 text-primary ${styles.blockHeading}`}
+          className={headingClass ? `${headingClass} text-primary` : 'text-primary'}
           dangerouslySetInnerHTML={{ __html: applyTypografToHTML(block.content || '') }}
         />
       );
