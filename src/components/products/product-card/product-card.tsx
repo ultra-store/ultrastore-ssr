@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { QuantitySelector } from '@/components/cart/quantity-selector';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/shared/context/cart-context';
+import icons from '@/shared/icons';
 import type { Product } from '@/shared/types/types';
 import type { WithClassName } from '@/shared/types/utils';
 import { formatPrice } from '@/shared/utils/format-price';
@@ -49,6 +50,7 @@ export const ProductCard = ({
   const normalizedCurrency = normalizeCurrency(currency);
   const displayPrice = on_sale && sale_price ? sale_price : price;
   const formattedPrice = formatPrice(displayPrice, normalizedCurrency);
+  const formattedRegularPrice = on_sale && price ? formatPrice(price, normalizedCurrency) : null;
   // Показываем префикс "от..." только если товар имеет вариации
   const pricePrefix = (showPricePrefix && has_variations) ? 'от ' : '';
 
@@ -104,10 +106,40 @@ export const ProductCard = ({
       <div className={styles.info}>
         <div className={`secondary-bold ${styles.title}`}>{name}</div>
         <div className={styles.priceContainer}>
-          <span className={`number outline-primary ${styles.price} ${on_sale ? styles.salePrice : ''}`}>
-            {pricePrefix}
-            {formattedPrice}
-          </span>
+          <div className={styles.priceWrapper}>
+            {!has_variations && on_sale && formattedRegularPrice && (
+              <span className={`number ${styles.regularPrice}`}>
+                {formattedRegularPrice}
+              </span>
+            )}
+            <span className={`number outline-primary ${styles.price}`}>
+              {pricePrefix}
+              {formattedPrice}
+            </span>
+          </div>
+          {!has_variations && (
+            isInCart
+              ? (
+                  <QuantitySelector
+                    quantity={cartItem.quantity}
+                    onDecrement={handleDecrement}
+                    onIncrement={handleIncrement}
+                    className={styles.quantitySelector}
+                  />
+                )
+              : (
+                  <Button
+                    variant="primary"
+                    icon={icons.cart}
+                    className={styles.cartButton}
+                    onClick={handleAddToCart}
+                    disabled={in_stock === false}
+                    aria-label="Добавить в корзину"
+                  >
+                    {' '}
+                  </Button>
+                )
+          )}
         </div>
       </div>
     </div>
@@ -151,56 +183,6 @@ export const ProductCard = ({
       <Link href={productLink} className={styles.overlayLink} aria-label={`Перейти к ${name}`} />
       <div className={styles.cardWrapper}>
         {content}
-        <div className={styles.cartControls}>
-          {has_variations
-            ? (
-                in_stock === false
-                  ? (
-                      <Button
-                        variant="primary"
-                        fullWidth
-                        className={styles.button}
-                        disabled
-                      >
-                        Нет в наличии
-                      </Button>
-                    )
-                  : (
-                      <Link href={productLink} className={styles.productLink}>
-                        <Button
-                          variant="primary"
-                          fullWidth
-                          className={styles.selectButton}
-                          aria-label={`Перейти к ${name} для выбора конфигурации`}
-                        >
-                          Выбрать
-                        </Button>
-                      </Link>
-                    )
-              )
-            : (
-                isInCart
-                  ? (
-                      <QuantitySelector
-                        quantity={cartItem.quantity}
-                        onDecrement={handleDecrement}
-                        onIncrement={handleIncrement}
-                        className={styles.quantitySelector}
-                      />
-                    )
-                  : (
-                      <Button
-                        variant="primary"
-                        fullWidth
-                        className={styles.button}
-                        onClick={handleAddToCart}
-                        disabled={in_stock === false}
-                      >
-                        {in_stock === false ? 'Нет в наличии' : 'В корзину'}
-                      </Button>
-                    )
-              )}
-        </div>
       </div>
     </article>
   );

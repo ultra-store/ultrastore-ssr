@@ -1,13 +1,14 @@
 .card {
   position: relative;
   width: 100%;
+  height: 100%;
   padding: var(--spacing-lg);
   border: 1px solid var(--outline-faint);
   border-radius: 25px;
   background: var(--surface-primary);
+  cursor: pointer;
   box-sizing: border-box;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  cursor: pointer;
 }
 
 .card:hover {
@@ -19,6 +20,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--spacing-lg);
+  height: 100%;
 }
 
 .overlayLink {
@@ -54,7 +56,6 @@
 }
 
 .quantitySelector {
-  width: 100%;
   height: 45px;
   max-height: 45px;
   opacity: 0;
@@ -102,9 +103,8 @@
 
 .title {
   display: -webkit-box;
-  height: 2.4em;
-  min-height: 2.4em;
   color: var(--outline-primary);
+  flex: 1;
   overflow: hidden;
   text-overflow: ellipsis;
   -webkit-line-clamp: 2;
@@ -114,9 +114,18 @@
 }
 
 .priceContainer {
+  position: relative;
+  z-index: 2;
   display: flex;
-  align-items: baseline;
-  gap: var(--spacing-xs);
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-sm);
+  height: 50px;
+}
+
+.priceWrapper {
+  display: flex;
+  flex-direction: column;
 }
 
 .price {
@@ -124,15 +133,34 @@
   white-space: nowrap;
 }
 
-.salePrice {
-  color: var(--outline-interactive);
-}
-
 .regularPrice {
-  color: var(--outline-initial);
-  font-size: var(--font-size-small);
+  color: var(--outline-placeholder);
+  font-size: var(--font-size-medium);
+  font-weight: 400;
+  line-height: var(--line-height-medium);
   text-decoration: line-through;
   white-space: nowrap;
+}
+
+.cartButton {
+  position: relative;
+  z-index: 3;
+  width: 45px;
+  height: 45px;
+  min-width: 45px;
+  padding: 0;
+  border-radius: 10px !important;
+  pointer-events: auto;
+}
+
+.cartButton .buttonContent {
+  gap: 0;
+}
+
+.cartButton img {
+  filter: brightness(0) invert(1);
+  width: 25px !important;
+  height: 25px !important;
 }
 
 .buyButton {
