@@ -9,10 +9,6 @@
   color: var(--outline-primary);
 }
 
-.salePrice {
-  color: var(--outline-interactive);
-}
-
 .mobileOnly {
   display: none;
 }
